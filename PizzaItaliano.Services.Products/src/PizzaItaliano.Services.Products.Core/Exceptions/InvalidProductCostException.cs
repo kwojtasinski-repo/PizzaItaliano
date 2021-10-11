@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Products.Core.Exceptions
 {
-    public class InvalidProductCostException
+    public class InvalidProductCostException : DomainException
     {
+        public override string Code { get; } = "invalid_product_cost";
+        public decimal Cost { get; }
+
+
+        public InvalidProductCostException(decimal cost) : base($"Invalid product cost")
+        {
+            Cost = cost;
+        }
     }
 }

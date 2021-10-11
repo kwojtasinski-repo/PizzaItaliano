@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PizzaItaliano.Services.Products.Core.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,8 @@ namespace PizzaItaliano.Services.Products.Core.Entities
 
         public Product(Guid id, string name, decimal cost)
         {
+            ValidCost(cost);
+            ValidName(name);
             Id = id;
             Name = name;
             Cost = cost;
@@ -21,7 +24,28 @@ namespace PizzaItaliano.Services.Products.Core.Entities
 
         public static Product Create(Guid id, string name, decimal cost)
         {
+            ValidCost(cost);
+            ValidName(name);
             var product = new Product(id, name, cost);
+            return product;
+        }
+
+        private static void ValidCost(decimal cost)
+        {
+            if (cost < 0)
+            {
+                throw new InvalidProductCostException(cost);
+            }
+
+        }
+
+        private static void ValidName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ProductNameCannotBeEmptyException();
+            }
+
         }
     }
 }
