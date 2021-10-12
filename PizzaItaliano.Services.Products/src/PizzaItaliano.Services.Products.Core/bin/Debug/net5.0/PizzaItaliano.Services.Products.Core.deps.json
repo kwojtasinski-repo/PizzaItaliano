@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "PizzaItaliano.Services.Products.Core/1.0.0": {
+        "runtime": {
+          "PizzaItaliano.Services.Products.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PizzaItaliano.Services.Products.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

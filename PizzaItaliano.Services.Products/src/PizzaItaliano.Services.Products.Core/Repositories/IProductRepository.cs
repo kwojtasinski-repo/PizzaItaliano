@@ -11,8 +11,8 @@ namespace PizzaItaliano.Services.Products.Core.Repositories
     {
         Task<Product> GetAsync(AggregateId id);
         Task<bool> ExistsAsync(AggregateId id);
-        Task AddAsync(Product id);
-        Task UpdateAsync(Product id);
+        Task AddAsync(Product product);
+        Task UpdateAsync(Product product);
         Task DeleteAsync(AggregateId id);
     }
 }

@@ -1,31 +1,27 @@
-﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:44792",
+      "applicationUrl": "http://localhost:5001",
       "sslPort": 0
     }
   },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "weatherforecast",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "WebApplication1": {
+    "PizzaItaliano.Services.Products": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
-      "launchBrowser": true,
-      "launchUrl": "weatherforecast",
-      "applicationUrl": "http://localhost:5000",
+      "launchBrowser": false,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:5001"
     }
   }
 }

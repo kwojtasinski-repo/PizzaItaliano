@@ -33,6 +33,96 @@
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
+            "projectReferences": {
+              "D:\\Projekty\\Mikroserwisy\\RestaurantMicroService\\PizzaItaliano\\PizzaItaliano.Services.Products\\src\\PizzaItaliano.Services.Products.Core\\PizzaItaliano.Services.Products.Core.csproj": {
+                "projectPath": "D:\\Projekty\\Mikroserwisy\\RestaurantMicroService\\PizzaItaliano\\PizzaItaliano.Services.Products\\src\\PizzaItaliano.Services.Products.Core\\PizzaItaliano.Services.Products.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Convey": {
+              "target": "Package",
+              "version": "[0.5.506, )"
+            },
+            "Convey.CQRS.Commands": {
+              "target": "Package",
+              "version": "[0.5.506, )"
+            },
+            "Convey.CQRS.Events": {
+              "target": "Package",
+              "version": "[0.5.506, )"
+            },
+            "Convey.CQRS.Queries": {
+              "target": "Package",
+              "version": "[0.5.506, )"
+            },
+            "Convey.MessageBrokers": {
+              "target": "Package",
+              "version": "[0.5.506, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Projekty\\Mikroserwisy\\RestaurantMicroService\\PizzaItaliano\\PizzaItaliano.Services.Products\\src\\PizzaItaliano.Services.Products.Core\\PizzaItaliano.Services.Products.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Projekty\\Mikroserwisy\\RestaurantMicroService\\PizzaItaliano\\PizzaItaliano.Services.Products\\src\\PizzaItaliano.Services.Products.Core\\PizzaItaliano.Services.Products.Core.csproj",
+        "projectName": "PizzaItaliano.Services.Products.Core",
+        "projectPath": "D:\\Projekty\\Mikroserwisy\\RestaurantMicroService\\PizzaItaliano\\PizzaItaliano.Services.Products\\src\\PizzaItaliano.Services.Products.Core\\PizzaItaliano.Services.Products.Core.csproj",
+        "packagesPath": "C:\\Users\\KW\\.nuget\\packages\\",
+        "outputPath": "D:\\Projekty\\Mikroserwisy\\RestaurantMicroService\\PizzaItaliano\\PizzaItaliano.Services.Products\\src\\PizzaItaliano.Services.Products.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\Programy\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\KW\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
             "projectReferences": {}
           }
         },
