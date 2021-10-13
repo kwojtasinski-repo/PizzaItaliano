@@ -28,7 +28,7 @@ namespace PizzaItaliano.Services.Products.Application.Commands.Handlers
                 throw new ProductAlreadyExistsException(command.ProductId);
             }
 
-            var product = Product.Create(command.ProductId, command.Name, command.Cost);
+            var product = Product.Create(command.ProductId, command.Name, command.Cost, ProductStatus.New);
             await _productRepository.AddAsync(product);
         }
     }

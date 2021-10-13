@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Products.Application.Exceptions
 {
-    public class ProductAlreadyExistsException : AppException
+    public class CannotDeleteProductException : AppException
     {
-        public override string Code { get; } = "product_already_exists";
+        public override string Code => "cannot_delete_product";
         public Guid ProductId { get; }
 
-        public ProductAlreadyExistsException(Guid productId) : base($"Product with id {productId} already exists.")
+        public CannotDeleteProductException(Guid productId) : base($"Cannot delete product with id {productId} ")
         {
             ProductId = productId;
         }

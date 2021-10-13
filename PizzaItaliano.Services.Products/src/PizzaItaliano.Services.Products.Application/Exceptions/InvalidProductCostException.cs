@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Products.Application.Exceptions
 {
-    public class ProductAlreadyExistsException : AppException
+    public class InvalidProductCostException : AppException
     {
-        public override string Code { get; } = "product_already_exists";
+        public override string Code => "invalid_product_cost";
         public Guid ProductId { get; }
 
-        public ProductAlreadyExistsException(Guid productId) : base($"Product with id {productId} already exists.")
+        public InvalidProductCostException(Guid productId) : base($"Invalid cost for product with id {productId}")
         {
             ProductId = productId;
         }

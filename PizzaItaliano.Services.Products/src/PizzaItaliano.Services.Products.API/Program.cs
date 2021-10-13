@@ -37,6 +37,8 @@ namespace WebApplication1
                         .Get<GetProducts, IEnumerable<ProductDto>>("products")
                         .Get<GetProduct, ProductDto>("products/{productId}")
                         .Post<AddProduct>("products", afterDispatch: (cmd, ctx) => ctx.Response.Created($"products/{cmd.ProductId}"))
+                        .Put<UpdateProduct>("products", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"products/{cmd.ProductId}"))
+                        .Delete<DeleteProduct>("products", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"Product with {cmd.ProductId} deleted"))
                     ));
     }
 }
