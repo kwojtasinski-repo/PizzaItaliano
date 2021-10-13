@@ -12,7 +12,7 @@ namespace PizzaItaliano.Services.Products.Core.Exceptions
         public decimal Cost { get; }
 
 
-        public InvalidProductCostException(decimal cost) : base($"Invalid product cost {cost}")
+        public InvalidProductCostException(decimal cost) : base($"Invalid product cost: {cost}")
         {
             Cost = cost;
         }

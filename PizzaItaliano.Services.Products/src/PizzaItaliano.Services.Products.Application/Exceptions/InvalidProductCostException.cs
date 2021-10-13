@@ -11,7 +11,7 @@ namespace PizzaItaliano.Services.Products.Application.Exceptions
         public override string Code => "invalid_product_cost";
         public Guid ProductId { get; }
 
-        public InvalidProductCostException(Guid productId) : base($"Invalid cost for product with id {productId}")
+        public InvalidProductCostException(Guid productId) : base($"Invalid cost for product with id: {productId}")
         {
             ProductId = productId;
         }

@@ -11,7 +11,7 @@ namespace PizzaItaliano.Services.Products.Application.Exceptions
         public override string Code { get; } = "product_already_exists";
         public Guid ProductId { get; }
 
-        public ProductAlreadyExistsException(Guid productId) : base($"Product with id {productId} already exists.")
+        public ProductAlreadyExistsException(Guid productId) : base($"Product with id: {productId} already exists.")
         {
             ProductId = productId;
         }

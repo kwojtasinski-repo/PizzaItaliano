@@ -1,4 +1,5 @@
 ﻿using Convey.Types;
+using PizzaItaliano.Services.Products.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace PizzaItaliano.Services.Products.Infrastructure.Mongo.Documents
         public Guid Id { get; set; }
         public string Name { get; set; }
         public decimal Cost { get; set; }
+        public ProductStatus Status { get; set; }
     }
 }

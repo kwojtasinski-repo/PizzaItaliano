@@ -11,7 +11,7 @@ namespace PizzaItaliano.Services.Products.Application.Exceptions
         public override string Code => "cannot_delete_product";
         public Guid ProductId { get; }
 
-        public CannotDeleteProductException(Guid productId) : base($"Cannot delete product with id {productId} ")
+        public CannotDeleteProductException(Guid productId) : base($"Cannot delete product with id: {productId} ")
         {
             ProductId = productId;
         }

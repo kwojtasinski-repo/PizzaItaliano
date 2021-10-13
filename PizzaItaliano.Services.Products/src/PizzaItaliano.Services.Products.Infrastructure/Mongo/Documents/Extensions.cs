@@ -1,10 +1,5 @@
 ﻿using PizzaItaliano.Services.Products.Application.DTO;
 using PizzaItaliano.Services.Products.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Products.Infrastructure.Mongo.Documents
 {
@@ -12,7 +7,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure.Mongo.Documents
     {
         public static Product AsEntity(this ProductDocument productDocument)
         {
-            var entity = new Product(productDocument.Id, productDocument.Name, productDocument.Cost);
+            var entity = new Product(productDocument.Id, productDocument.Name, productDocument.Cost, productDocument.Status);
             return entity;
         }
 
