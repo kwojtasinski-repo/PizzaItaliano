@@ -26,9 +26,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure.Mongo.Queries.Handlers
                 .Find(p => p.Id == query.ProductId)
                 .SingleOrDefaultAsync();
 
-            var productDto = product?.AsDto();
-
-            return productDto;
+            return product?.AsDto();
         }
     }
 }

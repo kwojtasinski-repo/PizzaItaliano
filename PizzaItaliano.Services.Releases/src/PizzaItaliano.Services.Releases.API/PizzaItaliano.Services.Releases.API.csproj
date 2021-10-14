@@ -4,4 +4,15 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Convey" Version="0.5.506" />
+    <PackageReference Include="Convey.Logging" Version="0.5.506" />
+    <PackageReference Include="Convey.WebApi" Version="0.5.506" />
+    <PackageReference Include="Convey.WebApi.CQRS" Version="0.5.506" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PizzaItaliano.Services.Releases.Infrastructure\PizzaItaliano.Services.Releases.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

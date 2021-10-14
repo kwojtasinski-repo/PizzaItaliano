@@ -2,7 +2,8 @@
 
 namespace PizzaItaliano.Services.Payments.Core
 {
-    public class Class1
+    // marker
+    public interface IDomainEvent
     {
     }
 }
