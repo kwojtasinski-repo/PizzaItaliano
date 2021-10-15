@@ -1,4 +1,5 @@
 ﻿using Convey.Types;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace PizzaItaliano.Services.Releases.Infrastructure.Mongo.Documents
         public Guid Id { get; set; }
         public Guid OrderId { get; set; }
         public Guid OrderProductId { get; set; }
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime Date { get; set; }
     }
 }

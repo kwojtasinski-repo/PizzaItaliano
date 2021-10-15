@@ -2,7 +2,7 @@
 
 namespace PizzaItaliano.Services.Orders.Application
 {
-    public class Class1
+    public class Extensions
     {
     }
 }

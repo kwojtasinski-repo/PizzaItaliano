@@ -38,8 +38,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure.Mongo.Repositories
         public async Task<Product> GetAsync(AggregateId id)
         {
             var document = await _mongoRepository.GetAsync(id);
-            var product = document?.AsEntity();
-            return product;
+            return document?.AsEntity();
         }
 
         public Task UpdateAsync(Product product)

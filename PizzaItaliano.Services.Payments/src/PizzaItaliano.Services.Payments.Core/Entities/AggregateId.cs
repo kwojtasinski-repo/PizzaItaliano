@@ -1,5 +1,8 @@
-﻿using System;
+﻿using PizzaItaliano.Services.Payments.Core.Converters;
+using PizzaItaliano.Services.Payments.Core.Exceptions;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
