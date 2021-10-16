@@ -49,7 +49,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Repositories
         public Task UpdateAsync(Order order)
         {
             var orderDocument = order.AsDocument();
-            var task = _mongoRepository.UpdateAsync(orderDocument);
+            var task = _mongoRepository.Collection.ReplaceOneAsync(o => o.Id == order.Id, orderDocument);
             return task;
         }
 

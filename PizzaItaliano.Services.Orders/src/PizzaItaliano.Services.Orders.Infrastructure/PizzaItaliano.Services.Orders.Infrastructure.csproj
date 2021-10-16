@@ -25,8 +25,4 @@
     <ProjectReference Include="..\PizzaItaliano.Services.Orders.Application\PizzaItaliano.Services.Orders.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mongo\Queries\Handlers\" />
-  </ItemGroup>
-
 </Project>

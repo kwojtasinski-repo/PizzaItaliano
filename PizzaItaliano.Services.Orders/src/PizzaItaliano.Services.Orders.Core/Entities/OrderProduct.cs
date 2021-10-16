@@ -13,20 +13,24 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
         public int Quantity { get; private set; }
         public Guid OrderId { get; private set; }
         public Guid ProductId { get; private set; }
+        public decimal Cost { get; private set; }
         public OrderProductStatus OrderProductStatus { get; private set; }
 
-        public OrderProduct(Guid id, int quantity, Guid orderId, Guid productId, OrderProductStatus orderProductStatus)
+        public OrderProduct(Guid id, int quantity, decimal cost, Guid orderId, Guid productId, OrderProductStatus orderProductStatus)
         {
+            ValidCost(id, cost);
             Id = id;
             Quantity = quantity;
+            Cost = cost;
             OrderId = orderId;
             ProductId = productId;
             OrderProductStatus = orderProductStatus;
         }
 
-        public static OrderProduct Create(Guid id, int quantity, Guid orderId, Guid productId)
+        public static OrderProduct Create(Guid id, int quantity, decimal cost, Guid orderId, Guid productId)
         {
-            var orderProduct = new OrderProduct(id, quantity, orderId, productId, OrderProductStatus.New);
+            ValidCost(id, cost);
+            var orderProduct = new OrderProduct(id, quantity, cost, orderId, productId, OrderProductStatus.New);
             return orderProduct;
         }
 
@@ -67,6 +71,14 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
         public override int GetHashCode()
         {
             return ProductId.GetHashCode(); // dodane dla hashsetu sprawdzanie po ProductId
+        }
+
+        private static void ValidCost(Guid id, decimal cost)
+        {
+            if (cost < 0)
+            {
+                throw new InvalidOrderProductCostException(id, cost);
+            }
         }
     }
 }

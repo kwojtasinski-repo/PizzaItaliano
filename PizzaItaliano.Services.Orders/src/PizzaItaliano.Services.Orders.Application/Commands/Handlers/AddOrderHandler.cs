@@ -42,6 +42,8 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
                 .Append("/").Append(currentDate.Day.ToString("dd")).Append("/").Append(number).ToString();
 
             var order = Order.Create(command.OrderId, orderNumber, decimal.Zero);
+
+            await _orderRepository.AddAsync(order);
         }
     }
 }

@@ -10,10 +10,11 @@ namespace PizzaItaliano.Services.Products.Core.Exceptions
     {
         public override string Code { get; } = "invalid_product_cost";
         public decimal Cost { get; }
+        public Guid ProductId { get; }
 
-
-        public InvalidProductCostException(decimal cost) : base($"Invalid product cost: '{cost}'")
+        public InvalidProductCostException(Guid productId, decimal cost) : base($"Invalid cost: '{cost}' for product with id: '{productId}'")
         {
+            ProductId = productId;
             Cost = cost;
         }
     }

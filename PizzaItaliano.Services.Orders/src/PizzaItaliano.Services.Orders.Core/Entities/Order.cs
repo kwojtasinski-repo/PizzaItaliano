@@ -98,5 +98,15 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             OrderStatus = OrderStatus.Released;
             AddEvent(new OrderStateChanged(this));
         }
+
+        public void UpdateCost(decimal cost)
+        {
+            if (OrderStatus != OrderStatus.New)
+            {
+                throw new CannotUpdateOrderCostException(Id, cost, OrderStatus);
+            }
+
+            Cost += cost;
+        }
     }
 }

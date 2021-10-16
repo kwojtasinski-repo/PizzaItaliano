@@ -1,4 +1,5 @@
 ﻿using PizzaItaliano.Services.Payments.Core.Events;
+using PizzaItaliano.Services.Payments.Core.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
 
         public Payment(Guid id, string paymentNumber, decimal cost, Guid orderId, DateTime createDate, DateTime modifiedDate, PaymentStatus paymentStatus)
         {
+            ValidCost(id, cost);
             Id = id;
             PaymentNumber = paymentNumber;
             Cost = cost;
@@ -34,6 +36,7 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
 
         public static Payment Create(Guid id, string number, decimal cost, Guid orderId, PaymentStatus paymentStatus)
         {
+            ValidCost(id, cost);
             var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, paymentStatus);
             payment.AddEvent(new CreatePayment(payment));
             return payment;
@@ -49,6 +52,14 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
             PaymentStatus = PaymentStatus.Paid;
             ModifiedDate = DateTime.Now;
             AddEvent(new PaymentPaid(this));
+        }
+
+        private static void ValidCost(Guid id, decimal cost)
+        {
+            if (cost < 0)
+            {
+                throw new InvalidPaymentCostException(id, cost);
+            }
         }
     }
 }

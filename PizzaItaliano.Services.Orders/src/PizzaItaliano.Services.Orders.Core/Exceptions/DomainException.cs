@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Core.Exceptions
 {
-    public abstract class DoaminException : Exception
+    public abstract class DomainException : Exception
     {
         public abstract string Code { get; }
 
-        protected DoaminException(string message) : base(message)
+        protected DomainException(string message) : base(message)
         {
         }
     }

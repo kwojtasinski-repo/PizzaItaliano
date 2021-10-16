@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Application.Exceptions
 {
-    public class OrderAlreadyExistsException : AppException
+    public class OrderNotFoundException : AppException
     {
-        public override string Code => "order_already_exists";
+        public override string Code => "order_not_found";
         public Guid OrderId { get; }
 
-        public OrderAlreadyExistsException(Guid orderId) : base($"Order with id: '{orderId}' already exists")
+        public OrderNotFoundException(Guid orderId) : base($"Order with id: '{orderId}' was not found")
         {
             OrderId = orderId;
         }
