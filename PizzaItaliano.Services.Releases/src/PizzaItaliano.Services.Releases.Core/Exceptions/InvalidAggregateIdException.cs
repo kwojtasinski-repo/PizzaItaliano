@@ -11,7 +11,7 @@ namespace PizzaItaliano.Services.Releases.Core.Exceptions
         public override string Code => "invalid_aggregate_id";
         public Guid Id { get; }
 
-        public InvalidAggregateIdException(Guid id) : base($"Invalid aggregate id: {id}")
+        public InvalidAggregateIdException(Guid id) : base($"Invalid aggregate id: '{id}'")
         {
             Id = id;
         }

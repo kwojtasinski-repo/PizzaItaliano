@@ -2,5 +2,8 @@
 {
     public enum OrderProductStatus
     {
+        New,
+        Paid,
+        Released
     }
 }

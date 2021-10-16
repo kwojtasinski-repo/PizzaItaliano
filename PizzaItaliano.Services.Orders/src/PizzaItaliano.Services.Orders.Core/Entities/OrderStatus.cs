@@ -8,5 +8,8 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
 {
     public enum OrderStatus
     {
+        New,
+        Paid,
+        Released
     }
 }

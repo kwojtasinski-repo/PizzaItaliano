@@ -11,7 +11,7 @@ namespace PizzaItaliano.Services.Payments.Application.Exceptions
         public override string Code => "invalid_order_id";
         public Guid Id { get; }
 
-        public InvalidOrderIdException(Guid id) : base($"Invalid Order with id: {id}")
+        public InvalidOrderIdException(Guid id) : base($"Invalid Order with id: '{id}'")
         {
             Id = id;
         }

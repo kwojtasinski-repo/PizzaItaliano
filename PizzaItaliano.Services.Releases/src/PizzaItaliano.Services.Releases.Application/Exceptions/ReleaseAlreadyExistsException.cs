@@ -11,7 +11,7 @@ namespace PizzaItaliano.Services.Releases.Application.Exceptions
         public override string Code => "release_already_exists";
         public Guid Id { get; }
 
-        public ReleaseAlreadyExistsException(Guid id) : base($"Release with id: {id} already exists")
+        public ReleaseAlreadyExistsException(Guid id) : base($"Release with id: '{id}' already exists")
         {
             Id = id;
         }

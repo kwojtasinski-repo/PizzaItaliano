@@ -11,7 +11,7 @@ namespace PizzaItaliano.Services.Payments.Application.Exceptions
         public override string Code => "invalid_cost";
         public decimal Cost { get; }
 
-        public InvalidCostException(decimal cost) : base($"Invalid cost: {cost}")
+        public InvalidCostException(decimal cost) : base($"Invalid cost: '{cost}'")
         {
             Cost = cost;
         }

@@ -11,7 +11,7 @@ namespace PizzaItaliano.Services.Payments.Application.Exceptions
         public override string Code => "payment_already_exists";
         public Guid Id { get; }
 
-        public PaymentAlreadyExistsException(Guid id) : base($"Payment with id: {id} already exists")
+        public PaymentAlreadyExistsException(Guid id) : base($"Payment with id: '{id}' already exists")
         {
             Id = id;
         }
