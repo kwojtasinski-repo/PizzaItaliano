@@ -38,7 +38,7 @@ namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
             }
 
             var currentDate = DateTime.Now.Date;
-            var lastPaymentNumberToday = _paymentRepository.GetCollection(p => p.CreateDate > currentDate).OrderByDescending(p => p.CreateDate).Select(p => p.Number).FirstOrDefault();
+            var lastPaymentNumberToday = _paymentRepository.GetCollection(p => p.CreateDate > currentDate).OrderByDescending(p => p.CreateDate).Select(p => p.PaymentNumber).FirstOrDefault();
             int number = 1;
             if (lastPaymentNumberToday is { })
             {

@@ -36,7 +36,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             private set => _orderProducts = new HashSet<OrderProduct>(value);
         }
 
-        public static Order Create(Guid id, string orderNumber, decimal cost, bool paid)
+        public static Order Create(Guid id, string orderNumber, decimal cost)
         {
             var order = new Order(id, orderNumber, cost, OrderStatus.New, DateTime.Now, null);
             order.AddEvent(new CreateOrder(order));

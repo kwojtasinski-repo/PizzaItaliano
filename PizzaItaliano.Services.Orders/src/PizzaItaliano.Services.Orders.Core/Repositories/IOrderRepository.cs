@@ -1,8 +1,7 @@
 ﻿using PizzaItaliano.Services.Orders.Core.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Core.Repositories
@@ -14,5 +13,6 @@ namespace PizzaItaliano.Services.Orders.Core.Repositories
         Task AddAsync(Order order);
         Task UpdateAsync(Order order);
         Task DeleteAsync(AggregateId id);
+        IQueryable<Order> GetCollection(Expression<Func<Order, bool>> predicate);
     }
 }
