@@ -9,7 +9,7 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
 {
     public class Payment : AggregateRoot
     {
-        public string Number { get; private set; }
+        public string PaymentNumber { get; private set; }
         public decimal Cost { get; private set; }
         public Guid OrderId { get; private set; }
         public DateTime CreateDate { get; private set; }
@@ -21,10 +21,10 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
 
         }
 
-        public Payment(Guid id, string number, decimal cost, Guid orderId, DateTime createDate, DateTime modifiedDate, PaymentStatus paymentStatus)
+        public Payment(Guid id, string paymentNumber, decimal cost, Guid orderId, DateTime createDate, DateTime modifiedDate, PaymentStatus paymentStatus)
         {
             Id = id;
-            Number = number;
+            PaymentNumber = paymentNumber;
             Cost = cost;
             OrderId = orderId;
             CreateDate = createDate;

@@ -10,7 +10,7 @@ namespace PizzaItaliano.Services.Payments.Application.DTO
     public class PaymentDto
     {
         public Guid Id { get; set; }
-        public string Number { get; set; }
+        public string PaymentNumber { get; set; }
         public decimal Cost { get; set; }
         public Guid OrderId { get; set; }
         public DateTime CreateDate { get; set; }

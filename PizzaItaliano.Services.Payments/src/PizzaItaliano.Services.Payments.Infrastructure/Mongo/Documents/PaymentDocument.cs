@@ -12,7 +12,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents
     internal sealed class PaymentDocument : IIdentifiable<Guid>
     {
         public Guid Id { get; set; }
-        public string Number { get; set; }
+        public string PaymentNumber { get; set; }
         public decimal Cost { get; set; }
         public Guid OrderId { get; set; }
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
