@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+    rabbitmq:
+        build: ./rabbitmq
+        container_name: rabbitmq
+        restart: unless-stopped
+        networks:
+          - pizzaitaliano
+        ports:
+          - 5672:5672
+          - 15672:15672
+          - 15692:15692
+        # volumes: 
+        #   - rabbitmq:/var/lib/rabbitmq
+    
+    mongo:
+        image: mongo
+        container_name: mongo
+        restart: unless-stopped
+        # environment:
+        #   - MONGO_INITDB_ROOT_USERNAME=root
+        #   - MONGO_INITDB_ROOT_PASSWORD=secret
+        networks:
+          - pizzaitaliano
+        ports:
+          - 27017:27017
+        volumes:
+          - mongo:/data/db
+    
+networks:
+  pizzaitaliano:
+    name: pizza-italiano-network
+
+volumes:
+  # consul:
+  #   driver: local
+  # grafana:
+  #   driver: local
+  mongo:
+    driver: local
+  # prometheus:
+  #   driver: local
+  # rabbitmq:
+  #   driver: local
+  redis:
+    driver: local
+  # seq:
+  #   driver: local
+  

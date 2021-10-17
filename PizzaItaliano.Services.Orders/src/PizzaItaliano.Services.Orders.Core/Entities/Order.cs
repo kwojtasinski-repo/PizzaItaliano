@@ -19,7 +19,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
         public DateTime? ReleaseDate { get; private set; }
         public bool HasProducts => _orderProducts.Any();
 
-        public Order(Guid id, string orderNumber, decimal cost, OrderStatus orderStatus, DateTime orderDate, DateTime? releaseDate, IEnumerable<OrderProduct> orderProducts = null)
+        public Order(Guid id, string orderNumber, decimal cost, OrderStatus orderStatus, DateTime orderDate, DateTime? releaseDate, IEnumerable<OrderProduct> orderProducts = null, int version = 0)
         {
             Id = id;
             OrderNumber = orderNumber;
@@ -28,6 +28,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             OrderDate = orderDate;
             ReleaseDate = releaseDate;
             OrderProducts = orderProducts ?? Enumerable.Empty<OrderProduct>();
+            Version = version;
         }
 
         public IEnumerable<OrderProduct> OrderProducts

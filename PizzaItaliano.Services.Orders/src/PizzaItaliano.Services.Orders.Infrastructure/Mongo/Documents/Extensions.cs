@@ -23,10 +23,11 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
                 OrderDate = order.OrderDate,
                 ReleaseDate = order.ReleaseDate,
                 OrderProductDocuments = order.OrderProducts
-                                .Select(op => new OrderProductDocument 
-                                { Id = op.Id, OrderId = op.OrderId, OrderProductStatus = op.OrderProductStatus, 
+                                .Select(op => new OrderProductDocument
+                                { Id = op.Id, OrderId = op.OrderId, OrderProductStatus = op.OrderProductStatus,
                                     ProductId = op.ProductId, Quantity = op.Quantity }),
-                OrderStatus = order.OrderStatus
+                OrderStatus = order.OrderStatus,
+                Version = order.Version
             };
 
             return document;
@@ -35,7 +36,11 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
         public static Order AsEntity(this OrderDocument orderDocument)
         {
             var order = new Order(orderDocument.Id, orderDocument.OrderNumber, orderDocument.Cost, orderDocument.OrderStatus, orderDocument.OrderDate,
-                            orderDocument.ReleaseDate, orderDocument.OrderProductDocuments.Select(op => new OrderProduct(op.Id, op.Quantity, op.Cost, op.OrderId, op.ProductId, op.OrderProductStatus)));
+                            orderDocument.ReleaseDate, 
+                            orderDocument.OrderProductDocuments.Select(op => 
+                                new OrderProduct(op.Id, op.Quantity, op.Cost, op.OrderId, op.ProductId, 
+                                op.OrderProductStatus)), 
+                            orderDocument.Version);
             return order;
         }
 

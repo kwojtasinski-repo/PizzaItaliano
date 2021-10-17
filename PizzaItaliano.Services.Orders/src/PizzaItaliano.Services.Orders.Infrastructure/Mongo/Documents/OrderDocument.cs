@@ -20,5 +20,6 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime? ReleaseDate { get; set; }
         public IEnumerable<OrderProductDocument> OrderProductDocuments { get; set; }
+        public int Version { get; set; }
     }
 }

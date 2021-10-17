@@ -17,7 +17,7 @@ namespace PizzaItaliano.Services.Products.Core.Entities
 
         public Product(Guid id, string name, decimal cost, ProductStatus status)
         {
-            ValidCost(cost);
+            ValidCost(id, cost);
             ValidName(name);
             Id = id;
             Name = name;
@@ -27,17 +27,18 @@ namespace PizzaItaliano.Services.Products.Core.Entities
 
         public static Product Create(Guid id, string name, decimal cost, ProductStatus status)
         {
-            ValidCost(cost);
+            ValidCost(id, cost);
             ValidName(name);
             var product = new Product(id, name, cost, status);
+            product.AddEvent(new ProductAdded(product));
             return product;
         }
 
-        private static void ValidCost(decimal cost)
+        private static void ValidCost(Guid id, decimal cost)
         {
             if (cost < 0)
             {
-                throw new InvalidProductCostException(cost);
+                throw new InvalidProductCostException(id, cost);
             }
 
         }
@@ -54,7 +55,7 @@ namespace PizzaItaliano.Services.Products.Core.Entities
         public void Modified(string name, decimal cost)
         {
             ValidName(name);
-            ValidCost(cost);
+            ValidCost(Id, cost);
             Name = name;
             Cost = cost;
             AddEvent(new ProductModified(this));
@@ -69,7 +70,7 @@ namespace PizzaItaliano.Services.Products.Core.Entities
 
         public void Modified(decimal cost)
         {
-            ValidCost(cost);
+            ValidCost(Id, cost);
             Cost = cost;
             AddEvent(new ProductModified(this));
         }

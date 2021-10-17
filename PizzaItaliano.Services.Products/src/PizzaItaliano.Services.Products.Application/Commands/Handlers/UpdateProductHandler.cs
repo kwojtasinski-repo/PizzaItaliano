@@ -1,5 +1,6 @@
 ﻿using Convey.CQRS.Commands;
 using PizzaItaliano.Services.Products.Application.Exceptions;
+using PizzaItaliano.Services.Products.Application.Services;
 using PizzaItaliano.Services.Products.Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace PizzaItaliano.Services.Products.Application.Commands.Handlers
     public class UpdateProductHandler : ICommandHandler<UpdateProduct>
     {
         private readonly IProductRepository _productRepository;
+        private readonly IEventProcessor _eventProcessor;
 
-        public UpdateProductHandler(IProductRepository productRepository)
+        public UpdateProductHandler(IProductRepository productRepository, IEventProcessor eventProcessor)
         {
             _productRepository = productRepository;
+            _eventProcessor = eventProcessor;
         }
 
         public async Task HandleAsync(UpdateProduct command)
@@ -57,6 +60,7 @@ namespace PizzaItaliano.Services.Products.Application.Commands.Handlers
             }
 
             await _productRepository.UpdateAsync(product);
+            await _eventProcessor.ProcessAsync(product.Events);
         }
     }
 }

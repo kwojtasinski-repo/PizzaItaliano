@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace PizzaItaliano.Services.Products.Application.Events
 {
     [Contract]
-    public class ProductDeleted : IEvent
+    public class ProductModified : IEvent
     {
         public Guid ProductId { get; }
 
-        public ProductDeleted(Guid productId)
+        public ProductModified(Guid productId)
         {
             ProductId = productId;
         }
