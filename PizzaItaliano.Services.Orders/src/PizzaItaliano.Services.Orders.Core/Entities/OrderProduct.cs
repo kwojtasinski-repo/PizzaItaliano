@@ -19,6 +19,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
         public OrderProduct(Guid id, int quantity, decimal cost, Guid orderId, Guid productId, OrderProductStatus orderProductStatus)
         {
             ValidCost(id, cost);
+            ValidQuantity(id, quantity);
             Id = id;
             Quantity = quantity;
             Cost = cost;
@@ -30,6 +31,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
         public static OrderProduct Create(Guid id, int quantity, decimal cost, Guid orderId, Guid productId)
         {
             ValidCost(id, cost);
+            ValidQuantity(id, quantity);
             var orderProduct = new OrderProduct(id, quantity, cost, orderId, productId, OrderProductStatus.New);
             return orderProduct;
         }
@@ -41,7 +43,9 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
                 throw new CannotChangeOrderProductStateException(Id, OrderProductStatus, OrderProductStatus.Paid);
             }
 
+            var orderProductBeforeChange = new OrderProduct(Id, Quantity, Cost, OrderId, ProductId, OrderProductStatus);
             OrderProductStatus = OrderProductStatus.Paid;
+            AddEvent(new OrderProductStateChanged(orderProductBeforeChange, this));
         }
 
         public void OrderProductReleased()
@@ -51,8 +55,9 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
                 throw new CannotChangeOrderProductStateException(Id, OrderProductStatus, OrderProductStatus.Released);
             }
 
+            var orderProductBeforeChange = new OrderProduct(Id, Quantity, Cost, OrderId, ProductId, OrderProductStatus);
             OrderProductStatus = OrderProductStatus.Released;
-            AddEvent(new OrderProductReleased(this));
+            AddEvent(new OrderProductStateChanged(orderProductBeforeChange, this));
         }
 
         public bool Equals(OrderProduct other)
@@ -78,6 +83,14 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             if (cost < 0)
             {
                 throw new InvalidOrderProductCostException(id, cost);
+            }
+        }
+
+        private static void ValidQuantity(Guid id, int quantity)
+        {
+            if (quantity <= 0)
+            {
+                throw new InvalidOrderProductQuantityException(id, quantity);
             }
         }
     }

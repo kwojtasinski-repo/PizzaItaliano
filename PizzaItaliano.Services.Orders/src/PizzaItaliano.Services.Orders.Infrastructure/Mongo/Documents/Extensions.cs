@@ -25,7 +25,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
                 OrderProductDocuments = order.OrderProducts
                                 .Select(op => new OrderProductDocument
                                 { Id = op.Id, OrderId = op.OrderId, OrderProductStatus = op.OrderProductStatus,
-                                    ProductId = op.ProductId, Quantity = op.Quantity }),
+                                    ProductId = op.ProductId, Quantity = op.Quantity, Cost = op.Cost }),
                 OrderStatus = order.OrderStatus,
                 Version = order.Version
             };
@@ -54,7 +54,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
                 OrderDate = orderDocument.OrderDate,
                 ReleaseDate = orderDocument.ReleaseDate,
                 OrderStatus = orderDocument.OrderStatus,
-                OrderProducts = orderDocument.OrderProductDocuments.Select(op => new OrderProductDto { Id = op.Id, OrderId = op.OrderId, ProductId = op.ProductId, Quantity = op.Quantity, OrderProductStatus = op.OrderProductStatus })
+                OrderProducts = orderDocument.OrderProductDocuments.Select(op => new OrderProductDto { Id = op.Id, OrderId = op.OrderId, ProductId = op.ProductId, Quantity = op.Quantity, OrderProductStatus = op.OrderProductStatus, Cost = op.Cost })
             };
 
             return orderDto;

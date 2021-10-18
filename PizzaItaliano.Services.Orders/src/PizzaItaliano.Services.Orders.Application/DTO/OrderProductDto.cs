@@ -11,6 +11,7 @@ namespace PizzaItaliano.Services.Orders.Application.DTO
     {
         public Guid Id { get; set; }
         public int Quantity { get; set; }
+        public decimal Cost { get; set; }
         public Guid OrderId { get; set; }
         public Guid ProductId { get; set; }
         public OrderProductStatus OrderProductStatus { get; set; }

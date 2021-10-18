@@ -40,7 +40,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
         public static Order Create(Guid id, string orderNumber, decimal cost)
         {
             var order = new Order(id, orderNumber, cost, OrderStatus.New, DateTime.Now, null);
-            order.AddEvent(new CreateOrder(order));
+            order.AddEvent(new OrderCreated(order));
             return order;
         }
 
@@ -51,7 +51,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
                 throw new OrderProductAlreadyAddedToOrderException(Id, orderProduct.ProductId);
             }
 
-            AddEvent(new OrderProductAdded(this, orderProduct));
+            AddEvent(new OrderProductCreated(this, orderProduct));
         }
 
         public void DeleteOrderProduct(Guid orderProductId)
@@ -62,7 +62,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
                 throw new OrderProductNotFoundException(Id, orderProductId);
             }
 
-            AddEvent(new OrderProductDeleted(this, orderProduct));
+            AddEvent(new OrderProductRemoved(this, orderProduct));
         }
 
         public void OrderPaid()
@@ -72,6 +72,8 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
                 throw new CannotChangeOrderStateException(Id, OrderStatus, OrderStatus.Paid);
             }
 
+            var orderBeforeChange = new Order(Id, OrderNumber, Cost, OrderStatus, OrderDate, ReleaseDate, OrderProducts, Version);
+
             OrderStatus = OrderStatus.Paid;
             if (HasProducts)
             {
@@ -80,7 +82,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
                     orderProduct.OrderProductPaid();
                 }    
             }
-            AddEvent(new OrderStateChanged(this));
+            AddEvent(new OrderStateChanged(orderBeforeChange, this));
         }
         
         public void OrderReleased()
@@ -93,11 +95,12 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             var orderProductsReleased = _orderProducts.All(op => op.OrderProductStatus == OrderProductStatus.Released);
             if (!orderProductsReleased)
             {
-
+                throw new CannotChangeOrderStateException(Id, OrderStatus, OrderStatus.Released);
             }
 
+            var orderBeforeChange = new Order(Id, OrderNumber, Cost, OrderStatus, OrderDate, ReleaseDate, OrderProducts, Version);
             OrderStatus = OrderStatus.Released;
-            AddEvent(new OrderStateChanged(this));
+            AddEvent(new OrderStateChanged(orderBeforeChange, this));
         }
 
         public void UpdateCost(decimal cost)

@@ -15,7 +15,7 @@ using PizzaItaliano.Services.Products.Application.DTO;
 using PizzaItaliano.Services.Products.Application.Queries;
 using PizzaItaliano.Services.Products.Infrastructure;
 
-namespace WebApplication1
+namespace PizzaItaliano.Services.Products.API
 {
     public class Program
     {

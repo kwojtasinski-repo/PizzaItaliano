@@ -9,11 +9,13 @@ namespace PizzaItaliano.Services.Orders.Core.Events
 {
     public class OrderStateChanged : IDomainEvent
     {
-        public Order Order { get; }
+        public Order OrderBeforeChange { get; }
+        public Order OrderAfterChange { get; }
 
-        public OrderStateChanged(Order order)
+        public OrderStateChanged(Order orderBeforeChange, Order orderAfterChange)
         {
-            Order = order;
+            OrderBeforeChange = orderBeforeChange;
+            OrderAfterChange = orderAfterChange;
         }
     }
 }

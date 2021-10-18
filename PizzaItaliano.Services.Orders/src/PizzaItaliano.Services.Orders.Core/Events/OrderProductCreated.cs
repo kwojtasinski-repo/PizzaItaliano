@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Core.Events
 {
-    public class OrderProductAdded : IDomainEvent
+    public class OrderProductCreated : IDomainEvent
     {
         public Order Order { get; }
         public OrderProduct OrderProduct { get; }
 
-        public OrderProductAdded(Order order, OrderProduct orderProduct)
+        public OrderProductCreated(Order order, OrderProduct orderProduct)
         {
             Order = order;
             OrderProduct = orderProduct;

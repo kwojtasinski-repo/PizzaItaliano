@@ -51,7 +51,8 @@ namespace PizzaItaliano.Services.Products.Infrastructure
             app.UseErrorHandler()
                .UseConvey()
                .UsePublicContracts<ContractAttribute>()
-               .UseSwaggerDocs();
+               .UseSwaggerDocs()
+               .UseRabbitMq();
 
             return app;
         }

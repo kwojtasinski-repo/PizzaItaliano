@@ -10,13 +10,13 @@ namespace PizzaItaliano.Services.Orders.Core.Exceptions
     public class CannotUpdateOrderCostException : DomainException
     {
         public override string Code => "cannot_update_order_cost";
-        public Guid Id { get; }
+        public Guid OrderId { get; }
         public decimal Cost { get; }
         public OrderStatus OrderStatus { get; }
 
-        public CannotUpdateOrderCostException(Guid id, decimal cost, OrderStatus orderStatus) : base($"Cannot update cost by '{cost}' for order with id: '{id}' with status '{orderStatus}'")
+        public CannotUpdateOrderCostException(Guid orderId, decimal cost, OrderStatus orderStatus) : base($"Cannot update cost by '{cost}' for order with id: '{orderId}' with status '{orderStatus}'")
         {
-            Id = id;
+            OrderId = orderId;
             Cost = cost;
             OrderStatus = orderStatus;
         }

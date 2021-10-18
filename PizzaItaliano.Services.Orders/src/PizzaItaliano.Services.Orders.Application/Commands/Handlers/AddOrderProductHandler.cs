@@ -1,5 +1,6 @@
 ﻿using Convey.CQRS.Commands;
 using PizzaItaliano.Services.Orders.Application.Exceptions;
+using PizzaItaliano.Services.Orders.Application.Services;
 using PizzaItaliano.Services.Orders.Application.Services.Clients;
 using PizzaItaliano.Services.Orders.Core.Entities;
 using PizzaItaliano.Services.Orders.Core.Repositories;
@@ -15,11 +16,15 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IProductServiceClient _productServiceClient;
+        private readonly IMessageBroker _messageBroker;
+        private readonly IEventMapper _eventMapper;
 
-        public AddOrderProductHandler(IOrderRepository orderRepository, IProductServiceClient productServiceClient)
+        public AddOrderProductHandler(IOrderRepository orderRepository, IProductServiceClient productServiceClient, IMessageBroker messageBroker, IEventMapper eventMapper)
         {
             _orderRepository = orderRepository;
             _productServiceClient = productServiceClient;
+            _messageBroker = messageBroker;
+            _eventMapper = eventMapper;
         }
 
         public async Task HandleAsync(AddOrderProduct command)
@@ -42,6 +47,8 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
             order.UpdateCost(cost);
 
             await _orderRepository.UpdateAsync(order);
+            var integrationEvents = _eventMapper.MapAll(order.Events);
+            await _messageBroker.PublishAsync(integrationEvents);
         }
     }
 }
