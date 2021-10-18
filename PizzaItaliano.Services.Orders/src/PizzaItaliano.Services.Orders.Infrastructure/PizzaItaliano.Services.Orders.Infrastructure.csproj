@@ -18,6 +18,7 @@
     <PackageReference Include="Convey.MessageBrokers.RabbitMQ" Version="0.5.506" />
     <PackageReference Include="Convey.Persistence.MongoDB" Version="0.5.506" />
     <PackageReference Include="Convey.Persistence.Redis" Version="0.5.506" />
+    <PackageReference Include="Convey.WebApi.CQRS" Version="0.5.506" />
     <PackageReference Include="Convey.WebApi.Swagger" Version="0.5.506" />
   </ItemGroup>
 

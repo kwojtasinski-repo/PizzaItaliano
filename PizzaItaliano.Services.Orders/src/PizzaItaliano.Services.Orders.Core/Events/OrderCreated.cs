@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Core.Events
 {
-    public class CreateOrder : IDomainEvent
+    public class OrderCreated : IDomainEvent
     {
         public Order Order { get; }
 
-        public CreateOrder(Order order)
+        public OrderCreated(Order order)
         {
             Order = order;
         }
