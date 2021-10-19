@@ -60,6 +60,16 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             AddEvent(new OrderProductStateChanged(orderProductBeforeChange, this));
         }
 
+        public void AddQuantity(int quantity)
+        {
+            Quantity += quantity;
+        }
+
+        public void DeleteQuantity(int quantity)
+        {
+            Quantity -= quantity;
+        }
+
         public bool Equals(OrderProduct other)
         {
             if (ReferenceEquals(null, other)) return false;

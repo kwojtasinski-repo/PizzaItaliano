@@ -32,6 +32,21 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Exceptions
                     AddOrderProduct command => new AddOrderProductRejected(command.OrderProductId, ex.Message, ex.Code),
                     _ => null
                 },
+                CannotAddOrderProductException ex => message switch
+                {
+                    AddOrderProduct command => new AddOrderProductRejected(command.OrderProductId, ex.Message, ex.Code),
+                    _ => null
+                },
+                Application.Exceptions.CannotDeleteOrderProductException ex => message switch
+                {
+                    DeleteOrderProduct command => new DeleteOrderProductRejected(command.OrderProductId, ex.Message, ex.Code),
+                    _ => null
+                },
+                Application.Exceptions.OrderProductNotFoundException ex => message switch
+                {
+                    DeleteOrderProduct command => new DeleteOrderProductRejected(command.OrderProductId, ex.Message, ex.Code),
+                    _ => null
+                },
 
                 // Domain Exceptions
                 CannotChangeOrderProductStateException ex => new UpdateOrderProductRejected(ex.OrderProductId, ex.Message, ex.Code),
@@ -45,7 +60,8 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Exceptions
                     AddOrderProduct command => new AddOrderProductRejected(command.OrderProductId, ex.Message, ex.Code),
                     _ => null
                 },
-                OrderProductNotFoundException ex => new DeleteOrderProductRejected(ex.OrderProductId, ex.Message, ex.Code),
+                Core.Exceptions.OrderProductNotFoundException ex => new DeleteOrderProductRejected(ex.OrderProductId, ex.Message, ex.Code),
+                Core.Exceptions.CannotDeleteOrderProductException ex => new DeleteOrderProductRejected(ex.OrderProductId, ex.Message, ex.Code),
 
                 // other unforeseen exceptions 
                 _ => null

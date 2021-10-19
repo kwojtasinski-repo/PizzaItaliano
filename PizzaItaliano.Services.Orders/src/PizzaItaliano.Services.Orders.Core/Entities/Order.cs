@@ -46,28 +46,68 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
 
         public void AddOrderProduct(OrderProduct orderProduct)
         {
-            if (!_orderProducts.Add(orderProduct))
+            var product = _orderProducts.Where(op => op.ProductId == orderProduct.ProductId).FirstOrDefault();
+
+            if (product is null)
             {
-                throw new OrderProductAlreadyAddedToOrderException(Id, orderProduct.ProductId);
+                if (!_orderProducts.Add(orderProduct))
+                {
+                    throw new OrderProductAlreadyAddedToOrderException(Id, orderProduct.ProductId);
+                }
+
+                AddEvent(new OrderProductCreated(this, orderProduct));
+            }
+            else
+            {
+                product.AddQuantity(orderProduct.Quantity);
             }
 
-            AddEvent(new OrderProductCreated(this, orderProduct));
+            var cost = orderProduct.Cost * orderProduct.Quantity;
+            Cost += cost;
         }
 
-        public void DeleteOrderProduct(Guid orderProductId)
+        public void DeleteOrderProduct(OrderProduct orderProduct, int quantity)
         {
-            var orderProduct = _orderProducts.SingleOrDefault(op => op.Id == orderProductId);
-            if (orderProduct is null)
+            var product = _orderProducts.Where(op => op.ProductId == orderProduct.ProductId).FirstOrDefault();
+
+            if (product is null)
             {
-                throw new OrderProductNotFoundException(Id, orderProductId);
+                throw new OrderProductNotFoundException(Id, orderProduct.Id);
             }
 
-            AddEvent(new OrderProductRemoved(this, orderProduct));
+            if (product.Quantity < quantity)
+            {
+                throw new CannotDeleteOrderProductException(Id, orderProduct.Id, orderProduct.Quantity);
+            }
+
+            if (product.Quantity == quantity)
+            {
+                _orderProducts.Remove(product);
+                AddEvent(new OrderProductRemoved(this, orderProduct));
+            }
+            else
+            {
+                product.DeleteQuantity(quantity);
+            }
+
+            var cost = orderProduct.Cost * quantity;
+            Cost -= cost;
+        }
+
+        public void OrderReady()
+        {
+            var orderBeforeChange = new Order(Id, OrderNumber, Cost, OrderStatus, OrderDate, ReleaseDate, OrderProducts, Version);
+
+            if (OrderStatus != OrderStatus.New)
+            {
+                throw new CannotChangeOrderStateException(Id, OrderStatus, OrderStatus.Paid);
+            }
+            AddEvent(new OrderStateChanged(orderBeforeChange, this));
         }
 
         public void OrderPaid()
         {
-            if (OrderStatus != OrderStatus.New)
+            if (OrderStatus != OrderStatus.Ready)
             {
                 throw new CannotChangeOrderStateException(Id, OrderStatus, OrderStatus.Paid);
             }
