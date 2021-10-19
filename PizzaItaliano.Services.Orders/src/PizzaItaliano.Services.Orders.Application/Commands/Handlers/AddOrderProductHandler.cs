@@ -34,7 +34,7 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
                 throw new CannotAddOrderProductException(command.OrderId, command.OrderProductId, command.Quantity);
             }
 
-            var order = await _orderRepository.GetAsync(command.OrderId);
+            var order = await _orderRepository.GetWithCollectionAsync(command.OrderId);
             if (order is null)
             {
                 throw new OrderNotFoundException(command.OrderId);

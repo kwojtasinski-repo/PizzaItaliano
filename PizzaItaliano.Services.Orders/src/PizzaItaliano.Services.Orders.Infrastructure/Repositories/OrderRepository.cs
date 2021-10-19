@@ -61,5 +61,17 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Repositories
             var payments = paymentDocuments.Map<OrderDocument, Order>();
             return payments;
         }
+
+        public async Task<Order> GetWithCollectionAsync(AggregateId id)
+        {
+            var cursor = (await _mongoRepository.Collection.FindAsync(o => o.Id == id)).ToAsyncEnumerable();
+
+            OrderDocument orderDocument = null;
+            await foreach(var document in cursor)
+            {
+                orderDocument = document;
+            }
+            return orderDocument?.AsEntity();
+        }
     }
 }

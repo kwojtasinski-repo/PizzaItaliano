@@ -1,5 +1,6 @@
 ﻿using Convey;
 using Convey.CQRS.Commands;
+using Convey.CQRS.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,9 @@ namespace PizzaItaliano.Services.Products.Application
         public static IConveyBuilder AddApplication(this IConveyBuilder builder)
         {
             builder.AddCommandHandlers()
-                .AddInMemoryCommandDispatcher();
+                   .AddEventHandlers()
+                   .AddInMemoryCommandDispatcher()
+                   .AddInMemoryEventDispatcher();
 
             return builder;
         }

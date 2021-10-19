@@ -16,6 +16,8 @@ using PizzaItaliano.Services.Products.Application;
 using Convey.WebApi.CQRS;
 using PizzaItaliano.Services.Products.Infrastructure.Services;
 using PizzaItaliano.Services.Products.Application.Services;
+using PizzaItaliano.Services.Products.Application.Events.External;
+using Convey.MessageBrokers.CQRS;
 
 namespace PizzaItaliano.Services.Products.Infrastructure
 {
@@ -52,7 +54,8 @@ namespace PizzaItaliano.Services.Products.Infrastructure
                .UseConvey()
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
-               .UseRabbitMq();
+               .UseRabbitMq()
+               .SubscribeEvent<OrderProductAdded>(); // wywola event handler
 
             return app;
         }

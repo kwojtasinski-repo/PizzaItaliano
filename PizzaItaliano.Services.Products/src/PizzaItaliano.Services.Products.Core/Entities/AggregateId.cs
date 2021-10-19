@@ -48,7 +48,7 @@ namespace PizzaItaliano.Services.Products.Core.Entities
 
         public static implicit operator AggregateId(Guid id)
         {
-            return new AggregateId();
+            return new AggregateId(id);
         }
 
         public override string ToString()

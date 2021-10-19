@@ -1,4 +1,5 @@
-﻿using PizzaItaliano.Services.Orders.Application.DTO;
+﻿using MongoDB.Driver;
+using PizzaItaliano.Services.Orders.Application.DTO;
 using PizzaItaliano.Services.Orders.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -136,6 +137,17 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
                     }
                 default:
                     throw new NotSupportedException(node.NodeType.ToString());
+            }
+        }
+
+        public static async IAsyncEnumerable<T> ToAsyncEnumerable<T>(this IAsyncCursor<T> asyncCursor)
+        {
+            while (await asyncCursor.MoveNextAsync())
+            {
+                foreach (var current in asyncCursor.Current)
+                {
+                    yield return current;
+                }
             }
         }
     }

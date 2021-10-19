@@ -54,14 +54,13 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
                 {
                     throw new OrderProductAlreadyAddedToOrderException(Id, orderProduct.ProductId);
                 }
-
-                AddEvent(new OrderProductCreated(this, orderProduct));
             }
             else
             {
                 product.AddQuantity(orderProduct.Quantity);
             }
 
+            AddEvent(new OrderProductCreated(this, orderProduct));
             var cost = orderProduct.Cost * orderProduct.Quantity;
             Cost += cost;
         }

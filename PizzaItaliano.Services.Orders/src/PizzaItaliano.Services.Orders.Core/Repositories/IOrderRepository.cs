@@ -14,5 +14,6 @@ namespace PizzaItaliano.Services.Orders.Core.Repositories
         Task UpdateAsync(Order order);
         Task DeleteAsync(AggregateId id);
         IQueryable<Order> GetCollection(Expression<Func<Order, bool>> predicate);
+        Task<Order> GetWithCollectionAsync(AggregateId id);
     }
 }

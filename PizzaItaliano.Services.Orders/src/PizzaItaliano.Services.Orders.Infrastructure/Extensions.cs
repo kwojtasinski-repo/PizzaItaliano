@@ -16,6 +16,9 @@ using PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Orders.Infrastructure.Repositories;
 using PizzaItaliano.Services.Orders.Infrastructure.Services;
 using System;
+using PizzaItaliano.Services.Orders.Infrastructure.Services.Clients;
+using PizzaItaliano.Services.Orders.Application.Services.Clients;
+using Convey.HTTP;
 
 namespace PizzaItaliano.Services.Orders.Infrastructure
 {
@@ -26,11 +29,13 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
             conveyBuilder.Services.AddTransient<IOrderRepository, OrderRepository>();
             conveyBuilder.Services.AddTransient<IMessageBroker, MessageBroker>();
             conveyBuilder.Services.AddSingleton<IEventMapper, EventMapper>();
+            conveyBuilder.Services.AddTransient<IProductServiceClient, ProductServiceClient>();
 
             conveyBuilder.AddErrorHandler<ExceptionToResponseMapper>();
             conveyBuilder.AddExceptionToMessageMapper<ExceptionToMessageMapper>();
             conveyBuilder.AddQueryHandlers();
             conveyBuilder.AddInMemoryQueryDispatcher();
+            conveyBuilder.AddHttpClient();
             conveyBuilder.AddMongo();
             conveyBuilder.AddMongoRepository<OrderDocument, Guid>("orders");
             conveyBuilder.AddSwaggerDocs();

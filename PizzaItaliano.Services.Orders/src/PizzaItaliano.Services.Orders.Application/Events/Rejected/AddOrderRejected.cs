@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace PizzaItaliano.Services.Orders.Application.Events.Rejected
 {
+    [Contract]
     public class AddOrderRejected : IRejectedEvent
     {
         public Guid OrderId { get; }

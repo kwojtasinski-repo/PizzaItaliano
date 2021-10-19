@@ -17,7 +17,8 @@ namespace PizzaItaliano.Services.Products.Infrastructure.Mongo.Documents
             {
                 Id = entity.Id,
                 Cost = entity.Cost,
-                Name = entity.Name
+                Name = entity.Name,
+                Status = entity.Status
             };
             return document;
         }

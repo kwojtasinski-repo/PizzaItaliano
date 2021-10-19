@@ -8,7 +8,7 @@ namespace PizzaItaliano.Services.Products.Core.Exceptions
 {
     public class InvalidProductCostException : DomainException
     {
-        public override string Code { get; } = "invalid_product_cost";
+        public override string Code => "invalid_product_cost";
         public decimal Cost { get; }
         public Guid ProductId { get; }
 

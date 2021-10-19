@@ -15,6 +15,11 @@ namespace PizzaItaliano.Services.Releases.Core.Entities
 
         protected void AddEvent(IDomainEvent @event)
         {
+            if (!_events.Any())
+            {
+                Version++;
+            }
+
             _events.Add(@event);
         }
 

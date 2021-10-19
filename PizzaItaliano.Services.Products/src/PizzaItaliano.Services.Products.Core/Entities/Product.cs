@@ -34,6 +34,16 @@ namespace PizzaItaliano.Services.Products.Core.Entities
             return product;
         }
 
+        public void MarkAsUsed()
+        {
+            if (Status != ProductStatus.New)
+            {
+                throw new CannotChangeProductStatusException(Id, Status, ProductStatus.Used);
+            }
+
+            Status = ProductStatus.Used;
+        }
+
         private static void ValidCost(Guid id, decimal cost)
         {
             if (cost < 0)

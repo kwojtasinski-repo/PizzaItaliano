@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace PizzaItaliano.Services.Orders.Application.Events
 {
+    [Contract]
     public class OrderStateModified : IEvent
     {
         public Guid OrderId { get; }
