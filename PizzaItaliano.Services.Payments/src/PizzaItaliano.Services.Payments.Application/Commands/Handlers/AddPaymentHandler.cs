@@ -1,5 +1,6 @@
 ﻿using Convey.CQRS.Commands;
 using PizzaItaliano.Services.Payments.Application.Exceptions;
+using PizzaItaliano.Services.Payments.Application.Services;
 using PizzaItaliano.Services.Payments.Core.Entities;
 using PizzaItaliano.Services.Payments.Core.Repositories;
 using System;
@@ -12,10 +13,14 @@ namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
     public class AddPaymentHandler : ICommandHandler<AddPayment>
     {
         private readonly IPaymentRepository _paymentRepository;
+        private readonly IMessageBroker _messageBroker;
+        private readonly IEventMapper _eventMapper;
 
-        public AddPaymentHandler(IPaymentRepository paymentRepository)
+        public AddPaymentHandler(IPaymentRepository paymentRepository, IMessageBroker messageBroker, IEventMapper eventMapper)
         {
             _paymentRepository = paymentRepository;
+            _messageBroker = messageBroker;
+            _eventMapper = eventMapper;
         }
 
         public async Task HandleAsync(AddPayment command)
@@ -54,6 +59,8 @@ namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
             var payment = Payment.Create(command.PaymentId, paymentNumber, command.Cost, command.OrderId, PaymentStatus.Paid);
 
             await _paymentRepository.AddAsync(payment);
+            var integrationEvents = _eventMapper.MapAll(payment.Events);
+            await _messageBroker.PublishAsync(integrationEvents);
         }
     }
 }

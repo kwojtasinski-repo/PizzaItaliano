@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Payments.Application.Commands
 {
+    [Contract]
     public class AddPayment : ICommand
     {
         public Guid PaymentId { get; set; }

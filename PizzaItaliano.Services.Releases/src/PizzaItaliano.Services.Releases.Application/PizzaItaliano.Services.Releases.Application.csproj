@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -9,16 +9,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Convey" Version="0.5.506" />
     <PackageReference Include="Convey.CQRS.Commands" Version="0.5.506" />
     <PackageReference Include="Convey.CQRS.Events" Version="0.5.506" />
     <PackageReference Include="Convey.CQRS.Queries" Version="0.5.506" />
     <PackageReference Include="Convey.MessageBrokers" Version="0.5.506" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

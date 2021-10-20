@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Releases.Application.Commands
 {
+    [Contract]
     public class AddRelease : ICommand
     {
         public Guid ReleaseId { get; set; }

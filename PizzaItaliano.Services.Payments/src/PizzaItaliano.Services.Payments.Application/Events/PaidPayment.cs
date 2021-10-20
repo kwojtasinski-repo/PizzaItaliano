@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace PizzaItaliano.Services.Payments.Application.Events
 {
     [Contract]
-    public class AddedPayment : IEvent
+    public class PaidPayment : IEvent
     {
         public Guid PaymentId { get; }
         public Guid OrderId { get; }
 
-        public AddedPayment(Guid paymentId, Guid orderId)
+        public PaidPayment(Guid paymentId, Guid orderId)
         {
             PaymentId = paymentId;
             OrderId = orderId;

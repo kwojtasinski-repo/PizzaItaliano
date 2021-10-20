@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Application.Commands
 {
+    [Contract]
     public class SetOrderStatusReady : ICommand
     {
         public Guid OrderId { get; }

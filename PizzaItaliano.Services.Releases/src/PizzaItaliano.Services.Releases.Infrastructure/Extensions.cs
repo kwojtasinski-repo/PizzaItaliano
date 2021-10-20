@@ -7,10 +7,12 @@ using Convey.WebApi;
 using Convey.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using PizzaItaliano.Services.Releases.Application.Services;
 using PizzaItaliano.Services.Releases.Core.Repositories;
 using PizzaItaliano.Services.Releases.Infrastructure.Exceptions;
 using PizzaItaliano.Services.Releases.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Releases.Infrastructure.Mongo.Repositories;
+using PizzaItaliano.Services.Releases.Infrastructure.Services;
 using System;
 
 namespace PizzaItaliano.Services.Releases.Infrastructure
@@ -20,8 +22,11 @@ namespace PizzaItaliano.Services.Releases.Infrastructure
         public static IConveyBuilder AddInfrastructure(this IConveyBuilder conveyBuilder)
         {
             conveyBuilder.Services.AddTransient<IReleaseRepository, ReleaseRepository>();
+            conveyBuilder.Services.AddTransient<IMessageBroker, MessageBroker>();
+            conveyBuilder.Services.AddSingleton<IEventMapper, EventMapper>();
 
             conveyBuilder.AddErrorHandler<ExceptionToResponseMapper>();
+            conveyBuilder.AddExceptionToMessageMapper<ExceptionToMessageMapper>();
             conveyBuilder.AddQueryHandlers();
             conveyBuilder.AddInMemoryQueryDispatcher();
             conveyBuilder.AddMongo();
