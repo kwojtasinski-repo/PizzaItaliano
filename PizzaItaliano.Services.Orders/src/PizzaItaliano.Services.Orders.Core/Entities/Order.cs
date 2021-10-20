@@ -101,6 +101,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             {
                 throw new CannotChangeOrderStateException(Id, OrderStatus, OrderStatus.Paid);
             }
+            OrderStatus = OrderStatus.Ready;
             AddEvent(new OrderStateChanged(orderBeforeChange, this));
         }
 

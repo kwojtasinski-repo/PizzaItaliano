@@ -19,6 +19,9 @@ using System;
 using PizzaItaliano.Services.Orders.Infrastructure.Services.Clients;
 using PizzaItaliano.Services.Orders.Application.Services.Clients;
 using Convey.HTTP;
+using PizzaItaliano.Services.Orders.Application.Events;
+using PizzaItaliano.Services.Orders.Application.Events.External;
+using Convey.MessageBrokers.CQRS;
 
 namespace PizzaItaliano.Services.Orders.Infrastructure
 {
@@ -51,7 +54,9 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
                .UseConvey()
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
-               .UseRabbitMq();
+               .UseRabbitMq()
+               .SubscribeEvent<PaidPayment>()
+               .SubscribeEvent<ReleaseAdded>(); 
 
             return app;
         }

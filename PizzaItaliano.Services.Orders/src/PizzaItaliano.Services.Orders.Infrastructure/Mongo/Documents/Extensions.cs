@@ -23,10 +23,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
                 OrderNumber = order.OrderNumber,
                 OrderDate = order.OrderDate,
                 ReleaseDate = order.ReleaseDate,
-                OrderProductDocuments = order.OrderProducts
-                                .Select(op => new OrderProductDocument
-                                { Id = op.Id, OrderId = op.OrderId, OrderProductStatus = op.OrderProductStatus,
-                                    ProductId = op.ProductId, Quantity = op.Quantity, Cost = op.Cost }),
+                OrderProductDocuments = order.OrderProducts.Select(op => op.AsDocument()),
                 OrderStatus = order.OrderStatus,
                 Version = order.Version
             };
@@ -38,10 +35,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
         {
             var order = new Order(orderDocument.Id, orderDocument.OrderNumber, orderDocument.Cost, orderDocument.OrderStatus, orderDocument.OrderDate,
                             orderDocument.ReleaseDate, 
-                            orderDocument.OrderProductDocuments.Select(op => 
-                                new OrderProduct(op.Id, op.Quantity, op.Cost, op.OrderId, op.ProductId, 
-                                op.OrderProductStatus)), 
-                            orderDocument.Version);
+                            orderDocument.OrderProductDocuments.Select(op => op.AsEntity()));
             return order;
         }
 
@@ -55,10 +49,47 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
                 OrderDate = orderDocument.OrderDate,
                 ReleaseDate = orderDocument.ReleaseDate,
                 OrderStatus = orderDocument.OrderStatus,
-                OrderProducts = orderDocument.OrderProductDocuments.Select(op => new OrderProductDto { Id = op.Id, OrderId = op.OrderId, ProductId = op.ProductId, Quantity = op.Quantity, OrderProductStatus = op.OrderProductStatus, Cost = op.Cost })
+                OrderProducts = orderDocument.OrderProductDocuments.Select(op => op.AsDto())
             };
 
             return orderDto;
+        }
+
+        public static OrderProductDocument AsDocument(this OrderProduct orderProduct)
+        {
+            var document = new OrderProductDocument
+            {
+                Id = orderProduct.Id,
+                Cost = orderProduct.Cost,
+                OrderId = orderProduct.OrderId,
+                Quantity = orderProduct.Quantity,
+                ProductId = orderProduct.ProductId,
+                OrderProductStatus = orderProduct.OrderProductStatus
+            };
+
+            return document;
+        }
+
+        public static OrderProduct AsEntity(this OrderProductDocument orderProductDocument)
+        {
+            var orderProduct = new OrderProduct(orderProductDocument.Id, orderProductDocument.Quantity, orderProductDocument.Cost,
+                                                orderProductDocument.OrderId, orderProductDocument.ProductId, orderProductDocument.OrderProductStatus);
+            return orderProduct;
+        }
+
+        public static OrderProductDto AsDto(this OrderProductDocument orderProductDocument)
+        {
+            var orderProductDto = new OrderProductDto
+            {
+                Id = orderProductDocument.Id,
+                OrderId = orderProductDocument.OrderId,
+                ProductId = orderProductDocument.ProductId,
+                Quantity = orderProductDocument.Quantity,
+                OrderProductStatus = orderProductDocument.OrderProductStatus,
+                Cost = orderProductDocument.Cost
+            };
+
+            return orderProductDto;
         }
 
         public static IQueryable<TDest> Map<TSource, TDest>(this IQueryable<TSource> source)
