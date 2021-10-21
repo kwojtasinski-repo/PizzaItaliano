@@ -17,7 +17,7 @@ namespace PizzaItaliano.Services.Releases.Infrastructure.Services
         {
             IEvent eventMapped = @event switch
             {
-                CreateRelease e => new ReleaseAdded(e.Release.Id, e.Release.OrderId, e.Release.OrderProductId, e.Release.Date),
+                CreateRelease e => new ReleaseAdded(e.Release.Id, e.Release.OrderId, e.Release.OrderProductId),
                 _ => null
             };
 

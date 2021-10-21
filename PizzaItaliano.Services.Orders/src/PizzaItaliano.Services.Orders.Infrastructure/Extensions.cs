@@ -22,6 +22,10 @@ using Convey.HTTP;
 using PizzaItaliano.Services.Orders.Application.Events;
 using PizzaItaliano.Services.Orders.Application.Events.External;
 using Convey.MessageBrokers.CQRS;
+using Convey.CQRS.Commands;
+using PizzaItaliano.Services.Orders.Infrastructure.Decorators;
+using Convey.CQRS.Events;
+using Convey.MessageBrokers.Outbox;
 
 namespace PizzaItaliano.Services.Orders.Infrastructure
 {
@@ -33,8 +37,11 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
             conveyBuilder.Services.AddTransient<IMessageBroker, MessageBroker>();
             conveyBuilder.Services.AddSingleton<IEventMapper, EventMapper>();
             conveyBuilder.Services.AddTransient<IProductServiceClient, ProductServiceClient>();
+            conveyBuilder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(OutboxCommandHandlerDecorator<>));
+            conveyBuilder.Services.TryDecorate(typeof(IEventHandler<>), typeof(OutboxEventHandlerDecorator<>));
 
             conveyBuilder.AddErrorHandler<ExceptionToResponseMapper>();
+            conveyBuilder.AddMessageOutbox(o => o.AddMongo());
             conveyBuilder.AddExceptionToMessageMapper<ExceptionToMessageMapper>();
             conveyBuilder.AddQueryHandlers();
             conveyBuilder.AddInMemoryQueryDispatcher();

@@ -140,6 +140,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
 
             var orderBeforeChange = new Order(Id, OrderNumber, Cost, OrderStatus, OrderDate, ReleaseDate, OrderProducts, Version);
             OrderStatus = OrderStatus.Released;
+            ReleaseDate = DateTime.Now;
             AddEvent(new OrderStateChanged(orderBeforeChange, this));
         }
 

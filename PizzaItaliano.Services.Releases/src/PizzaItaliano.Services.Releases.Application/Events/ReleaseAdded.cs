@@ -13,14 +13,12 @@ namespace PizzaItaliano.Services.Releases.Application.Events
         public Guid ReleaseId { get; }
         public Guid OrderId { get; }
         public Guid OrderProductId { get; }
-        public DateTime Date { get; }
 
-        public ReleaseAdded(Guid releaseId, Guid orderId, Guid orderPorductId, DateTime date)
+        public ReleaseAdded(Guid releaseId, Guid orderId, Guid orderPorductId)
         {
             ReleaseId = releaseId;
             OrderId = orderId;
             OrderProductId = orderPorductId;
-            Date = date;
         }
     }
 }
