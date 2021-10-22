@@ -18,6 +18,11 @@ using PizzaItaliano.Services.Products.Infrastructure.Services;
 using PizzaItaliano.Services.Products.Application.Services;
 using PizzaItaliano.Services.Products.Application.Events.External;
 using Convey.MessageBrokers.CQRS;
+using PizzaItaliano.Services.Products.Infrastructure.Decorators;
+using Convey.CQRS.Events;
+using Convey.CQRS.Commands;
+using Convey.MessageBrokers.Outbox;
+using Convey.MessageBrokers.Outbox.Mongo;
 
 namespace PizzaItaliano.Services.Products.Infrastructure
 {
@@ -29,6 +34,8 @@ namespace PizzaItaliano.Services.Products.Infrastructure
             conveyBuilder.Services.AddTransient<IMessageBroker, MessageBroker>();
             conveyBuilder.Services.AddTransient<IEventProcessor, EventProcessor>();
             conveyBuilder.Services.AddSingleton<IEventMapper, EventMapper>();
+            conveyBuilder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(OutboxCommandHandlerDecorator<>));
+            conveyBuilder.Services.TryDecorate(typeof(IEventHandler<>), typeof(OutboxEventHandlerDecorator<>));
 
             conveyBuilder.Services.Scan(s => s.FromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
                 .AddClasses(c => c.AssignableTo(typeof(IDomainEventHandler<>)))
@@ -36,6 +43,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure
                 .WithTransientLifetime()); // przeszukaj Assembly i znajdz wszystkie klasy ktore implementuja IDomainEventHandler jako zaimplementowane interfejsy z cyklem zycia Transient
 
             conveyBuilder.AddErrorHandler<ExceptionToResponseMapper>();
+            conveyBuilder.AddMessageOutbox(o => o.AddMongo());
             conveyBuilder.AddExceptionToMessageMapper<ExceptionToMessageMapper>();
             conveyBuilder.AddQueryHandlers();
             conveyBuilder.AddInMemoryQueryDispatcher();

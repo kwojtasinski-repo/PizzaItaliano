@@ -26,6 +26,7 @@ using Convey.CQRS.Commands;
 using PizzaItaliano.Services.Orders.Infrastructure.Decorators;
 using Convey.CQRS.Events;
 using Convey.MessageBrokers.Outbox;
+using Convey.MessageBrokers.Outbox.Mongo;
 
 namespace PizzaItaliano.Services.Orders.Infrastructure
 {
