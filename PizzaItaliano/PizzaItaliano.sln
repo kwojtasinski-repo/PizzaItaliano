@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{32895C85
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Products.API", "..\PizzaItaliano.Services.Products\src\PizzaItaliano.Services.Products.API\PizzaItaliano.Services.Products.API.csproj", "{572D79C0-0D54-4D94-BA9D-DEAF3006C8ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Products.Application", "..\PizzaItaliano.Services.Products\src\PizzaItaliano.Services.Products.Application\PizzaItaliano.Services.Products.Application.csproj", "{CC736663-7F56-409E-BA1E-BC3D1BEA2B05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Products.Application", "..\PizzaItaliano.Services.Products\src\PizzaItaliano.Services.Products.Application\PizzaItaliano.Services.Products.Application.csproj", "{CC736663-7F56-409E-BA1E-BC3D1BEA2B05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Products.Infrastructure", "..\PizzaItaliano.Services.Products\src\PizzaItaliano.Services.Products.Infrastructure\PizzaItaliano.Services.Products.Infrastructure.csproj", "{05AC7A30-857E-46A8-A321-4DCC17EA2AEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Products.Infrastructure", "..\PizzaItaliano.Services.Products\src\PizzaItaliano.Services.Products.Infrastructure\PizzaItaliano.Services.Products.Infrastructure.csproj", "{05AC7A30-857E-46A8-A321-4DCC17EA2AEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Products.Core", "..\PizzaItaliano.Services.Products\src\PizzaItaliano.Services.Products.Core\PizzaItaliano.Services.Products.Core.csproj", "{52305EB0-8B6D-4B1E-B53E-A74B7F7461AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Products.Core", "..\PizzaItaliano.Services.Products\src\PizzaItaliano.Services.Products.Core\PizzaItaliano.Services.Products.Core.csproj", "{52305EB0-8B6D-4B1E-B53E-A74B7F7461AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Products.Tests.Unit", "..\PizzaItaliano.Services.Products\tests\PizzaItaliano.Services.Products.Tests.Unit\PizzaItaliano.Services.Products.Tests.Unit.csproj", "{4030B149-F000-45D0-9064-F607C2599820}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Products.Tests.Unit", "..\PizzaItaliano.Services.Products\tests\PizzaItaliano.Services.Products.Tests.Unit\PizzaItaliano.Services.Products.Tests.Unit.csproj", "{4030B149-F000-45D0-9064-F607C2599820}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PizzaItaliano.Services.Orders", "PizzaItaliano.Services.Orders", "{0B0AC078-CCD1-4DBB-BC4E-69DD8DD664FB}"
 EndProject
@@ -25,15 +25,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2C1778BD-D6A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AF59D75C-51D9-4CE7-8569-87A0F74CC386}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Orders.API", "..\PizzaItaliano.Services.Orders\src\PizzaItaliano.Services.Orders.API\PizzaItaliano.Services.Orders.API.csproj", "{CFA73840-E211-4939-8478-8B157D7D9919}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Orders.API", "..\PizzaItaliano.Services.Orders\src\PizzaItaliano.Services.Orders.API\PizzaItaliano.Services.Orders.API.csproj", "{CFA73840-E211-4939-8478-8B157D7D9919}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Orders.Application", "..\PizzaItaliano.Services.Orders\src\PizzaItaliano.Services.Orders.Application\PizzaItaliano.Services.Orders.Application.csproj", "{AEC216C0-2F88-4745-9949-CE388F0D6CE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Orders.Application", "..\PizzaItaliano.Services.Orders\src\PizzaItaliano.Services.Orders.Application\PizzaItaliano.Services.Orders.Application.csproj", "{AEC216C0-2F88-4745-9949-CE388F0D6CE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Orders.Infrastructure", "..\PizzaItaliano.Services.Orders\src\PizzaItaliano.Services.Orders.Infrastructure\PizzaItaliano.Services.Orders.Infrastructure.csproj", "{3AE550BD-01C9-4293-A977-216A31122AAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Orders.Infrastructure", "..\PizzaItaliano.Services.Orders\src\PizzaItaliano.Services.Orders.Infrastructure\PizzaItaliano.Services.Orders.Infrastructure.csproj", "{3AE550BD-01C9-4293-A977-216A31122AAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Orders.Core", "..\PizzaItaliano.Services.Orders\src\PizzaItaliano.Services.Orders.Core\PizzaItaliano.Services.Orders.Core.csproj", "{AE949A21-B616-49C5-A90E-FA23AD6A15C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Orders.Core", "..\PizzaItaliano.Services.Orders\src\PizzaItaliano.Services.Orders.Core\PizzaItaliano.Services.Orders.Core.csproj", "{AE949A21-B616-49C5-A90E-FA23AD6A15C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Orders.Tests.Unit", "..\PizzaItaliano.Services.Orders\tests\PizzaItaliano.Services.Orders.Tests.Unit\PizzaItaliano.Services.Orders.Tests.Unit.csproj", "{8C220333-D071-4315-8A9C-782F75BF6511}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Orders.Tests.Unit", "..\PizzaItaliano.Services.Orders\tests\PizzaItaliano.Services.Orders.Tests.Unit\PizzaItaliano.Services.Orders.Tests.Unit.csproj", "{8C220333-D071-4315-8A9C-782F75BF6511}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PizzaItaliano.Services.Releases", "PizzaItaliano.Services.Releases", "{C21DC15B-C9BA-425D-9A2C-9B31E38EE32E}"
 EndProject
@@ -47,25 +47,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6A112511-530
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4A31F19F-71E5-4CAD-84C3-DD8E8C943143}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Payments.API", "..\PizzaItaliano.Services.Payments\src\PizzaItaliano.Services.Payments.API\PizzaItaliano.Services.Payments.API.csproj", "{15FA29F8-C23E-4BE2-99AE-B20E0F526DCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Payments.API", "..\PizzaItaliano.Services.Payments\src\PizzaItaliano.Services.Payments.API\PizzaItaliano.Services.Payments.API.csproj", "{15FA29F8-C23E-4BE2-99AE-B20E0F526DCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Payments.Application", "..\PizzaItaliano.Services.Payments\src\PizzaItaliano.Services.Payments.Application\PizzaItaliano.Services.Payments.Application.csproj", "{D22CE9AF-FD43-49C7-9AC4-E16256AF277D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Payments.Application", "..\PizzaItaliano.Services.Payments\src\PizzaItaliano.Services.Payments.Application\PizzaItaliano.Services.Payments.Application.csproj", "{D22CE9AF-FD43-49C7-9AC4-E16256AF277D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Payments.Infrastructure", "..\PizzaItaliano.Services.Payments\src\PizzaItaliano.Services.Payments.Infrastructure\PizzaItaliano.Services.Payments.Infrastructure.csproj", "{9DBABC08-2062-4CE8-B3DA-D7193EA12B87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Payments.Infrastructure", "..\PizzaItaliano.Services.Payments\src\PizzaItaliano.Services.Payments.Infrastructure\PizzaItaliano.Services.Payments.Infrastructure.csproj", "{9DBABC08-2062-4CE8-B3DA-D7193EA12B87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Payments.Core", "..\PizzaItaliano.Services.Payments\src\PizzaItaliano.Services.Payments.Core\PizzaItaliano.Services.Payments.Core.csproj", "{1D166302-2026-4195-B005-BF8CA4D28835}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Payments.Core", "..\PizzaItaliano.Services.Payments\src\PizzaItaliano.Services.Payments.Core\PizzaItaliano.Services.Payments.Core.csproj", "{1D166302-2026-4195-B005-BF8CA4D28835}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Payments.Tests.Unit", "..\PizzaItaliano.Services.Payments\tests\PizzaItaliano.Services.Payments.Tests.Unit\PizzaItaliano.Services.Payments.Tests.Unit.csproj", "{B8181BB8-D4DC-44AE-ACFF-27353D3D7787}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Payments.Tests.Unit", "..\PizzaItaliano.Services.Payments\tests\PizzaItaliano.Services.Payments.Tests.Unit\PizzaItaliano.Services.Payments.Tests.Unit.csproj", "{B8181BB8-D4DC-44AE-ACFF-27353D3D7787}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Releases.API", "..\PizzaItaliano.Services.Releases\src\PizzaItaliano.Services.Releases.API\PizzaItaliano.Services.Releases.API.csproj", "{CC05D9CE-7760-4563-A7F9-6619076CA400}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Releases.API", "..\PizzaItaliano.Services.Releases\src\PizzaItaliano.Services.Releases.API\PizzaItaliano.Services.Releases.API.csproj", "{CC05D9CE-7760-4563-A7F9-6619076CA400}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Releases.Application", "..\PizzaItaliano.Services.Releases\src\PizzaItaliano.Services.Releases.Application\PizzaItaliano.Services.Releases.Application.csproj", "{2A5E7293-3E2E-4123-A12A-02D2A93BE3A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Releases.Application", "..\PizzaItaliano.Services.Releases\src\PizzaItaliano.Services.Releases.Application\PizzaItaliano.Services.Releases.Application.csproj", "{2A5E7293-3E2E-4123-A12A-02D2A93BE3A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Releases.Infrastructure", "..\PizzaItaliano.Services.Releases\src\PizzaItaliano.Services.Releases.Infrastructure\PizzaItaliano.Services.Releases.Infrastructure.csproj", "{E9B9B2CF-E42C-4E28-90A3-956C06CCE6D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Releases.Infrastructure", "..\PizzaItaliano.Services.Releases\src\PizzaItaliano.Services.Releases.Infrastructure\PizzaItaliano.Services.Releases.Infrastructure.csproj", "{E9B9B2CF-E42C-4E28-90A3-956C06CCE6D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Releases.Core", "..\PizzaItaliano.Services.Releases\src\PizzaItaliano.Services.Releases.Core\PizzaItaliano.Services.Releases.Core.csproj", "{2D9BF5ED-D4B1-4662-9163-845754A908FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Releases.Core", "..\PizzaItaliano.Services.Releases\src\PizzaItaliano.Services.Releases.Core\PizzaItaliano.Services.Releases.Core.csproj", "{2D9BF5ED-D4B1-4662-9163-845754A908FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Releases.Tests.Unit", "..\PizzaItaliano.Services.Releases\tests\PizzaItaliano.Services.Releases.Tests.Unit\PizzaItaliano.Services.Releases.Tests.Unit.csproj", "{7D664027-EF3F-4FC3-96B8-48CB55EC41E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Releases.Tests.Unit", "..\PizzaItaliano.Services.Releases\tests\PizzaItaliano.Services.Releases.Tests.Unit\PizzaItaliano.Services.Releases.Tests.Unit.csproj", "{7D664027-EF3F-4FC3-96B8-48CB55EC41E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PizzaItaliano.APIGateway", "PizzaItaliano.APIGateway", "{4356924E-3F25-4025-8AED-AB351D1DC032}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E210DDBA-A3DC-4AE6-B375-011F57807114}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.APIGateway", "..\PizzaItaliano.APIGateway\src\PizzaItaliano.APIGateway\PizzaItaliano.APIGateway.csproj", "{511C0428-959C-4148-B28D-AF65E6D3C052}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +159,10 @@ Global
 		{7D664027-EF3F-4FC3-96B8-48CB55EC41E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D664027-EF3F-4FC3-96B8-48CB55EC41E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D664027-EF3F-4FC3-96B8-48CB55EC41E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{511C0428-959C-4148-B28D-AF65E6D3C052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{511C0428-959C-4148-B28D-AF65E6D3C052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{511C0428-959C-4148-B28D-AF65E6D3C052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{511C0428-959C-4148-B28D-AF65E6D3C052}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -186,6 +196,8 @@ Global
 		{E9B9B2CF-E42C-4E28-90A3-956C06CCE6D7} = {6A112511-530D-4ACE-A405-2B4522051395}
 		{2D9BF5ED-D4B1-4662-9163-845754A908FD} = {6A112511-530D-4ACE-A405-2B4522051395}
 		{7D664027-EF3F-4FC3-96B8-48CB55EC41E6} = {4A31F19F-71E5-4CAD-84C3-DD8E8C943143}
+		{E210DDBA-A3DC-4AE6-B375-011F57807114} = {4356924E-3F25-4025-8AED-AB351D1DC032}
+		{511C0428-959C-4148-B28D-AF65E6D3C052} = {E210DDBA-A3DC-4AE6-B375-011F57807114}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30FFB666-5D1E-415D-8363-F77C72FCA839}

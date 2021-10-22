@@ -1,0 +1,95 @@
+﻿http:
+  retries: 2
+  interval: 2.0
+  exponential: true
+
+useForwardedHeaders: true
+passQueryString: true
+forwardRequestHeaders: true
+forwardResponseHeaders: true
+generateRequestId: true
+generateTraceId: true
+useLocalUrl: true
+loadBalancer:
+  enabled: false
+  url: localhost:9999
+
+extensions:
+  customErrors:
+    includeExceptionMessage: true
+
+    swagger:
+        name: PizzaItaliano
+        reDocEnabled: false
+        title: PizzaItaliano API
+        version: v1
+        routePrefix: docs
+        includeSecurity: true
+
+    tracing:
+        serviceName: api-gateway
+        udpHost: localhost
+        udpPort: 6831
+        maxPacketSize: 0
+        sampler: const
+        useEmptyTracer: false
+
+modules:
+  home:
+    routes:
+      - upstream: /
+        method: GET
+        use: return_value
+        returnValue: Welcome to PizzaItaliano API!
+  
+  products:
+    path: products
+    routes:
+      - upstream: /products
+        method: GET
+        use: downstream
+        downstream: products-service/products
+
+    services:
+      products-service:
+        localUrl: localhost:5001
+        url: products-service
+
+  orders:
+    path: orders
+    routes:
+      - upstream: /orders
+        method: GET
+        use: downstream
+        downstream: orders-service/orders
+
+    services:
+      orders-service:
+        localUrl: localhost:5002
+        url: orders-service
+
+  releases:
+    path: releases
+    routes:
+      - upstream: /releases
+        method: GET
+        use: downstream
+        downstream: releases-service/releases
+
+    services:
+      releases-service:
+        localUrl: localhost:5003
+        url: releases-service
+
+  payments:
+    path: payments
+    routes:
+      - upstream: /payments
+        method: GET
+        use: downstream
+        downstream: payments-service/payments
+
+    services:
+      payments-service:
+        localUrl: localhost:5004
+        url: payments-service
