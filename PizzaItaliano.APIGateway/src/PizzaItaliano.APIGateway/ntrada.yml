@@ -18,21 +18,37 @@ extensions:
   customErrors:
     includeExceptionMessage: true
 
-    swagger:
-        name: PizzaItaliano
-        reDocEnabled: false
-        title: PizzaItaliano API
-        version: v1
-        routePrefix: docs
-        includeSecurity: true
+  cors:
+    allowCredentials: true
+    allowedOrigins:
+      - '*'
+    allowedMethods:
+      - post
+      - put
+      - delete
+    allowedHeaders:
+      - '*'
+    exposedHeaders:
+      - Request-ID
+      - Resource-ID
+      - Trace-ID
+      - Total-Count
 
-    tracing:
-        serviceName: api-gateway
-        udpHost: localhost
-        udpPort: 6831
-        maxPacketSize: 0
-        sampler: const
-        useEmptyTracer: false
+  swagger:
+    name: Pacco
+    reDocEnabled: false
+    title: Pacco API
+    version: v1
+    routePrefix: docs
+    includeSecurity: true
+
+  tracing:
+    serviceName: api-gateway
+    udpHost: localhost
+    udpPort: 6831
+    maxPacketSize: 0
+    sampler: const
+    useEmptyTracer: false
 
 modules:
   home:
