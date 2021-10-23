@@ -35,9 +35,9 @@ extensions:
       - Total-Count
 
   swagger:
-    name: Pacco
+    name: PizzaItaliano
     reDocEnabled: false
-    title: Pacco API
+    title: PizzaItaliano API
     version: v1
     routePrefix: docs
     includeSecurity: true
@@ -61,10 +61,35 @@ modules:
   products:
     path: products
     routes:
-      - upstream: /products
+      - upstream: /health-check
         method: GET
         use: downstream
-        downstream: products-service/
+        downstream: products-service
+
+      - upstream: /
+        method: GET
+        use: downstream
+        downstream: products-service/products
+
+      - upstream: /{productId}
+        method: GET
+        use: downstream
+        downstream: products-service/products/{productId}
+
+      - upstream: /
+        method: POST
+        use: downstream
+        downstream: products-service/products
+
+      - upstream: /
+        method: PUT
+        use: downstream
+        downstream: products-service/products
+
+      - upstream: /{productId}
+        method: DELETE
+        use: downstream
+        downstream: products-service/products/{productId}
 
     services:
       products-service:
@@ -74,10 +99,40 @@ modules:
   orders:
     path: orders
     routes:
-      - upstream: /orders
+      - upstream: /health-check
+        method: GET
+        use: downstream
+        downstream: orders-service
+
+      - upstream: /
         method: GET
         use: downstream
         downstream: orders-service/orders
+
+      - upstream: /{orderId}
+        method: GET
+        use: downstream
+        downstream: orders-service/orders/{orderId}
+
+      - upstream: /
+        method: POST
+        use: downstream
+        downstream: orders-service/orders
+
+      - upstream: /order-product
+        method: POST
+        use: downstream
+        downstream: orders-service/orders/order-product
+
+      - upstream: /
+        method: PUT
+        use: downstream
+        downstream: orders-service/orders
+
+      - upstream: /order-product
+        method: DELETE
+        use: downstream
+        downstream: orders-service/orders/order-product
 
     services:
       orders-service:
@@ -87,8 +142,23 @@ modules:
   releases:
     path: releases
     routes:
-      - upstream: /releases
+      - upstream: /health-check
         method: GET
+        use: downstream
+        downstream: releases-service
+
+      - upstream: /
+        method: GET
+        use: downstream
+        downstream: releases-service/releases
+
+      - upstream: /{releaseId}
+        method: GET
+        use: downstream
+        downstream: releases-service/releases/{releaseId}
+
+      - upstream: /
+        method: POST
         use: downstream
         downstream: releases-service/releases
 
@@ -100,8 +170,28 @@ modules:
   payments:
     path: payments
     routes:
-      - upstream: /payments
+      - upstream: /health-check
         method: GET
+        use: downstream
+        downstream: payments-service
+
+      - upstream: /
+        method: GET
+        use: downstream
+        downstream: payments-service/payments
+
+      - upstream: /{paymentId}
+        method: GET
+        use: downstream
+        downstream: payments-service/payments/{paymentId}
+
+      - upstream: /
+        method: POST
+        use: downstream
+        downstream: payments-service/payments
+
+      - upstream: /
+        method: PUT
         use: downstream
         downstream: payments-service/payments
 

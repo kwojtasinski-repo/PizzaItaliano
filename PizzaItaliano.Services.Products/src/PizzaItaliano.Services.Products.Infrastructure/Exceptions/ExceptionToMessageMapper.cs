@@ -34,6 +34,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure.Exceptions
                 // Domain Exceptions
                 Core.Exceptions.InvalidProductCostException ex => new AddProductRejected(Guid.Empty, ex.Message, ex.Code),
                 ProductNameCannotBeEmptyException ex => new AddProductRejected(Guid.Empty, ex.Message, ex.Code),
+                CannotChangeProductStatusException ex => new UpdateProductRejected(ex.ProductId, ex.Message, ex.Code),
 
                 // other unforeseen exceptions 
                 _ => null

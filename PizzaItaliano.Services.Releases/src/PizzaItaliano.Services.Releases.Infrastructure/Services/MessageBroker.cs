@@ -16,14 +16,17 @@ namespace PizzaItaliano.Services.Releases.Infrastructure.Services
         private readonly IBusPublisher _busPublisher;
         private readonly IMessageOutbox _messageOutbox;
         private readonly IMessagePropertiesAccessor _messagePropertiesAccessor;
+        private readonly ICorrelationContextAccessor _correlationContextAccessor;
         private readonly ILogger<IMessageBroker> _logger;
 
         public MessageBroker(IBusPublisher busPublisher, IMessageOutbox messageOutbox,
-                IMessagePropertiesAccessor messagePropertiesAccessor, ILogger<IMessageBroker> logger)
+                IMessagePropertiesAccessor messagePropertiesAccessor, ICorrelationContextAccessor correlationContextAccessor,
+                ILogger<IMessageBroker> logger)
         {
             _busPublisher = busPublisher;
             _messageOutbox = messageOutbox;
             _messagePropertiesAccessor = messagePropertiesAccessor;
+            _correlationContextAccessor = correlationContextAccessor;
             _logger = logger;
         }
 
@@ -42,6 +45,9 @@ namespace PizzaItaliano.Services.Releases.Infrastructure.Services
 
             var messageProperties = _messagePropertiesAccessor.MessageProperties;
             var originatedMessageId = messageProperties?.MessageId;
+            var correlationId = messageProperties?.CorrelationId;
+
+            var correlationContext = _correlationContextAccessor.CorrelationContext;
 
             foreach (var @event in events)
             {
@@ -56,11 +62,11 @@ namespace PizzaItaliano.Services.Releases.Infrastructure.Services
 
                 if (_messageOutbox.Enabled)
                 {
-                    await _messageOutbox.SendAsync(Convert.ChangeType(@event, type), originatedMessageId, messageId); // nie moze serializowac interfejs dlatego konwersja w runtime na klase implementujaca
+                    await _messageOutbox.SendAsync(Convert.ChangeType(@event, type), originatedMessageId, messageId, correlationId, messageContext: correlationContext); // nie moze serializowac interfejs dlatego konwersja w runtime na klase implementujaca
                     continue;
                 }
 
-                await _busPublisher.PublishAsync(@event, messageId);
+                await _busPublisher.PublishAsync(@event, messageId, correlationId, messageContext: correlationContext);
             }
         }
     }

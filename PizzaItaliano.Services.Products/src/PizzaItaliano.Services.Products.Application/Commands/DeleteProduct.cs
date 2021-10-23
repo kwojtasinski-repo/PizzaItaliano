@@ -10,7 +10,12 @@ namespace PizzaItaliano.Services.Products.Application.Commands
     [Contract]
     public class DeleteProduct : ICommand
     {
-        public Guid ProductId { get; }
+        public Guid ProductId { get; set; }
+
+        public DeleteProduct()
+        {
+
+        }
 
         public DeleteProduct(Guid productId)
         {

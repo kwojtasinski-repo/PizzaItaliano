@@ -47,6 +47,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Exceptions
                     DeleteOrderProduct command => new DeleteOrderProductRejected(command.OrderProductId, ex.Message, ex.Code),
                     _ => null
                 },
+                CannotChangeOrderStatusException ex => new UpdateOrderRejected(ex.OrderId, ex.Message, ex.Code),
 
                 // Domain Exceptions
                 CannotChangeOrderProductStateException ex => new UpdateOrderProductRejected(ex.OrderProductId, ex.Message, ex.Code),
