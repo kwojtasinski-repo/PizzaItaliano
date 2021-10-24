@@ -105,21 +105,21 @@ modules:
         method: POST
         use: rabbitmq
         config:
-          exchange: products
+          exchange: product
           routing_key: add_product
 
       - upstream: /
         method: PUT
         use: rabbitmq
         config:
-          exchange: products
+          exchange: product
           routing_key: modify_product
 
       - upstream: /{productId}
         method: DELETE
         use: rabbitmq
         config:
-          exchange: products
+          exchange: product
           routing_key: delete_product
         bind:
           - productId: {productId}
@@ -158,21 +158,21 @@ modules:
         method: POST
         use: rabbitmq
         config:
-          exchange: orders
+          exchange: order
           routing_key: add_order_product
 
       - upstream: /
         method: PUT
         use: rabbitmq
         config:
-          exchange: orders
+          exchange: order
           routing_key: modify_order
 
       - upstream: /order-product
         method: DELETE
         use: rabbitmq
         config:
-          exchange: orders
+          exchange: order
           routing_key: delete_order_product
 
     services:
@@ -202,7 +202,7 @@ modules:
         method: POST
         use: rabbitmq
         config:
-          exchange: releases
+          exchange: release
           routing_key: add_releases
 
     services:
@@ -232,14 +232,14 @@ modules:
         method: POST
         use: rabbitmq
         config:
-          exchange: payments
+          exchange: payment
           routing_key: add_payment
 
       - upstream: /
         method: PUT
         use: rabbitmq
         config:
-          exchange: payments
+          exchange: payment
           routing_key: modify_product
 
     services:
