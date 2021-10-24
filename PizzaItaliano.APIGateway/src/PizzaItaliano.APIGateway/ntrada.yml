@@ -199,3 +199,17 @@ modules:
       payments-service:
         localUrl: localhost:5004
         url: payments-service
+
+  operations:
+    path: operations
+    routes:
+      - upstream: /{operationId}
+        method: GET
+        use: downstream
+        downstream: operations-service/operations/{operationId}
+        auth: false
+    
+    services:
+      operations-service:
+        localUrl: localhost:5005
+        url: operations-service

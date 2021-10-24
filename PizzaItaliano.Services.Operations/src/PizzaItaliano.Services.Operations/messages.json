@@ -1,0 +1,70 @@
+{
+  "product-service": {
+    "exchange": "product",
+    "commands": [
+      "add_product",
+      "delete_product",
+      "update_product"
+    ],
+    "events": [
+      "product_created",
+      "product_deleted",
+      "product_modified"
+    ],
+    "rejectedEvents": [
+      "add_product_rejected",
+      "delete_product_rejected",
+      "update_product_rejected"
+    ]
+  },
+  "order-service": {
+    "exchange": "order",
+    "commands": [
+      "add_order",
+      "add_order_product",
+      "delete_order_product",
+      "set_order_state_ready"
+    ],
+    "events": [
+      "order_added",
+      "order_product_added",
+      "order_product_deleted",
+      "order_product_state_modified",
+      "order_state_modified"
+    ],
+    "rejectedEvents": [
+      "add_order_product_rejected",
+      "add_order_rejected",
+      "delete_order_product_rejected",
+      "update_order_product_rejected",
+      "update_order_rejected"
+    ]
+  },
+  "release-service": {
+    "exchange": "release",
+    "commands": [
+      "add_release"
+    ],
+    "events": [
+      "release_added"
+    ],
+    "rejectedEvents": [
+      "add_release_rejected"
+    ]
+  },
+  "payment-service": {
+    "exchange": "payment",
+    "commands": [
+      "add_payment",
+      "update_payment"
+    ],
+    "events": [
+      "added_payment",
+      "paid_payment"
+    ],
+    "rejectedEvents": [
+      "add_payment_rejected",
+      "update_payment_rejected"
+    ]
+  }
+}
