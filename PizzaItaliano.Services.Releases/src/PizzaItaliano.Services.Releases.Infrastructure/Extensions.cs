@@ -21,6 +21,8 @@ using PizzaItaliano.Services.Releases.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Releases.Infrastructure.Mongo.Repositories;
 using PizzaItaliano.Services.Releases.Infrastructure.Services;
 using System;
+using Convey.MessageBrokers.CQRS;
+using PizzaItaliano.Services.Releases.Application.Commands;
 
 namespace PizzaItaliano.Services.Releases.Infrastructure
 {
@@ -54,7 +56,8 @@ namespace PizzaItaliano.Services.Releases.Infrastructure
                .UseConvey()
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
-               .UseRabbitMq();
+               .UseRabbitMq()
+               .SubscribeCommand<AddRelease>();
 
             return app;
         }
