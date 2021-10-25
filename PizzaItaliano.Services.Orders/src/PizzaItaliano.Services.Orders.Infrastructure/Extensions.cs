@@ -27,6 +27,7 @@ using PizzaItaliano.Services.Orders.Infrastructure.Decorators;
 using Convey.CQRS.Events;
 using Convey.MessageBrokers.Outbox;
 using Convey.MessageBrokers.Outbox.Mongo;
+using PizzaItaliano.Services.Orders.Application.Commands;
 
 namespace PizzaItaliano.Services.Orders.Infrastructure
 {
@@ -63,6 +64,10 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
                .UseRabbitMq()
+               .SubscribeCommand<AddOrder>()
+               .SubscribeCommand<AddOrderProduct>()
+               .SubscribeCommand<DeleteOrderProduct>()
+               .SubscribeCommand<SetOrderStatusReady>()
                .SubscribeEvent<PaidPayment>()
                .SubscribeEvent<ReleaseAdded>(); 
 

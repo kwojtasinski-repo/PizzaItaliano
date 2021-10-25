@@ -15,6 +15,7 @@ using Convey.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using PizzaItaliano.Services.Payments.Application;
+using PizzaItaliano.Services.Payments.Application.Commands;
 using PizzaItaliano.Services.Payments.Application.Events.External;
 using PizzaItaliano.Services.Payments.Application.Services;
 using PizzaItaliano.Services.Payments.Application.Services.Clients;
@@ -63,6 +64,8 @@ namespace PizzaItaliano.Services.Payments.Infrastructure
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
                .UseRabbitMq()
+               .SubscribeCommand<AddPayment>()
+               .SubscribeCommand<UpdatePayment>()
                .SubscribeEvent<OrderStateModified>(); // wywola event handler;
 
             return app;

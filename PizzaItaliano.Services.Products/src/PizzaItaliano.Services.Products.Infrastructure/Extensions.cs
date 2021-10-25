@@ -23,6 +23,7 @@ using Convey.CQRS.Events;
 using Convey.CQRS.Commands;
 using Convey.MessageBrokers.Outbox;
 using Convey.MessageBrokers.Outbox.Mongo;
+using PizzaItaliano.Services.Products.Application.Commands;
 
 namespace PizzaItaliano.Services.Products.Infrastructure
 {
@@ -63,6 +64,9 @@ namespace PizzaItaliano.Services.Products.Infrastructure
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
                .UseRabbitMq()
+               .SubscribeCommand<AddProduct>()
+               .SubscribeCommand<DeleteProduct>()
+               .SubscribeCommand<UpdateProduct>()
                .SubscribeEvent<OrderProductAdded>(); // wywola event handler
 
             return app;
