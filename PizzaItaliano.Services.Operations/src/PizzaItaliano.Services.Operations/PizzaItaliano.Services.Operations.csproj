@@ -39,4 +39,8 @@
     <Protobuf Include="Operations.proto" />
   </ItemGroup>
   
+  <ItemGroup>
+    <Folder Include="wwwroot\ui\js" />
+  </ItemGroup>
+  
 </Project>
