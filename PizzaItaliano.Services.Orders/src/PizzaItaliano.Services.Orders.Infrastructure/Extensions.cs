@@ -28,6 +28,7 @@ using Convey.CQRS.Events;
 using Convey.MessageBrokers.Outbox;
 using Convey.MessageBrokers.Outbox.Mongo;
 using PizzaItaliano.Services.Orders.Application.Commands;
+using Convey.Discovery.Consul;
 
 namespace PizzaItaliano.Services.Orders.Infrastructure
 {
@@ -53,6 +54,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
             conveyBuilder.AddSwaggerDocs();
             conveyBuilder.AddWebApiSwaggerDocs();
             conveyBuilder.AddRabbitMq();
+            conveyBuilder.AddConsul();
 
             return conveyBuilder;
         }
