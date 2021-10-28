@@ -53,8 +53,8 @@ namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
             }
 
             var paymentNumber = new StringBuilder("PAY/")
-                .Append(currentDate.Year.ToString("YYYY")).Append("/").Append(currentDate.Month.ToString("MM"))
-                .Append("/").Append(currentDate.Day.ToString("dd")).Append("/").Append(number).ToString();
+                .Append(currentDate.Year).Append("/").Append(currentDate.Month)
+                .Append("/").Append(currentDate.Day).Append("/").Append(number).ToString();
 
             var payment = Payment.Create(command.PaymentId, paymentNumber, command.Cost, command.OrderId, PaymentStatus.Paid);
 
