@@ -25,6 +25,7 @@ using Convey.MessageBrokers.Outbox;
 using Convey.MessageBrokers.Outbox.Mongo;
 using PizzaItaliano.Services.Products.Application.Commands;
 using Convey.Discovery.Consul;
+using Convey.LoadBalancing.Fabio;
 
 namespace PizzaItaliano.Services.Products.Infrastructure
 {
@@ -49,6 +50,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure
             conveyBuilder.AddExceptionToMessageMapper<ExceptionToMessageMapper>();
             conveyBuilder.AddQueryHandlers();
             conveyBuilder.AddConsul();
+            conveyBuilder.AddFabio();
             conveyBuilder.AddInMemoryQueryDispatcher();
             conveyBuilder.AddMongo();
             conveyBuilder.AddMongoRepository<ProductDocument, Guid>("products");
