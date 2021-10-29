@@ -77,7 +77,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PizzaItaliano.Services.Oper
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{01F74FE7-150A-41C9-B8F3-B9D5914121CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Operations", "..\PizzaItaliano.Services.Operations\src\PizzaItaliano.Services.Operations\PizzaItaliano.Services.Operations.csproj", "{D63804CB-56C4-42DE-8E74-6D8C70A604A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Operations", "..\PizzaItaliano.Services.Operations\src\PizzaItaliano.Services.Operations\PizzaItaliano.Services.Operations.csproj", "{D63804CB-56C4-42DE-8E74-6D8C70A604A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Products.Tests.Shared", "..\PizzaItaliano.Services.Products\tests\PizzaItaliano.Services.Products.Tests.Shared\PizzaItaliano.Services.Products.Tests.Shared.csproj", "{BA32D395-50FA-48F0-B4F9-B82F83BD042E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Products.Tests.Intgration", "..\PizzaItaliano.Services.Products\tests\PizzaItaliano.Services.Products.Tests.Intgration\PizzaItaliano.Services.Products.Tests.Intgration.csproj", "{C4BF803B-E058-4A10-A7F1-E2601EEAC332}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -173,6 +177,14 @@ Global
 		{D63804CB-56C4-42DE-8E74-6D8C70A604A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D63804CB-56C4-42DE-8E74-6D8C70A604A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D63804CB-56C4-42DE-8E74-6D8C70A604A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA32D395-50FA-48F0-B4F9-B82F83BD042E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA32D395-50FA-48F0-B4F9-B82F83BD042E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA32D395-50FA-48F0-B4F9-B82F83BD042E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA32D395-50FA-48F0-B4F9-B82F83BD042E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4BF803B-E058-4A10-A7F1-E2601EEAC332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4BF803B-E058-4A10-A7F1-E2601EEAC332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4BF803B-E058-4A10-A7F1-E2601EEAC332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4BF803B-E058-4A10-A7F1-E2601EEAC332}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -210,6 +222,8 @@ Global
 		{511C0428-959C-4148-B28D-AF65E6D3C052} = {E210DDBA-A3DC-4AE6-B375-011F57807114}
 		{01F74FE7-150A-41C9-B8F3-B9D5914121CF} = {1CB6BC03-C3C4-41F7-9A89-F7DAD4121C33}
 		{D63804CB-56C4-42DE-8E74-6D8C70A604A3} = {01F74FE7-150A-41C9-B8F3-B9D5914121CF}
+		{BA32D395-50FA-48F0-B4F9-B82F83BD042E} = {32895C85-6CC6-461C-88B9-4291CDE6021D}
+		{C4BF803B-E058-4A10-A7F1-E2601EEAC332} = {32895C85-6CC6-461C-88B9-4291CDE6021D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30FFB666-5D1E-415D-8363-F77C72FCA839}
