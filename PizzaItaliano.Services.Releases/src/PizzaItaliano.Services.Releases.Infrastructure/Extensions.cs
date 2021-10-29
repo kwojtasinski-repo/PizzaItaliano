@@ -23,6 +23,8 @@ using PizzaItaliano.Services.Releases.Infrastructure.Services;
 using System;
 using Convey.MessageBrokers.CQRS;
 using PizzaItaliano.Services.Releases.Application.Commands;
+using Convey.LoadBalancing.Fabio;
+using Convey.Discovery.Consul;
 
 namespace PizzaItaliano.Services.Releases.Infrastructure
 {
@@ -46,6 +48,8 @@ namespace PizzaItaliano.Services.Releases.Infrastructure
             conveyBuilder.AddWebApiSwaggerDocs();
             conveyBuilder.AddMessageOutbox(o => o.AddMongo());
             conveyBuilder.AddRabbitMq();
+            conveyBuilder.AddConsul();
+            conveyBuilder.AddFabio();
 
             return conveyBuilder;
         }
