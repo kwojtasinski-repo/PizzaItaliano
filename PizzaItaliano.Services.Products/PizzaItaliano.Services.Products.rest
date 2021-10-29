@@ -1,0 +1,36 @@
+@url = http://localhost:5001
+@productId = 10000000-0000-0000-0000-000000000000
+@name = Pizza
+@cost = 20.51
+
+###
+GET {{url}}/products
+
+###
+GET {{url}}/products/{{name}}
+
+###
+GET {{url}}/products/{{resourceId}}
+
+###
+POST {{url}}/products
+Content-Type: application/json
+
+{
+  "productId": "{{productId}}",
+  "name": "{{name}}"
+  "cost": {{cost}}
+}
+
+### 
+PUT {{url}}/products
+Content-Type: application/json
+
+{
+  "productId": "{{productId}}",
+  "name": "{{name}}"
+  "cost": {{cost}}
+}
+
+###
+DELETE {{url}}/products/{{productId}}
