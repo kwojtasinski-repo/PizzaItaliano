@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -17,6 +17,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PizzaItaliano.Services.Releases.API\PizzaItaliano.Services.Releases.API.csproj" />
+    <ProjectReference Include="..\..\src\PizzaItaliano.Services.Releases.Infrastructure\PizzaItaliano.Services.Releases.Infrastructure.csproj" />
+    <ProjectReference Include="..\PizzaItaliano.Services.Releases.Tests.Shared\PizzaItaliano.Services.Releases.Tests.Shared.csproj" />
   </ItemGroup>
 
 </Project>
