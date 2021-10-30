@@ -19,4 +19,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PizzaItaliano.Services.Orders.API\PizzaItaliano.Services.Orders.API.csproj" />
+    <ProjectReference Include="..\..\src\PizzaItaliano.Services.Orders.Infrastructure\PizzaItaliano.Services.Orders.Infrastructure.csproj" />
+    <ProjectReference Include="..\PizzaItaliano.Services.Orders.Tests.Shared\PizzaItaliano.Services.Orders.Tests.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
