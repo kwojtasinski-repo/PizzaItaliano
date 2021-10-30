@@ -18,7 +18,7 @@ Content-Type: application/json
 
 {
   "productId": "{{productId}}",
-  "name": "{{name}}"
+  "name": "{{name}}",
   "cost": {{cost}}
 }
 
@@ -28,7 +28,7 @@ Content-Type: application/json
 
 {
   "productId": "{{productId}}",
-  "name": "{{name}}"
+  "name": "{{name}}",
   "cost": {{cost}}
 }
 
