@@ -1,9 +1,9 @@
 using System;
 using Xunit;
 
-namespace PizzaItaliano.Services.Orders.Tests.Unit
+namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications
 {
-    public class UnitTest1
+    public class AddOrderHandlerTests
     {
         [Fact]
         public void Test1()
