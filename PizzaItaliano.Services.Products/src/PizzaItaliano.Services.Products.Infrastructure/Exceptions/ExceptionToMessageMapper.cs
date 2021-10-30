@@ -30,6 +30,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure.Exceptions
                     DeleteProduct command => new DeleteProductRejected(command.ProductId, ex.Message, ex.Code),
                     _ => null
                 },
+                InvalidUpdateProductException ex => new UpdateProductRejected(ex.ProductId, ex.Message, ex.Code),
 
                 // Domain Exceptions
                 Core.Exceptions.InvalidProductCostException ex => new AddProductRejected(Guid.Empty, ex.Message, ex.Code),

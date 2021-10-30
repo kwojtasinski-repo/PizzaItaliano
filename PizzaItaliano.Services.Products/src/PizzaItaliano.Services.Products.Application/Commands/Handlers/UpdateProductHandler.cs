@@ -28,7 +28,7 @@ namespace PizzaItaliano.Services.Products.Application.Commands.Handlers
 
             if (emptyName && !costHasValue)
             {
-                return;
+                throw new InvalidUpdateProductException(command.ProductId);
             }
 
             if (costHasValue && command.Cost < 0)

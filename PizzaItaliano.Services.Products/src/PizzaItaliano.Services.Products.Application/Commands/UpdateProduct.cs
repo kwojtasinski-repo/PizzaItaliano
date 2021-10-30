@@ -13,5 +13,12 @@ namespace PizzaItaliano.Services.Products.Application.Commands
         public Guid ProductId { get; set; }
         public string Name { get; set; }
         public decimal? Cost { get; set; }
+
+        public UpdateProduct(Guid productId, string name, decimal? cost)
+        {
+            ProductId = productId;
+            Name = name;
+            Cost = cost;
+        }
     }
 }
