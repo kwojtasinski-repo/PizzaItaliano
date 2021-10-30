@@ -1,0 +1,28 @@
+@url = http://localhost:5004
+@paymentId = 10000000-0000-0000-0000-000000000000
+@orderId = 10000000-0000-0000-0000-000000000000
+@cost = 20.51
+
+###
+GET {{url}}/payments
+
+###
+GET {{url}}/payments/{{paymentId}}
+
+###
+POST {{url}}/payments
+Content-Type: application/json
+
+{
+  "paymentId": "{{paymentId}}",
+  "cost": "{{cost}}",
+  "orderId": {{orderId}}
+}
+
+### 
+PUT {{url}}/payments
+Content-Type: application/json
+
+{
+  "paymentId": "{{paymentId}}"
+}
