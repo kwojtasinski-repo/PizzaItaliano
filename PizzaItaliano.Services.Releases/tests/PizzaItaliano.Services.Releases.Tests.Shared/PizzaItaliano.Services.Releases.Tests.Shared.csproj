@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Convey.MessageBrokers.RabbitMQ" Version="0.5.506" />
+    <PackageReference Include="Convey.Persistence.MongoDB" Version="0.5.506" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.11" />
+  </ItemGroup>
+
+</Project>
