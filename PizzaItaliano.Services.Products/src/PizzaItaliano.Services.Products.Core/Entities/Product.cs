@@ -27,8 +27,6 @@ namespace PizzaItaliano.Services.Products.Core.Entities
 
         public static Product Create(Guid id, string name, decimal cost, ProductStatus status)
         {
-            ValidCost(id, cost);
-            ValidName(name);
             var product = new Product(id, name, cost, status);
             product.AddEvent(new ProductAdded(product));
             return product;
