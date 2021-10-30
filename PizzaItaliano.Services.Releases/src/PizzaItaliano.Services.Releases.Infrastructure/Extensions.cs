@@ -25,7 +25,9 @@ using Convey.MessageBrokers.CQRS;
 using PizzaItaliano.Services.Releases.Application.Commands;
 using Convey.LoadBalancing.Fabio;
 using Convey.Discovery.Consul;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("PizzaItaliano.Services.Releases.Tests.Intgration")] // widocznosc internal na poziomie testow (integration)
 namespace PizzaItaliano.Services.Releases.Infrastructure
 {
     public static class Extensions
