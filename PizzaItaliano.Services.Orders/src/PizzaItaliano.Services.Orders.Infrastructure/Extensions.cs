@@ -30,7 +30,9 @@ using Convey.MessageBrokers.Outbox.Mongo;
 using PizzaItaliano.Services.Orders.Application.Commands;
 using Convey.Discovery.Consul;
 using Convey.LoadBalancing.Fabio;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("PizzaItaliano.Services.Orders.Tests.Integration")] // widocznosc internal na poziomie testow (integration)
 namespace PizzaItaliano.Services.Orders.Infrastructure
 {
     public static class Extensions
