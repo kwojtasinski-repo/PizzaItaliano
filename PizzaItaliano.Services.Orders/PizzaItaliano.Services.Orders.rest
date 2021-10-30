@@ -1,0 +1,43 @@
+@url = http://localhost:5002
+
+
+@orderId = 10000000-0000-0000-0000-000000000000
+@orderProductId = 10000000-0000-0000-0000-000000000000
+@productId = 10000000-0000-0000-0000-000000000000
+@quantity = 1
+
+###
+GET {{url}}/orders
+
+###
+GET {{url}}/orders/{{orderId}}
+
+###
+POST {{url}}/orders
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}"
+}
+
+###
+POST {{url}}/orders/order-product
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}",
+  "orderProductId": "{{orderProductId}}",
+  "productId": {{productId}},
+  "quantity": {{quantity}}
+}
+
+### 
+PUT {{url}}/orders
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}"
+}
+
+###
+DELETE {{url}}/orders/{{orderId}}/order-product/{{orderProductId}}/product/{{productId}}
