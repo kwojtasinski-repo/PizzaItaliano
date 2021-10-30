@@ -79,9 +79,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{01F74FE7-150
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Operations", "..\PizzaItaliano.Services.Operations\src\PizzaItaliano.Services.Operations\PizzaItaliano.Services.Operations.csproj", "{D63804CB-56C4-42DE-8E74-6D8C70A604A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Products.Tests.Shared", "..\PizzaItaliano.Services.Products\tests\PizzaItaliano.Services.Products.Tests.Shared\PizzaItaliano.Services.Products.Tests.Shared.csproj", "{BA32D395-50FA-48F0-B4F9-B82F83BD042E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Products.Tests.Shared", "..\PizzaItaliano.Services.Products\tests\PizzaItaliano.Services.Products.Tests.Shared\PizzaItaliano.Services.Products.Tests.Shared.csproj", "{BA32D395-50FA-48F0-B4F9-B82F83BD042E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Products.Tests.Intgration", "..\PizzaItaliano.Services.Products\tests\PizzaItaliano.Services.Products.Tests.Intgration\PizzaItaliano.Services.Products.Tests.Intgration.csproj", "{C4BF803B-E058-4A10-A7F1-E2601EEAC332}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Products.Tests.Intgration", "..\PizzaItaliano.Services.Products\tests\PizzaItaliano.Services.Products.Tests.Intgration\PizzaItaliano.Services.Products.Tests.Intgration.csproj", "{C4BF803B-E058-4A10-A7F1-E2601EEAC332}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Orders.Tests.Integration", "..\PizzaItaliano.Services.Orders\tests\PizzaItaliano.Services.Orders.Tests.Integration\PizzaItaliano.Services.Orders.Tests.Integration.csproj", "{957139D8-E5A5-4904-9D03-B895713D41BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Orders.Tests.Shared", "..\PizzaItaliano.Services.Orders\tests\PizzaItaliano.Services.Orders.Tests.Shared\PizzaItaliano.Services.Orders.Tests.Shared.csproj", "{A339CF55-A2FB-4B55-83D5-435727DB040A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -185,6 +189,14 @@ Global
 		{C4BF803B-E058-4A10-A7F1-E2601EEAC332}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4BF803B-E058-4A10-A7F1-E2601EEAC332}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4BF803B-E058-4A10-A7F1-E2601EEAC332}.Release|Any CPU.Build.0 = Release|Any CPU
+		{957139D8-E5A5-4904-9D03-B895713D41BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{957139D8-E5A5-4904-9D03-B895713D41BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{957139D8-E5A5-4904-9D03-B895713D41BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{957139D8-E5A5-4904-9D03-B895713D41BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A339CF55-A2FB-4B55-83D5-435727DB040A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A339CF55-A2FB-4B55-83D5-435727DB040A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A339CF55-A2FB-4B55-83D5-435727DB040A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A339CF55-A2FB-4B55-83D5-435727DB040A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -224,6 +236,8 @@ Global
 		{D63804CB-56C4-42DE-8E74-6D8C70A604A3} = {01F74FE7-150A-41C9-B8F3-B9D5914121CF}
 		{BA32D395-50FA-48F0-B4F9-B82F83BD042E} = {32895C85-6CC6-461C-88B9-4291CDE6021D}
 		{C4BF803B-E058-4A10-A7F1-E2601EEAC332} = {32895C85-6CC6-461C-88B9-4291CDE6021D}
+		{957139D8-E5A5-4904-9D03-B895713D41BE} = {AF59D75C-51D9-4CE7-8569-87A0F74CC386}
+		{A339CF55-A2FB-4B55-83D5-435727DB040A} = {AF59D75C-51D9-4CE7-8569-87A0F74CC386}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30FFB666-5D1E-415D-8363-F77C72FCA839}
