@@ -1,0 +1,20 @@
+@url = http://localhost:5003
+@releaseId = 10000000-0000-0000-0000-000000000000
+@orderId = 10000000-0000-0000-0000-000000000000
+@orderProductId = 10000000-0000-0000-0000-000000000000
+
+###
+GET {{url}}/releases
+
+###
+GET {{url}}/releases/{{releaseId}}
+
+###
+POST {{url}}/releases
+Content-Type: application/json
+
+{
+  "releaseId": "{{releaseId}}",
+  "orderId": "{{orderId}}"
+  "orderProductId": {{orderProductId}}
+}
