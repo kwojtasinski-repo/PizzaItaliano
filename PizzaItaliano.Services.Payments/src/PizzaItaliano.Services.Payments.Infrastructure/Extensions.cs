@@ -29,7 +29,9 @@ using PizzaItaliano.Services.Payments.Infrastructure.Repositories;
 using PizzaItaliano.Services.Payments.Infrastructure.Services;
 using PizzaItaliano.Services.Payments.Infrastructure.Services.Clients;
 using System;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("PizzaItaliano.Services.Payments.Tests.Intgration")] // widocznosc internal na poziomie testow (integration)
 namespace PizzaItaliano.Services.Payments.Infrastructure
 {
     public static class Extensions

@@ -89,6 +89,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Orde
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Payments.Tests.Shared", "..\PizzaItaliano.Services.Payments\tests\PizzaItaliano.Services.Payments.Tests.Shared\PizzaItaliano.Services.Payments.Tests.Shared.csproj", "{686C097E-394E-40B0-896D-A0F20F7DFFCC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Payments.Tests.Intgration", "..\PizzaItaliano.Services.Payments\tests\PizzaItaliano.Services.Payments.Tests.Intgration\PizzaItaliano.Services.Payments.Tests.Intgration.csproj", "{2BB94D85-685A-441E-9DBF-BAC39B4CCA6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -203,6 +205,10 @@ Global
 		{686C097E-394E-40B0-896D-A0F20F7DFFCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{686C097E-394E-40B0-896D-A0F20F7DFFCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{686C097E-394E-40B0-896D-A0F20F7DFFCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BB94D85-685A-441E-9DBF-BAC39B4CCA6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BB94D85-685A-441E-9DBF-BAC39B4CCA6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BB94D85-685A-441E-9DBF-BAC39B4CCA6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BB94D85-685A-441E-9DBF-BAC39B4CCA6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -245,6 +251,7 @@ Global
 		{957139D8-E5A5-4904-9D03-B895713D41BE} = {AF59D75C-51D9-4CE7-8569-87A0F74CC386}
 		{A339CF55-A2FB-4B55-83D5-435727DB040A} = {AF59D75C-51D9-4CE7-8569-87A0F74CC386}
 		{686C097E-394E-40B0-896D-A0F20F7DFFCC} = {DBA81E07-303B-4E37-9ECD-DBCCFE8C232B}
+		{2BB94D85-685A-441E-9DBF-BAC39B4CCA6E} = {DBA81E07-303B-4E37-9ECD-DBCCFE8C232B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30FFB666-5D1E-415D-8363-F77C72FCA839}
