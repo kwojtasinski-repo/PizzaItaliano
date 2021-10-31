@@ -63,6 +63,8 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Exceptions
                 },
                 Core.Exceptions.OrderProductNotFoundException ex => new DeleteOrderProductRejected(ex.OrderProductId, ex.Message, ex.Code),
                 Core.Exceptions.CannotDeleteOrderProductException ex => new DeleteOrderProductRejected(ex.OrderProductId, ex.Message, ex.Code),
+                InvalidOrderCostException ex => new AddOrderRejected(ex.OrderId, ex.Message, ex.Code),
+                InvalidOrderNumberException ex => new AddOrderRejected(ex.OrderId, ex.Message, ex.Code),
 
                 // other unforeseen exceptions 
                 _ => null

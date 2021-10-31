@@ -50,6 +50,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Exceptions
 
                 // Domain Exceptions
                 InvalidPaymentCostException ex => new AddPaymentRejected(Guid.Empty, ex.Message, ex.Code),
+                InvalidPaymentNumberException ex => new AddPaymentRejected(Guid.Empty, ex.Message, ex.Code),
 
                 // other unforeseen exceptions 
                 _ => null
