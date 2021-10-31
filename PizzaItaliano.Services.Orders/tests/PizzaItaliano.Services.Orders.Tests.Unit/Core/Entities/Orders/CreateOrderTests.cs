@@ -15,7 +15,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
         private Order Act(AggregateId id, string number, decimal cost) => Order.Create(id, number, cost);
 
         [Fact]
-        public void given_valid_parameters_product_should_be_created()
+        public void given_valid_parameters_order_should_be_created()
         {
             // Arrange
             var id = new AggregateId();
@@ -23,13 +23,13 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var cost = new decimal(12.12);
 
             // Act
-            var product = Act(id, number, cost);
+            var order = Act(id, number, cost);
 
             // Assert
-            product.Id.ShouldBe(id);
-            product.OrderNumber.ShouldBe(number);
-            product.Cost.ShouldBe(cost);
-            var @event = product.Events.Single();
+            order.Id.ShouldBe(id);
+            order.OrderNumber.ShouldBe(number);
+            order.Cost.ShouldBe(cost);
+            var @event = order.Events.Single();
             @event.ShouldBeOfType<OrderCreated>();
         }
     }

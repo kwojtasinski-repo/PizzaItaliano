@@ -1,4 +1,5 @@
 ﻿using PizzaItaliano.Services.Orders.Core.Entities;
+using PizzaItaliano.Services.Orders.Core.Exceptions;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.OrderProducts
         private OrderProduct Act(AggregateId id, int quantity, decimal cost, Guid orderId, Guid productId) => OrderProduct.Create(id, quantity, cost, orderId, productId);
 
         [Fact]
-        public void given_valid_parameters_product_should_be_created()
+        public void given_valid_parameters_order_product_should_be_created()
         {
             // Arrange
             var id = new AggregateId();
@@ -24,14 +25,50 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.OrderProducts
             var quantity = 1;
 
             // Act
-            var product = Act(id, quantity, cost, orderId, productId);
+            var orderProduct = Act(id, quantity, cost, orderId, productId);
 
             // Assert
-            product.Id.ShouldBe(id);
-            product.Quantity.ShouldBe(quantity);
-            product.Cost.ShouldBe(cost);
-            product.OrderId.ShouldBe(orderId);
-            product.ProductId.ShouldBe(productId);
+            orderProduct.Id.ShouldBe(id);
+            orderProduct.Quantity.ShouldBe(quantity);
+            orderProduct.Cost.ShouldBe(cost);
+            orderProduct.OrderId.ShouldBe(orderId);
+            orderProduct.ProductId.ShouldBe(productId);
+        }
+
+        [Fact]
+        public void given_invalid_quantity_should_throw_exception()
+        {
+            // Arrange
+            var id = new AggregateId();
+            var orderId = Guid.NewGuid();
+            var productId = Guid.NewGuid();
+            var quantity = -1;
+            var cost = new decimal(12.12);
+
+            // Act
+            var exception = Record.Exception(() => Act(id, quantity, cost, orderId, productId));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<InvalidOrderProductQuantityException>();
+        }
+
+        [Fact]
+        public void given_invalid_cost_should_throw_exception()
+        {
+            // Arrange
+            var id = new AggregateId();
+            var orderId = Guid.NewGuid();
+            var productId = Guid.NewGuid();
+            var quantity = -1;
+            var cost = new decimal(-12.12);
+
+            // Act
+            var exception = Record.Exception(() => Act(id, quantity, cost, orderId, productId));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<InvalidOrderProductCostException>();
         }
     }
 }
