@@ -60,7 +60,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
                 product.AddQuantity(orderProduct.Quantity);
             }
 
-            AddEvent(new OrderProductCreated(this, orderProduct));
+            AddEvent(new OrderProductAdd(this, orderProduct));
             var cost = orderProduct.Cost * orderProduct.Quantity;
             Cost += cost;
         }
