@@ -30,8 +30,6 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
 
         public static OrderProduct Create(Guid id, int quantity, decimal cost, Guid orderId, Guid productId)
         {
-            ValidCost(id, cost);
-            ValidQuantity(id, quantity);
             var orderProduct = new OrderProduct(id, quantity, cost, orderId, productId, OrderProductStatus.New);
             return orderProduct;
         }
