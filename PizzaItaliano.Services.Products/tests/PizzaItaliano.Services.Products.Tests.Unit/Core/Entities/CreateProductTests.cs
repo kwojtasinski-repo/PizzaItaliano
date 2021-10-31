@@ -10,7 +10,7 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Core.Entities
 {
     public class CreateProductTests
     {
-        private Product Act(AggregateId id, string name, decimal cost, ProductStatus status) => Product.Create(id, name, cost, status);
+        private Product Act(AggregateId id, string name, decimal cost) => Product.Create(id, name, cost);
 
         [Fact]
         public void given_valid_parameters_product_should_be_created()
@@ -22,7 +22,7 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Core.Entities
             var status = ProductStatus.New;
 
             // Act
-            var product = Act(id, name, cost, status);
+            var product = Act(id, name, cost);
 
             // Assert
             product.Id.ShouldBe(id);
@@ -40,7 +40,7 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Core.Entities
             var id = new AggregateId();
 
             // Act
-            var exception = Record.Exception(() => Act(id, "", 0, ProductStatus.New));
+            var exception = Record.Exception(() => Act(id, "", 0));
 
             // Assert
             exception.ShouldNotBeNull();
@@ -56,7 +56,7 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Core.Entities
             var cost = -10;
 
             // Act
-            var exception = Record.Exception(() => Act(id, name, cost, ProductStatus.New));
+            var exception = Record.Exception(() => Act(id, name, cost));
 
             // Assert
             exception.ShouldNotBeNull();

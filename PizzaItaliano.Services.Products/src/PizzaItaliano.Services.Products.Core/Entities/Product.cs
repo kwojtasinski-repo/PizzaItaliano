@@ -25,6 +25,13 @@ namespace PizzaItaliano.Services.Products.Core.Entities
             Status = status;
         }
 
+        public static Product Create(Guid id, string name, decimal cost)
+        {
+            var product = new Product(id, name, cost, ProductStatus.New);
+            product.AddEvent(new ProductAdded(product));
+            return product;
+        }
+
         public static Product Create(Guid id, string name, decimal cost, ProductStatus status)
         {
             var product = new Product(id, name, cost, status);
