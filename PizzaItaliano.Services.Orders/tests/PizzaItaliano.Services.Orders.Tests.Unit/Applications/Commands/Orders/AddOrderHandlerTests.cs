@@ -41,7 +41,6 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Commands.Orders
             // Arrange
             var id = Guid.NewGuid();
             var command = new AddOrder(id);
-            var currentDate = DateTime.Now.Date;
             var number = 1021;
             var orderNumber = $"ORD/2021/10/31/{number}";
             var order = new Order(Guid.NewGuid(), orderNumber, new decimal(100), OrderStatus.Released, DateTime.Now, DateTime.Now);

@@ -36,7 +36,6 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
 
         public static Payment Create(Guid id, string number, decimal cost, Guid orderId, PaymentStatus paymentStatus)
         {
-            ValidCost(id, cost);
             var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, paymentStatus);
             payment.AddEvent(new CreatePayment(payment));
             return payment;
