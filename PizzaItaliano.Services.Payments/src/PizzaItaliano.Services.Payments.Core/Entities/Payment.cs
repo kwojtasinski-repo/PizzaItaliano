@@ -24,6 +24,7 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
 
         public Payment(Guid id, string paymentNumber, decimal cost, Guid orderId, DateTime createDate, DateTime modifiedDate, PaymentStatus paymentStatus)
         {
+            ValidPaymentNumber(id, paymentNumber);
             ValidCost(id, cost);
             Id = id;
             PaymentNumber = paymentNumber;
@@ -37,6 +38,13 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
         public static Payment Create(Guid id, string number, decimal cost, Guid orderId, PaymentStatus paymentStatus)
         {
             var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, paymentStatus);
+            payment.AddEvent(new CreatePayment(payment));
+            return payment;
+        }
+
+        public static Payment Create(Guid id, string number, decimal cost, Guid orderId)
+        {
+            var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, PaymentStatus.Unpaid);
             payment.AddEvent(new CreatePayment(payment));
             return payment;
         }
@@ -58,6 +66,14 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
             if (cost < 0)
             {
                 throw new InvalidPaymentCostException(id, cost);
+            }
+        }
+
+        private static void ValidPaymentNumber(Guid id, string paymentNumber)
+        {
+            if (string.IsNullOrWhiteSpace(paymentNumber))
+            {
+                throw new InvalidPaymentNumberException(id, paymentNumber);
             }
         }
     }

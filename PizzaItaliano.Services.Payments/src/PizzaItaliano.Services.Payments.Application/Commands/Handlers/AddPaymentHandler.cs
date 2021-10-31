@@ -56,7 +56,7 @@ namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
                 .Append(currentDate.Year).Append("/").Append(currentDate.Month)
                 .Append("/").Append(currentDate.Day).Append("/").Append(number).ToString();
 
-            var payment = Payment.Create(command.PaymentId, paymentNumber, command.Cost, command.OrderId, PaymentStatus.Paid);
+            var payment = Payment.Create(command.PaymentId, paymentNumber, command.Cost, command.OrderId);
 
             await _paymentRepository.AddAsync(payment);
             var integrationEvents = _eventMapper.MapAll(payment.Events);
