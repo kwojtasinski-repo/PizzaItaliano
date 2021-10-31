@@ -76,7 +76,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
                 throw new OrderProductNotFoundException(Id, orderProduct.Id);
             }
 
-            if (product.Quantity < quantity)
+            if (product.Quantity < quantity || quantity < 1)
             {
                 throw new CannotDeleteOrderProductException(Id, orderProduct.Id, orderProduct.Quantity);
             }
