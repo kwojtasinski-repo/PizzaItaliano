@@ -21,6 +21,8 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
 
         public Order(Guid id, string orderNumber, decimal cost, OrderStatus orderStatus, DateTime orderDate, DateTime? releaseDate, IEnumerable<OrderProduct> orderProducts = null, int version = 0)
         {
+            ValidCost(id, cost);
+            ValidOrderNumber(id, orderNumber);
             Id = id;
             OrderNumber = orderNumber;
             Cost = cost;
@@ -152,6 +154,22 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             }
 
             Cost += cost;
+        }
+
+        private static void ValidCost(Guid id, decimal cost)
+        {
+            if (cost < 0)
+            {
+                throw new InvalidOrderCostException(id, cost);
+            }
+        }
+
+        private static void ValidOrderNumber(Guid id, string orderNumber)
+        {
+            if (string.IsNullOrWhiteSpace(orderNumber))
+            {
+                throw new InvalidOrderNumberException(id, orderNumber);
+            }
         }
     }
 }
