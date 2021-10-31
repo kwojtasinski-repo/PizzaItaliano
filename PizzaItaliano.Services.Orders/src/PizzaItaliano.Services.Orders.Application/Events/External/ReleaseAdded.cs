@@ -15,8 +15,6 @@ namespace PizzaItaliano.Services.Orders.Application.Events.External
         public Guid OrderId { get; }
         public Guid OrderProductId { get; }
 
-        // literowka w zmiennej powinno dzialac 
-		// TODO test Eventu
         public ReleaseAdded(Guid releaseId, Guid orderId, Guid orderProductId)
         {
             ReleaseId = releaseId;

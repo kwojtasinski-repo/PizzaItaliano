@@ -31,6 +31,11 @@ namespace PizzaItaliano.Services.Orders.Application.Events.External.Handlers
                 return;
             }
 
+            if (order.OrderStatus != Core.Entities.OrderStatus.Paid)
+            {
+                return;
+            }
+
             var orderProducts = order.OrderProducts;
             if (orderProducts == null)
             {
