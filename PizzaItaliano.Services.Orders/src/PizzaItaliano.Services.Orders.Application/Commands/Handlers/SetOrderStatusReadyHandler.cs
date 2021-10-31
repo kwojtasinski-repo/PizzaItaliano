@@ -31,6 +31,11 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
                 throw new OrderNotFoundException(command.OrderId);
             }
 
+            if (order.OrderStatus == Core.Entities.OrderStatus.Released)
+            {
+                throw new CannotChangeOrderStatusException(order.Id);
+            }
+
             order.OrderReady();
             await _orderRepository.UpdateAsync(order);
             var events = _eventMapper.MapAll(order.Events);

@@ -1,6 +1,7 @@
 ﻿using Convey.CQRS.Commands;
 using PizzaItaliano.Services.Orders.Application.Exceptions;
 using PizzaItaliano.Services.Orders.Application.Services;
+using PizzaItaliano.Services.Orders.Core.Entities;
 using PizzaItaliano.Services.Orders.Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,11 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
             if (order is null)
             {
                 throw new OrderNotFoundException(command.OrderId);
+            }
+
+            if (order.OrderStatus != OrderStatus.New)
+            {
+                throw new CannotDeleteOrderProductException(order.Id, command.OrderProductId, command.Quantity);
             }
 
             var orderProduct = order.OrderProducts.Where(op => op.Id == command.OrderProductId).FirstOrDefault();

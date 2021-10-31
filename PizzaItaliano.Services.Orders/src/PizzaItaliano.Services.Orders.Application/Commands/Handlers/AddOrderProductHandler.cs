@@ -31,13 +31,18 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
         {
             if (command.Quantity <= 0)
             {
-                throw new CannotAddOrderProductException(command.OrderId, command.OrderProductId, command.Quantity);
+                throw new CannotAddOrderProductException(command.OrderId, command.OrderProductId, command.ProductId, command.Quantity);
             }
 
             var order = await _orderRepository.GetWithCollectionAsync(command.OrderId);
             if (order is null)
             {
                 throw new OrderNotFoundException(command.OrderId);
+            }
+
+            if (order.OrderStatus != OrderStatus.New)
+            {
+                throw new CannotAddOrderProductException(order.Id, command.OrderProductId, command.ProductId, command.Quantity);
             }
 
             var product = await _productServiceClient.GetAsync(command.ProductId);
