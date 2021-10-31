@@ -1,5 +1,6 @@
 ﻿using PizzaItaliano.Services.Orders.Core.Entities;
 using PizzaItaliano.Services.Orders.Core.Events;
+using PizzaItaliano.Services.Orders.Core.Exceptions;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,38 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             order.Cost.ShouldBe(cost);
             var @event = order.Events.Single();
             @event.ShouldBeOfType<OrderCreated>();
+        }
+
+        [Fact]
+        public void given_invalid_cost_should_throw_an_exception()
+        {
+            // Arrange
+            var id = new AggregateId();
+            var number = "ORD/2021/10/31/1";
+            var cost = new decimal(-12.12);
+
+            // Act
+            var exception = Record.Exception(() => Act(id, number, cost));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<InvalidOrderCostException>();
+        }
+
+        [Fact]
+        public void given_invalid_order_number_should_throw_an_exception()
+        {
+            // Arrange
+            var id = new AggregateId();
+            var number = "";
+            var cost = new decimal(12.12);
+
+            // Act
+            var exception = Record.Exception(() => Act(id, number, cost));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<InvalidOrderNumberException>();
         }
     }
 }
