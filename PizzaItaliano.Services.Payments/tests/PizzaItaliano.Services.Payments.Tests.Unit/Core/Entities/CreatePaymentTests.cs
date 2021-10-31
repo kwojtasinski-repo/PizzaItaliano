@@ -1,5 +1,6 @@
 ﻿using PizzaItaliano.Services.Payments.Core.Entities;
 using PizzaItaliano.Services.Payments.Core.Events;
+using PizzaItaliano.Services.Payments.Core.Exceptions;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,42 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Core.Entities
             payment.PaymentStatus.ShouldBe(status);
             var @event = payment.Events.Single();
             @event.ShouldBeOfType<CreatePayment>();
+        }
+
+        [Fact]
+        public void given_invalid_cost_should_throw_an_exception()
+        {
+            // Arrange
+            var id = new AggregateId();
+            var number = "123";
+            var cost = new decimal(-20);
+            var orderId = Guid.NewGuid();
+            var status = PaymentStatus.Paid;
+
+            // Act
+            var exception = Record.Exception(() => Act(id, number, cost, orderId, status));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<InvalidPaymentCostException>();
+        }
+
+        [Fact]
+        public void given_invalid_payment_number_should_throw_an_exception()
+        {
+            // Arrange
+            var id = new AggregateId();
+            var number = "";
+            var cost = decimal.One;
+            var orderId = Guid.NewGuid();
+            var status = PaymentStatus.Paid;
+
+            // Act
+            var exception = Record.Exception(() => Act(id, number, cost, orderId, status));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<InvalidPaymentNumberException>();
         }
     }
 }
