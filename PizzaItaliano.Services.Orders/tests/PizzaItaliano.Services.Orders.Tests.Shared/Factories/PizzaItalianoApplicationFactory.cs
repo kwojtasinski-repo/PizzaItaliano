@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Tests.Shared.Factories
 {
-    public class PizzaItalianoApplicationFactory<TEntryPoint> : WebApplicationFactory<TEntryPoint> where TEntryPoint: class
+    public class PizzaItalianoApplicationFactory<TEntryPoint> : WebApplicationFactory<TEntryPoint> where TEntryPoint : class
     {
         protected override IWebHostBuilder CreateWebHostBuilder()
             => base.CreateWebHostBuilder().UseEnvironment("tests");
