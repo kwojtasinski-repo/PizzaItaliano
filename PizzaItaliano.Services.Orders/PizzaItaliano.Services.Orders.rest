@@ -27,7 +27,7 @@ Content-Type: application/json
 {
   "orderId": "{{orderId}}",
   "orderProductId": "{{orderProductId}}",
-  "productId": {{productId}},
+  "productId": "{{productId}}",
   "quantity": {{quantity}}
 }
 
@@ -40,4 +40,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{url}}/orders/{{orderId}}/order-product/{{orderProductId}}/product/{{productId}}
+DELETE {{url}}/orders/{{orderId}}/order-product/{{orderProductId}}/quantity/{{quantity}}
