@@ -25,6 +25,8 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Exceptions
                 OrderNotFoundException ex => message switch
                 {
                     AddOrderProduct command => new AddOrderProductRejected(command.OrderProductId, ex.Message, ex.Code),
+                    DeleteOrderProduct command => new DeleteOrderProductRejected(command.OrderProductId, ex.Message, ex.Code),
+                    SetOrderStatusReady command => new UpdateOrderRejected(command.OrderId, ex.Message, ex.Code),
                     _ => null
                 },
                 ProductNotFoundException ex => message switch

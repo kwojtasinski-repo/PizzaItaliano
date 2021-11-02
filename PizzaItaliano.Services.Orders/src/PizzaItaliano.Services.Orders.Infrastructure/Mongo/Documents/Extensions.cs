@@ -34,8 +34,8 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
         public static Order AsEntity(this OrderDocument orderDocument)
         {
             var order = new Order(orderDocument.Id, orderDocument.OrderNumber, orderDocument.Cost, orderDocument.OrderStatus, orderDocument.OrderDate,
-                            orderDocument.ReleaseDate, 
-                            orderDocument.OrderProductDocuments.Select(op => op.AsEntity()));
+                            orderDocument.ReleaseDate,
+                            orderDocument.OrderProductDocuments?.Select(op => op.AsEntity()));
             return order;
         }
 
