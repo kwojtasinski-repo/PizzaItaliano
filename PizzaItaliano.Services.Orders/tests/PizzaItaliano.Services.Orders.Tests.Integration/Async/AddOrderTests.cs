@@ -6,6 +6,7 @@ using PizzaItaliano.Services.Orders.Application.Events;
 using PizzaItaliano.Services.Orders.Application.Events.Rejected;
 using PizzaItaliano.Services.Orders.Application.Exceptions;
 using PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents;
+using PizzaItaliano.Services.Orders.Tests.Integration.Helpers;
 using PizzaItaliano.Services.Orders.Tests.Shared.Factories;
 using PizzaItaliano.Services.Orders.Tests.Shared.Fixtures;
 using Shouldly;
@@ -39,10 +40,10 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Async
         }
 
         [Fact]
-        public async Task add_order_command_with_existed_should_throw_an_exception()
+        public async Task add_order_command_with_existed_should_throw_an_exception_and_send_rejected_event()
         {
             var orderId = Guid.NewGuid();
-            AddTestOrder(orderId);
+            await TestHelper.AddTestOrder(orderId, _mongoDbFixture);
             var command = new AddOrder(orderId);
 
             var tcs = _rabbitMqFixture
@@ -57,24 +58,6 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Async
             var exception = new OrderAlreadyExistsException(orderId);
             addOrderRejected.Code.ShouldBe(exception.Code);
             addOrderRejected.Reason.ShouldBe(exception.Message);
-        }
-
-        private void AddTestOrder(Guid id)
-        {
-            var orderId = id;
-            var cost = new decimal(100);
-            var orderDate = DateTime.Now;
-            var orderNumber = "123";
-            var status = Core.Entities.OrderStatus.Released;
-            var orderProductId = Guid.NewGuid();
-            var orderProductStatus = Core.Entities.OrderProductStatus.Released;
-            var productId = Guid.NewGuid();
-            var orderProductDocument = new OrderProductDocument { Id = orderProductId, Cost = cost, OrderId = orderId, Quantity = 1, OrderProductStatus = orderProductStatus, ProductId = productId };
-            var products = new List<OrderProductDocument> { orderProductDocument };
-            var releasedDate = DateTime.Now;
-            var document = new OrderDocument { Id = orderId, Cost = cost, OrderDate = orderDate, OrderNumber = orderNumber, OrderStatus = status, OrderProductDocuments = products, ReleaseDate = releasedDate, Version = 0 };
-
-            _mongoDbFixture.InsertAsync(document);
         }
 
         #region Arrange
