@@ -43,8 +43,8 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
             }
 
             var orderNumber = new StringBuilder("ORD/")
-                .Append(currentDate.Year).Append("/").Append(currentDate.Month)
-                .Append("/").Append(currentDate.Day).Append("/").Append(number).ToString();
+                .Append(currentDate.Year).Append("/").Append(currentDate.Month.ToString("d2"))
+                .Append("/").Append(currentDate.Day.ToString("00")).Append("/").Append(number).ToString();
 
             var order = Order.Create(command.OrderId, orderNumber, decimal.Zero);
 

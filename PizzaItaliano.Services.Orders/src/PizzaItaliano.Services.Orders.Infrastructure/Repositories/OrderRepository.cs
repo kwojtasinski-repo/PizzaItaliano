@@ -59,7 +59,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Repositories
         {
             var expression = predicate.Convert<Order, OrderDocument>();
             var paymentDocuments = _mongoRepository.Collection.AsQueryable().Where(expression);
-            var payments = paymentDocuments.Map<OrderDocument, Order>();
+            var payments = paymentDocuments.Map();
             return payments;
         }
 

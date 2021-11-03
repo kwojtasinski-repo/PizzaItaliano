@@ -92,6 +92,20 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
             return orderProductDto;
         }
 
+        public static IQueryable<Order> Map(this IQueryable<OrderDocument> source)
+        {
+            List<Order> destinationList = new List<Order>();
+            List<OrderDocument> sourceList = source.ToList<OrderDocument>();
+
+            foreach (OrderDocument sourceElement in sourceList)
+            {
+                var destElement = sourceElement.AsEntity();
+                destinationList.Add(destElement);
+            }
+
+            return destinationList.AsQueryable();
+        }
+
         public static IQueryable<TDest> Map<TSource, TDest>(this IQueryable<TSource> source)
         {
             List<TDest> destinationList = new List<TDest>();
