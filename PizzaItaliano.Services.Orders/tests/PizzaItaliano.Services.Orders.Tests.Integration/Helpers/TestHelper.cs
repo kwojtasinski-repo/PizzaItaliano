@@ -3,6 +3,7 @@ using PizzaItaliano.Services.Orders.Tests.Shared.Fixtures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Helpers
         {
             var cost = new decimal(100);
             var orderDate = DateTime.Now;
-            var orderNumber = "123";
+            var orderNumber = "ORD/2021/11/03/1";
             var status = Core.Entities.OrderStatus.Released;
             var releasedDate = DateTime.Now;
             var document = new OrderDocument { Id = orderId, Cost = cost, OrderDate = orderDate, OrderNumber = orderNumber, OrderStatus = status, ReleaseDate = releasedDate, Version = 0 };
@@ -26,7 +27,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Helpers
         {
             var cost = new decimal(100);
             var orderDate = DateTime.Now;
-            var orderNumber = "123";
+            var orderNumber = "ORD/2021/11/03/1";
             var releasedDate = DateTime.Now;
             var document = new OrderDocument { Id = orderId, Cost = cost, OrderDate = orderDate, OrderNumber = orderNumber, OrderStatus = status, ReleaseDate = releasedDate, Version = 0 };
 
@@ -37,7 +38,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Helpers
         {
             var cost = new decimal(100);
             var orderDate = DateTime.Now;
-            var orderNumber = "123";
+            var orderNumber = "ORD/2021/11/03/1";
             var status = Core.Entities.OrderStatus.Released;
             var orderProductStatus = Core.Entities.OrderProductStatus.Released;
             var productId = Guid.NewGuid();
@@ -53,7 +54,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Helpers
         {
             var cost = new decimal(100);
             var orderDate = DateTime.Now;
-            var orderNumber = "123";
+            var orderNumber = "ORD/2021/11/03/1";
             var productId = Guid.NewGuid();
             var orderProductDocument = new OrderProductDocument { Id = orderProductId, Cost = cost, OrderId = orderId, Quantity = 1, OrderProductStatus = orderProductStatus, ProductId = productId };
             var products = new List<OrderProductDocument> { orderProductDocument };

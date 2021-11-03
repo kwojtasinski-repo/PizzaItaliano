@@ -11,12 +11,6 @@ namespace PizzaItaliano.Services.Orders.Tests.Shared.Factories
 {
     public class PizzaItalianoApplicationFactory<TEntryPoint> : WebApplicationFactory<TEntryPoint> where TEntryPoint : class
     {
-        public TestServer GetTestServer() // fix net 5.0
-        {
-            var server = new TestServer(CreateWebHostBuilder());
-            return server;
-        }
-
         protected override IWebHostBuilder CreateWebHostBuilder()
             => base.CreateWebHostBuilder().UseEnvironment("tests");
     }

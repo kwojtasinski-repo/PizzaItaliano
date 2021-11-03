@@ -144,8 +144,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Async
         {
             _rabbitMqFixture = new RabbitMqFixture();
             _mongoDbFixture = new MongoDbFixture<OrderDocument, Guid>("orders");
-            var testServer = factory.GetTestServer();
-            testServer.AllowSynchronousIO = true;
+            factory.Server.AllowSynchronousIO = true;
         }
 
         public void Dispose()
