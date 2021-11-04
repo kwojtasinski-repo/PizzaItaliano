@@ -31,6 +31,7 @@ using PizzaItaliano.Services.Payments.Infrastructure.Services.Clients;
 using System;
 using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("PizzaItaliano.Services.Payments.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Payments.Tests.Intgration")] // widocznosc internal na poziomie testow (integration)
 namespace PizzaItaliano.Services.Payments.Infrastructure
 {

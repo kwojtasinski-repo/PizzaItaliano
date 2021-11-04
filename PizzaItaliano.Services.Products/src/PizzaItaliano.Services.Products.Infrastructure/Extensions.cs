@@ -28,6 +28,7 @@ using Convey.Discovery.Consul;
 using Convey.LoadBalancing.Fabio;
 using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("PizzaItaliano.Services.Products.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Products.Tests.Intgration")] // widocznosc internal na poziomie testow (integration)
 namespace PizzaItaliano.Services.Products.Infrastructure
 {
