@@ -32,7 +32,7 @@ namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
 
             if (command.Cost < 0)
             {
-                throw new InvalidCostException(command.Cost);
+                throw new InvalidCostException(command.PaymentId, command.Cost);
             }
 
             var exists = await _paymentRepository.ExistsAsync(command.PaymentId);

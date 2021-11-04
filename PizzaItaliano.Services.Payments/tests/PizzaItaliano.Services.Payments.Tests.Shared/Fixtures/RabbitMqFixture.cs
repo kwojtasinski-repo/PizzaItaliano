@@ -88,6 +88,50 @@ namespace PizzaItaliano.Services.Payments.Tests.Shared.Fixtures
             return taskCompletionSource;
         }
 
+        public TaskCompletionSource<TMessage> SubscribeAndGet<TMessage>(string exchange)
+        {
+            var taskCompletionSource = new TaskCompletionSource<TMessage>();
+
+            _channel.ExchangeDeclare(exchange: exchange,
+                durable: true,
+                autoDelete: false,
+                arguments: null,
+                type: "topic");
+
+            var queue = $"test_{SnakeCase(typeof(TMessage).Name)}";
+
+            _channel.QueueDeclare(queue: queue,
+                durable: true,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null);
+
+            _channel.QueueBind(queue, exchange, SnakeCase(typeof(TMessage).Name));
+            _channel.BasicQos(0, 1, false);
+
+            var consumer = new AsyncEventingBasicConsumer(_channel);
+            consumer.Received += async (model, ea) =>
+            {
+                var body = ea.Body;
+                var json = Encoding.UTF8.GetString(body.Span);
+                var message = JsonConvert.DeserializeObject<TMessage>(json);
+
+                if (message is null)
+                {
+                    taskCompletionSource.TrySetCanceled();
+                    return;
+                }
+
+                taskCompletionSource.TrySetResult(message);
+            };
+
+            _channel.BasicConsume(queue: queue,
+                autoAck: true,
+                consumer: consumer);
+
+            return taskCompletionSource;
+        }
+
         private static string SnakeCase(string value)
             => string.Concat(value.Select((x, i) =>
                     i > 0 && value[i - 1] != '.' && value[i - 1] != '/' && char.IsUpper(x) ? "_" + x : x.ToString()))

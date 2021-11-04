@@ -1,7 +1,9 @@
-﻿using NSubstitute;
+﻿using Convey.CQRS.Events;
+using NSubstitute;
 using PizzaItaliano.Services.Products.Application.Commands;
 using PizzaItaliano.Services.Products.Application.Commands.Handlers;
 using PizzaItaliano.Services.Products.Application.Exceptions;
+using PizzaItaliano.Services.Products.Application.Services;
 using PizzaItaliano.Services.Products.Core.Entities;
 using PizzaItaliano.Services.Products.Core.Repositories;
 using Shouldly;
@@ -32,6 +34,7 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Applications.Commands
 
             // Assert
             await _productRepository.Received(1).DeleteAsync(id);
+            await _messageBroker.Received(1).PublishAsync(Arg.Any<IEnumerable<IEvent>>());
         }
 
         [Fact]
@@ -70,11 +73,13 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Applications.Commands
 
         private readonly DeleteProductHandler _handler;
         private readonly IProductRepository _productRepository;
+        private readonly IMessageBroker _messageBroker;
 
         public DeleteProductHandlerTests()
         {
             _productRepository = Substitute.For<IProductRepository>();
-            _handler = new DeleteProductHandler(_productRepository);
+            _messageBroker = Substitute.For<IMessageBroker>();
+            _handler = new DeleteProductHandler(_productRepository, _messageBroker);
         }
 
         #endregion
