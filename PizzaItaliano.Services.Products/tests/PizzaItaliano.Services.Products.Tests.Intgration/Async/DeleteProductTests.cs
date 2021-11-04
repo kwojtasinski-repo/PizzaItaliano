@@ -50,13 +50,13 @@ namespace PizzaItaliano.Services.Products.Tests.Intgration.Async
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var deleteProductRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<DeleteProductRejected>();
+            deleteProductRejected.ShouldNotBeNull();
+            deleteProductRejected.ShouldBeOfType<DeleteProductRejected>();
             var exception = new ProductNotFoundException(productId);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            deleteProductRejected.Code.ShouldBe(exception.Code);
+            deleteProductRejected.Reason.ShouldBe(exception.Message);
         }
 
         [Fact]
@@ -71,13 +71,13 @@ namespace PizzaItaliano.Services.Products.Tests.Intgration.Async
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var deleteProductRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<DeleteProductRejected>();
+            deleteProductRejected.ShouldNotBeNull();
+            deleteProductRejected.ShouldBeOfType<DeleteProductRejected>();
             var exception = new CannotDeleteProductException(productId);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            deleteProductRejected.Code.ShouldBe(exception.Code);
+            deleteProductRejected.Reason.ShouldBe(exception.Message);
         }
 
         #region Arrange

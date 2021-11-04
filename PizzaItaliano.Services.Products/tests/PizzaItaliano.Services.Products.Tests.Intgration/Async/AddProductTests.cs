@@ -49,13 +49,13 @@ namespace PizzaItaliano.Services.Products.Tests.Intgration.Async
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var addProductRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<AddProductRejected>();
+            addProductRejected.ShouldNotBeNull();
+            addProductRejected.ShouldBeOfType<AddProductRejected>();
             var exception = new ProductAlreadyExistsException(productId);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            addProductRejected.Code.ShouldBe(exception.Code);
+            addProductRejected.Reason.ShouldBe(exception.Message);
         }
 
         #region Arrange

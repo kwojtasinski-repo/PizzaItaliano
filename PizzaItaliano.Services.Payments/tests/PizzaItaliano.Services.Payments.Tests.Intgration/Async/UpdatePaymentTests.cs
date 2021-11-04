@@ -52,13 +52,13 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration.Async
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var updatePaymentRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<UpdatePaymentRejected>();
+            updatePaymentRejected.ShouldNotBeNull();
+            updatePaymentRejected.ShouldBeOfType<UpdatePaymentRejected>();
             var exception = new InvalidPaymentIdException(paymentId);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            updatePaymentRejected.Code.ShouldBe(exception.Code);
+            updatePaymentRejected.Reason.ShouldBe(exception.Message);
         }
 
         [Fact]
@@ -72,13 +72,13 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration.Async
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var updatePaymentRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<UpdatePaymentRejected>();
+            updatePaymentRejected.ShouldNotBeNull();
+            updatePaymentRejected.ShouldBeOfType<UpdatePaymentRejected>();
             var exception = new PaymentNotFoundException(paymentId);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            updatePaymentRejected.Code.ShouldBe(exception.Code);
+            updatePaymentRejected.Reason.ShouldBe(exception.Message);
         }
 
         [Fact]
@@ -93,13 +93,13 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration.Async
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var updatePaymentRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<UpdatePaymentRejected>();
+            updatePaymentRejected.ShouldNotBeNull();
+            updatePaymentRejected.ShouldBeOfType<UpdatePaymentRejected>();
             var exception = new CannotUpdatePaymentStatusException(paymentId);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            updatePaymentRejected.Code.ShouldBe(exception.Code);
+            updatePaymentRejected.Reason.ShouldBe(exception.Message);
         }
 
         #region Arrange

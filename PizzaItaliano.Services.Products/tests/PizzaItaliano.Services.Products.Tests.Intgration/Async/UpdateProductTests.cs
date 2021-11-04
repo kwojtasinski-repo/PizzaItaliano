@@ -54,13 +54,13 @@ namespace PizzaItaliano.Services.Products.Tests.Intgration.Async
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var updateOrderRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<UpdateProductRejected>();
+            updateOrderRejected.ShouldNotBeNull();
+            updateOrderRejected.ShouldBeOfType<UpdateProductRejected>();
             var exception = new InvalidUpdateProductException(productId);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            updateOrderRejected.Code.ShouldBe(exception.Code);
+            updateOrderRejected.Reason.ShouldBe(exception.Message);
         }
 
         [Fact]
@@ -75,13 +75,13 @@ namespace PizzaItaliano.Services.Products.Tests.Intgration.Async
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var updateOrderRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<UpdateProductRejected>();
+            updateOrderRejected.ShouldNotBeNull();
+            updateOrderRejected.ShouldBeOfType<UpdateProductRejected>();
             var exception = new InvalidProductCostException(productId);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            updateOrderRejected.Code.ShouldBe(exception.Code);
+            updateOrderRejected.Reason.ShouldBe(exception.Message);
         }
 
         [Fact]
@@ -95,13 +95,13 @@ namespace PizzaItaliano.Services.Products.Tests.Intgration.Async
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var updateOrderRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<UpdateProductRejected>();
+            updateOrderRejected.ShouldNotBeNull();
+            updateOrderRejected.ShouldBeOfType<UpdateProductRejected>();
             var exception = new ProductNotFoundException(productId);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            updateOrderRejected.Code.ShouldBe(exception.Code);
+            updateOrderRejected.Reason.ShouldBe(exception.Message);
         }
 
         #region Arrange

@@ -54,13 +54,13 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var addPaymentRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<AddPaymentRejected>();
+            addPaymentRejected.ShouldNotBeNull();
+            addPaymentRejected.ShouldBeOfType<AddPaymentRejected>();
             var exception = new InvalidOrderIdException(paymentId);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            addPaymentRejected.Code.ShouldBe(exception.Code);
+            addPaymentRejected.Reason.ShouldBe(exception.Message);
         }
 
         [Fact]
@@ -76,13 +76,13 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var addPaymentRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<AddPaymentRejected>();
+            addPaymentRejected.ShouldNotBeNull();
+            addPaymentRejected.ShouldBeOfType<AddPaymentRejected>();
             var exception = new InvalidCostException(paymentId, cost);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            addPaymentRejected.Code.ShouldBe(exception.Code);
+            addPaymentRejected.Reason.ShouldBe(exception.Message);
         }
 
         [Fact]
@@ -99,13 +99,13 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration
 
             await Act(command);
 
-            var addOrderRejected = await tcs.Task;
+            var addPaymentRejected = await tcs.Task;
 
-            addOrderRejected.ShouldNotBeNull();
-            addOrderRejected.ShouldBeOfType<AddPaymentRejected>();
+            addPaymentRejected.ShouldNotBeNull();
+            addPaymentRejected.ShouldBeOfType<AddPaymentRejected>();
             var exception = new PaymentAlreadyExistsException(paymentId);
-            addOrderRejected.Code.ShouldBe(exception.Code);
-            addOrderRejected.Reason.ShouldBe(exception.Message);
+            addPaymentRejected.Code.ShouldBe(exception.Code);
+            addPaymentRejected.Reason.ShouldBe(exception.Message);
         }
 
         #region Arrange
