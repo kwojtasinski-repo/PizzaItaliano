@@ -49,8 +49,9 @@ namespace PizzaItaliano.Services.Products.Tests.Shared.Fixtures
 
             if (entity is null)
             {
-                receivedTask.TrySetCanceled();
-                return;
+                //receivedTask.TrySetCanceled();
+                //return;
+                 // ze wzgledu na  delete w innym przypadku odkomentowac
             }
 
             receivedTask.TrySetResult(entity);

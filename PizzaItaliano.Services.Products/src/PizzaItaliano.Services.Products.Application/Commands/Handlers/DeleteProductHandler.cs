@@ -1,5 +1,8 @@
 ﻿using Convey.CQRS.Commands;
+using Convey.CQRS.Events;
+using PizzaItaliano.Services.Products.Application.Events;
 using PizzaItaliano.Services.Products.Application.Exceptions;
+using PizzaItaliano.Services.Products.Application.Services;
 using PizzaItaliano.Services.Products.Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,10 +15,12 @@ namespace PizzaItaliano.Services.Products.Application.Commands.Handlers
     public class DeleteProductHandler : ICommandHandler<DeleteProduct>
     {
         private readonly IProductRepository _productRepository;
+        private readonly IMessageBroker _messageBroker;
 
-        public DeleteProductHandler(IProductRepository productRepository)
+        public DeleteProductHandler(IProductRepository productRepository, IMessageBroker messageBroker)
         {
             _productRepository = productRepository;
+            _messageBroker = messageBroker;
         }
 
         public async Task HandleAsync(DeleteProduct command)
@@ -33,6 +38,9 @@ namespace PizzaItaliano.Services.Products.Application.Commands.Handlers
             }
 
             await _productRepository.DeleteAsync(command.ProductId);
+            var productDeleted = new ProductDeleted(command.ProductId);
+            var events = new List<IEvent>() { productDeleted };
+            await _messageBroker.PublishAsync(events);
         }
     }
 }
