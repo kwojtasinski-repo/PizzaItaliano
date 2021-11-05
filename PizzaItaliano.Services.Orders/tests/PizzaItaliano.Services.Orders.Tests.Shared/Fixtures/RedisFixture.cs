@@ -22,12 +22,11 @@ namespace PizzaItaliano.Services.Orders.Tests.Shared.Fixtures
 
         public RedisFixture()
         {
-            RequestsOptions = OptionsHelper.GetOptions<RequestsOptions>("requests");
-            _signalrOptions = OptionsHelper.GetOptions<SignalrOptions>("signalR");
-            _redisOptions = OptionsHelper.GetOptions<RedisOptions>("redis");
-            //var database = _connectionMultiplexer.GetDatabase(_redisOptions.Database);
+            RequestsOptions = OptionsHelper.GetOptions<RequestsOptions>("requests"); // opcje z appsettings
+            _signalrOptions = OptionsHelper.GetOptions<SignalrOptions>("signalR"); // opcje z appsettings
+            _redisOptions = OptionsHelper.GetOptions<RedisOptions>("redis"); // opcje z appsettings
             _redisCacheOptions = new RedisCacheOptions() { Configuration = _redisOptions.ConnectionString, InstanceName = _redisOptions.Instance };
-            _connectionMultiplexer = ConnectionMultiplexer.Connect(_redisOptions.ConnectionString);
+            _connectionMultiplexer = ConnectionMultiplexer.Connect(_redisOptions.ConnectionString); // polaczenie z redis
             _redisCache = new RedisCache(_redisCacheOptions);
             DistributedCache = _redisCache;
         }
