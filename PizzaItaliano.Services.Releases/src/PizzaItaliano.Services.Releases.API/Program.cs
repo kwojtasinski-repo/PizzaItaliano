@@ -37,6 +37,7 @@ namespace PizzaItaliano.Services.Releases.API
                         .Get<GetReleases, IEnumerable<ReleaseDto>>("releases")
                         .Get<GetRelease, ReleaseDto>("releases/{releaseId}")
                         .Post<AddRelease>("releases", afterDispatch: (cmd, ctx) => ctx.Response.Created($"releases/{cmd.ReleaseId}"))
-                    ));
+                    ))
+            .UseLogging();
     }
 }
