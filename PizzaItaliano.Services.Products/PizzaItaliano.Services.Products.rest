@@ -10,7 +10,7 @@ GET {{url}}/products
 GET {{url}}/products/{{name}}
 
 ###
-GET {{url}}/products/{{resourceId}}
+GET {{url}}/products/{{productId}}
 
 ###
 POST {{url}}/products

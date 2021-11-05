@@ -24,6 +24,7 @@ using PizzaItaliano.Services.Payments.Application.Services.Clients;
 using PizzaItaliano.Services.Payments.Core.Repositories;
 using PizzaItaliano.Services.Payments.Infrastructure.Decorators;
 using PizzaItaliano.Services.Payments.Infrastructure.Exceptions;
+using PizzaItaliano.Services.Payments.Infrastructure.Logging;
 using PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Payments.Infrastructure.Repositories;
 using PizzaItaliano.Services.Payments.Infrastructure.Services;
@@ -60,6 +61,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure
             conveyBuilder.AddRabbitMq();
             conveyBuilder.AddConsul();
             conveyBuilder.AddFabio();
+            conveyBuilder.AddHandlersLogging();
 
             return conveyBuilder;
         }

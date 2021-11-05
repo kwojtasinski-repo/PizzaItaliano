@@ -15,8 +15,8 @@ Content-Type: application/json
 
 {
   "paymentId": "{{paymentId}}",
-  "cost": "{{cost}}",
-  "orderId": {{orderId}}
+  "cost": {{cost}},
+  "orderId": "{{orderId}}"
 }
 
 ### 

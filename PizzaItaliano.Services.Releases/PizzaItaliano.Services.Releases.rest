@@ -15,6 +15,6 @@ Content-Type: application/json
 
 {
   "releaseId": "{{releaseId}}",
-  "orderId": "{{orderId}}"
-  "orderProductId": {{orderProductId}}
+  "orderId": "{{orderId}}",
+  "orderProductId": "{{orderProductId}}"
 }
