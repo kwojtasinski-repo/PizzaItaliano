@@ -114,7 +114,7 @@ services:
         # volumes:
         #   - prometheus:/prometheus
 
-    
+
 networks:
   pizzaitaliano:
     name: pizza-italiano-network
