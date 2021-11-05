@@ -32,6 +32,7 @@ using Convey.LoadBalancing.Fabio;
 using System.Runtime.CompilerServices;
 using Convey.Persistence.Redis;
 using PizzaItaliano.Services.Orders.Infrastructure.Types;
+using PizzaItaliano.Services.Orders.Infrastructure.Logging;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Orders.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Orders.Tests.Integration")] // widocznosc internal na poziomie testow (integration)
@@ -65,6 +66,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
             conveyBuilder.AddFabio();
             conveyBuilder.AddRedis();
             conveyBuilder.AddSignalR();
+            conveyBuilder.AddHandlersLogging();
 
             return conveyBuilder;
         }
