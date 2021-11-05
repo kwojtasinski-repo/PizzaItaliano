@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 using PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Orders.Tests.Shared.Fixtures;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Helpers
 {
-    internal sealed class TestHelper
+    internal static class TestHelper
     {
         public static StringContent GetContent(object value)
             => new StringContent(JsonConvert.SerializeObject(value), Encoding.UTF8, "application/json");
@@ -73,6 +74,20 @@ namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Helpers
 
             return mongoDbFixture.InsertAsync(document);
         }
+
+        public static async Task AddObjectToCache<T>(this RedisFixture redisFixture, T obj, string name)
+        {
+            var objectSerialized = JsonConvert.SerializeObject(obj);
+            var expirySeconds = redisFixture.RequestsOptions.ExpirySeconds;
+            await redisFixture.DistributedCache.SetStringAsync(GetKey(name),
+                objectSerialized,
+                new DistributedCacheEntryOptions
+                {
+                    SlidingExpiration = TimeSpan.FromSeconds(expirySeconds)
+                });
+        }
+
+        private static string GetKey(string id) => $"requests:{id}";
 
         internal sealed class Error
         {
