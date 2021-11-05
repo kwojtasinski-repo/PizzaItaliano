@@ -15,7 +15,7 @@ using PizzaItaliano.Services.Payments.Application.Queries;
 using PizzaItaliano.Services.Payments.Infrastructure;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using Convey.Logging;
 
 namespace PizzaItaliano.Services.Payments.API
 {
@@ -40,6 +40,7 @@ namespace PizzaItaliano.Services.Payments.API
                         .Get<GetPayment, PaymentDto>("payments/{paymentId}")
                         .Post<AddPayment>("payments", afterDispatch: (cmd, ctx) => ctx.Response.Created($"payments/{cmd.PaymentId}"))
                         .Put<UpdatePayment>("payments", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"payments/{cmd.PaymentId}"))
-                    ));
+                    ))
+            .UseLogging();
     }
 }
