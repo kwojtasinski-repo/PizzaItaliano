@@ -69,7 +69,6 @@ namespace PizzaItaliano.Services.Operations.Infrastructure
                 .AddFabio()
                 .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin())
                 .AddMongo()
-                .AddRedis()
                 .AddMetrics()
                 .AddJaeger()
                 .AddRedis()
