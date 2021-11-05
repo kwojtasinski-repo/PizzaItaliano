@@ -96,7 +96,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Async
         }
 
         [Fact]
-        public async Task add_order_product_with_invalid_id_should_throw_an_exception_and_send_rejected_event()
+        public async Task add_order_product_command_with_invalid_id_should_throw_an_exception_and_send_rejected_event()
         {
             var orderId = Guid.NewGuid();
             var orderProductId = Guid.NewGuid();
