@@ -27,6 +27,7 @@ using PizzaItaliano.Services.Products.Application.Commands;
 using Convey.Discovery.Consul;
 using Convey.LoadBalancing.Fabio;
 using System.Runtime.CompilerServices;
+using PizzaItaliano.Services.Products.Infrastructure.Logging;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Products.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Products.Tests.Intgration")] // widocznosc internal na poziomie testow (integration)
@@ -60,6 +61,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure
             conveyBuilder.AddSwaggerDocs();
             conveyBuilder.AddWebApiSwaggerDocs();
             conveyBuilder.AddRabbitMq();
+            conveyBuilder.AddHandlersLogging();
 
             return conveyBuilder;
         }
