@@ -19,7 +19,6 @@ using System;
 using PizzaItaliano.Services.Orders.Infrastructure.Services.Clients;
 using PizzaItaliano.Services.Orders.Application.Services.Clients;
 using Convey.HTTP;
-using PizzaItaliano.Services.Orders.Application.Events;
 using PizzaItaliano.Services.Orders.Application.Events.External;
 using Convey.MessageBrokers.CQRS;
 using Convey.CQRS.Commands;
@@ -31,6 +30,8 @@ using PizzaItaliano.Services.Orders.Application.Commands;
 using Convey.Discovery.Consul;
 using Convey.LoadBalancing.Fabio;
 using System.Runtime.CompilerServices;
+using Convey.Persistence.Redis;
+using PizzaItaliano.Services.Orders.Infrastructure.Types;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Orders.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Orders.Tests.Integration")] // widocznosc internal na poziomie testow (integration)
@@ -60,6 +61,8 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
             conveyBuilder.AddRabbitMq();
             conveyBuilder.AddConsul();
             conveyBuilder.AddFabio();
+            conveyBuilder.AddRedis();
+            conveyBuilder.AddSignalR();
 
             return conveyBuilder;
         }
@@ -79,6 +82,22 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
                .SubscribeEvent<ReleaseAdded>(); 
 
             return app;
+        }
+
+        private static IConveyBuilder AddSignalR(this IConveyBuilder builder)
+        {
+            var options = builder.GetOptions<SignalrOptions>("signalR");
+            builder.Services.AddSingleton(options);
+            var signalR = builder.Services.AddSignalR();
+            if (!options.Backplane.Equals("redis", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return builder;
+            }
+
+            var redisOptions = builder.GetOptions<RedisOptions>("redis");
+            signalR.AddRedis(redisOptions.ConnectionString);
+
+            return builder;
         }
     }
 }
