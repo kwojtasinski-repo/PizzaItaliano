@@ -41,6 +41,8 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
     {
         public static IConveyBuilder AddInfrastructure(this IConveyBuilder conveyBuilder)
         {
+            var requestsOptions = conveyBuilder.GetOptions<RequestsOptions>("requests");
+            conveyBuilder.Services.AddSingleton(requestsOptions);
             conveyBuilder.Services.AddTransient<IOrderRepository, OrderRepository>();
             conveyBuilder.Services.AddTransient<IMessageBroker, MessageBroker>();
             conveyBuilder.Services.AddSingleton<IEventMapper, EventMapper>();
