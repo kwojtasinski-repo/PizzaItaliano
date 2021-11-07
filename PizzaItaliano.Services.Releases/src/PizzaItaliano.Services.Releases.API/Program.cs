@@ -14,6 +14,7 @@ using PizzaItaliano.Services.Releases.Infrastructure;
 using PizzaItaliano.Services.Releases.Application.DTO;
 using PizzaItaliano.Services.Releases.Application.Queries;
 using PizzaItaliano.Services.Releases.Application.Commands;
+using Convey.Secrets.Vault;
 
 namespace PizzaItaliano.Services.Releases.API
 {
@@ -38,6 +39,7 @@ namespace PizzaItaliano.Services.Releases.API
                         .Get<GetRelease, ReleaseDto>("releases/{releaseId}")
                         .Post<AddRelease>("releases", afterDispatch: (cmd, ctx) => ctx.Response.Created($"releases/{cmd.ReleaseId}"))
                     ))
-            .UseLogging();
+                .UseLogging()
+                .UseVault();
     }
 }
