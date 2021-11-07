@@ -37,7 +37,7 @@ services:
           - 15692:15692
         # volumes: 
         #   - rabbitmq:/var/lib/rabbitmq
-     
+      
     mongo:
         image: mongo
         container_name: mongo
