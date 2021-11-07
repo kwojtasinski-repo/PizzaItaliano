@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Convey;
 using Convey.Logging;
+using Convey.Secrets.Vault;
 using Convey.Types;
 using Convey.WebApi;
 using Convey.WebApi.CQRS;
@@ -40,6 +41,7 @@ namespace PizzaItaliano.Services.Products.API
                         .Put<UpdateProduct>("products", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"products/{cmd.ProductId}"))
                         .Delete<DeleteProduct>("products/{productId}", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"Product with {cmd.ProductId} deleted"))
                     ))
-            .UseLogging();
+                .UseLogging()
+                .UseVault();
     }
 }
