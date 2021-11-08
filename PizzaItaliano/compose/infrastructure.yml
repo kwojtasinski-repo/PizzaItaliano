@@ -102,6 +102,17 @@ services:
           - pizzaitaliano
         ports:
           - 8200:8200
+          
+    prometheus:
+        build: ./host-prometheus
+        container_name: prometheus
+        restart: unless-stopped
+        networks:
+          - pizzaitaliano
+        ports:
+          - 9090:9090
+        # volumes:
+        #   - prometheus:/prometheus
 
     
 networks:
