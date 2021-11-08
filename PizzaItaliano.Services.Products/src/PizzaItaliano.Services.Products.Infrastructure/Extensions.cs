@@ -29,6 +29,7 @@ using Convey.LoadBalancing.Fabio;
 using System.Runtime.CompilerServices;
 using PizzaItaliano.Services.Products.Infrastructure.Logging;
 using Convey.Metrics.AppMetrics;
+using PizzaItaliano.Services.Products.Infrastructure.Metrics;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Products.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Products.Tests.Intgration")] // widocznosc internal na poziomie testow (integration)
@@ -49,6 +50,9 @@ namespace PizzaItaliano.Services.Products.Infrastructure
                 .AddClasses(c => c.AssignableTo(typeof(IDomainEventHandler<>)))
                 .AsImplementedInterfaces()
                 .WithTransientLifetime()); // przeszukaj Assembly i znajdz wszystkie klasy ktore implementuja IDomainEventHandler jako zaimplementowane interfejsy z cyklem zycia Transient
+
+            conveyBuilder.Services.AddHostedService<MetricsJob>();
+            conveyBuilder.Services.AddSingleton<CustomMetricsMiddleware>();
 
             conveyBuilder.AddErrorHandler<ExceptionToResponseMapper>();
             conveyBuilder.AddMessageOutbox(o => o.AddMongo());
@@ -75,6 +79,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
                .UseMetrics()
+               .UseMiddleware<CustomMetricsMiddleware>()
                .UseRabbitMq()
                .SubscribeCommand<AddProduct>()
                .SubscribeCommand<DeleteProduct>()
