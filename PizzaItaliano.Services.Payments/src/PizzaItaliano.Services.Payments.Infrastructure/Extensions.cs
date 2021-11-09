@@ -32,6 +32,7 @@ using PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Payments.Infrastructure.Repositories;
 using PizzaItaliano.Services.Payments.Infrastructure.Services;
 using PizzaItaliano.Services.Payments.Infrastructure.Services.Clients;
+using PizzaItaliano.Services.Payments.Infrastructure.Tracing;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -49,6 +50,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure
             conveyBuilder.Services.AddTransient<IOrderServiceClient, OrderServiceClient>();
             conveyBuilder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(OutboxCommandHandlerDecorator<>));
             conveyBuilder.Services.TryDecorate(typeof(IEventHandler<>), typeof(OutboxEventHandlerDecorator<>));
+            conveyBuilder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(JaegerCommandHandlerDecorator<>));
 
             conveyBuilder.Services.AddHostedService<MetricsJob>();
             conveyBuilder.Services.AddSingleton<CustomMetricsMiddleware>();
