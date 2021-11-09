@@ -30,6 +30,7 @@ using System.Runtime.CompilerServices;
 using PizzaItaliano.Services.Products.Infrastructure.Logging;
 using Convey.Metrics.AppMetrics;
 using PizzaItaliano.Services.Products.Infrastructure.Metrics;
+using Convey.Tracing.Jaeger;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Products.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Products.Tests.Intgration")] // widocznosc internal na poziomie testow (integration)
@@ -68,6 +69,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure
             conveyBuilder.AddRabbitMq();
             conveyBuilder.AddHandlersLogging();
             conveyBuilder.AddMetrics();
+            conveyBuilder.AddJaeger();
 
             return conveyBuilder;
         }
@@ -76,6 +78,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure
         {
             app.UseErrorHandler()
                .UseConvey()
+               .UseJaeger()
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
                .UseMetrics()
