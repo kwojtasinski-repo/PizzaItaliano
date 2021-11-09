@@ -27,6 +27,8 @@ using Convey.LoadBalancing.Fabio;
 using Convey.Discovery.Consul;
 using System.Runtime.CompilerServices;
 using PizzaItaliano.Services.Releases.Infrastructure.Logging;
+using Convey.Metrics.AppMetrics;
+using PizzaItaliano.Services.Releases.Infrastructure.Metrics;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Releases.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Releases.Tests.Intgration")] // widocznosc internal na poziomie testow (integration)
@@ -42,6 +44,9 @@ namespace PizzaItaliano.Services.Releases.Infrastructure
             conveyBuilder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(OutboxCommandHandlerDecorator<>));
             conveyBuilder.Services.TryDecorate(typeof(IEventHandler<>), typeof(OutboxEventHandlerDecorator<>));
 
+            conveyBuilder.Services.AddHostedService<MetricsJob>();
+            conveyBuilder.Services.AddSingleton<CustomMetricsMiddleware>();
+
             conveyBuilder.AddErrorHandler<ExceptionToResponseMapper>();
             conveyBuilder.AddExceptionToMessageMapper<ExceptionToMessageMapper>();
             conveyBuilder.AddQueryHandlers();
@@ -55,6 +60,7 @@ namespace PizzaItaliano.Services.Releases.Infrastructure
             conveyBuilder.AddConsul();
             conveyBuilder.AddFabio();
             conveyBuilder.AddHandlersLogging();
+            conveyBuilder.AddMetrics();
 
             return conveyBuilder;
         }
@@ -65,6 +71,8 @@ namespace PizzaItaliano.Services.Releases.Infrastructure
                .UseConvey()
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
+               .UseMetrics()
+               .UseMiddleware<CustomMetricsMiddleware>()
                .UseRabbitMq()
                .SubscribeCommand<AddRelease>();
 
