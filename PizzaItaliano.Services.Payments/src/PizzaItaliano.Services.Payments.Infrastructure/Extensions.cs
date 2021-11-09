@@ -12,6 +12,7 @@ using Convey.MessageBrokers.Outbox.Mongo;
 using Convey.MessageBrokers.RabbitMQ;
 using Convey.Metrics.AppMetrics;
 using Convey.Persistence.MongoDB;
+using Convey.Tracing.Jaeger;
 using Convey.WebApi;
 using Convey.WebApi.CQRS;
 using Convey.WebApi.Swagger;
@@ -67,6 +68,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure
             conveyBuilder.AddFabio();
             conveyBuilder.AddHandlersLogging();
             conveyBuilder.AddMetrics();
+            conveyBuilder.AddJaeger();
 
             return conveyBuilder;
         }
@@ -75,6 +77,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure
         {
             app.UseErrorHandler()
                .UseConvey()
+               .UseJaeger()
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
                .UseMetrics()
