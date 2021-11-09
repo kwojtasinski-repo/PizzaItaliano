@@ -26,6 +26,7 @@ using PizzaItaliano.Services.Payments.Core.Repositories;
 using PizzaItaliano.Services.Payments.Infrastructure.Decorators;
 using PizzaItaliano.Services.Payments.Infrastructure.Exceptions;
 using PizzaItaliano.Services.Payments.Infrastructure.Logging;
+using PizzaItaliano.Services.Payments.Infrastructure.Metrics;
 using PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Payments.Infrastructure.Repositories;
 using PizzaItaliano.Services.Payments.Infrastructure.Services;
@@ -48,6 +49,8 @@ namespace PizzaItaliano.Services.Payments.Infrastructure
             conveyBuilder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(OutboxCommandHandlerDecorator<>));
             conveyBuilder.Services.TryDecorate(typeof(IEventHandler<>), typeof(OutboxEventHandlerDecorator<>));
 
+            conveyBuilder.Services.AddHostedService<MetricsJob>();
+            conveyBuilder.Services.AddSingleton<CustomMetricsMiddleware>();
 
             conveyBuilder.AddErrorHandler<ExceptionToResponseMapper>();
             conveyBuilder.AddMessageOutbox(o => o.AddMongo());
@@ -75,6 +78,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
                .UseMetrics()
+               .UseMiddleware<CustomMetricsMiddleware>()
                .UseRabbitMq()
                .SubscribeCommand<AddPayment>()
                .SubscribeCommand<UpdatePayment>()
