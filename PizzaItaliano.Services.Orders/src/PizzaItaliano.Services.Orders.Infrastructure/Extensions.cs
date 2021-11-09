@@ -84,6 +84,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
                .UseMetrics()
+               .UseMiddleware<CustomMetricsMiddleware>()
                .UseRabbitMq()
                .SubscribeCommand<AddOrder>()
                .SubscribeCommand<AddOrderProduct>()
