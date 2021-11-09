@@ -33,6 +33,8 @@ using System.Runtime.CompilerServices;
 using Convey.Persistence.Redis;
 using PizzaItaliano.Services.Orders.Infrastructure.Types;
 using PizzaItaliano.Services.Orders.Infrastructure.Logging;
+using Convey.Metrics.AppMetrics;
+using PizzaItaliano.Services.Orders.Infrastructure.Metrics;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Orders.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Orders.Tests.Integration")] // widocznosc internal na poziomie testow (integration)
@@ -51,6 +53,9 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
             conveyBuilder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(OutboxCommandHandlerDecorator<>));
             conveyBuilder.Services.TryDecorate(typeof(IEventHandler<>), typeof(OutboxEventHandlerDecorator<>));
 
+            conveyBuilder.Services.AddHostedService<MetricsJob>();
+            conveyBuilder.Services.AddSingleton<CustomMetricsMiddleware>();
+
             conveyBuilder.AddErrorHandler<ExceptionToResponseMapper>();
             conveyBuilder.AddMessageOutbox(o => o.AddMongo());
             conveyBuilder.AddExceptionToMessageMapper<ExceptionToMessageMapper>();
@@ -67,6 +72,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
             conveyBuilder.AddRedis();
             conveyBuilder.AddSignalR();
             conveyBuilder.AddHandlersLogging();
+            conveyBuilder.AddMetrics();
 
             return conveyBuilder;
         }
@@ -77,6 +83,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
                .UseConvey()
                .UsePublicContracts<ContractAttribute>()
                .UseSwaggerDocs()
+               .UseMetrics()
                .UseRabbitMq()
                .SubscribeCommand<AddOrder>()
                .SubscribeCommand<AddOrderProduct>()
