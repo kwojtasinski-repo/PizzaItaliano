@@ -36,6 +36,7 @@ using PizzaItaliano.Services.Orders.Infrastructure.Logging;
 using Convey.Metrics.AppMetrics;
 using PizzaItaliano.Services.Orders.Infrastructure.Metrics;
 using Convey.Tracing.Jaeger;
+using PizzaItaliano.Services.Orders.Infrastructure.Tracing;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Orders.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Orders.Tests.Integration")] // widocznosc internal na poziomie testow (integration)
@@ -53,6 +54,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
             conveyBuilder.Services.AddTransient<IProductServiceClient, ProductServiceClient>();
             conveyBuilder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(OutboxCommandHandlerDecorator<>));
             conveyBuilder.Services.TryDecorate(typeof(IEventHandler<>), typeof(OutboxEventHandlerDecorator<>));
+            conveyBuilder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(JaegerCommandHandlerDecorator<>));
 
             conveyBuilder.Services.AddHostedService<MetricsJob>();
             conveyBuilder.Services.AddSingleton<CustomMetricsMiddleware>();
