@@ -1,0 +1,262 @@
+﻿http:
+  retries: 2
+  interval: 2.0
+  exponential: true
+
+useForwardedHeaders: true
+passQueryString: true
+forwardRequestHeaders: true
+forwardResponseHeaders: true
+generateRequestId: true
+generateTraceId: true
+useLocalUrl: false
+loadBalancer:
+  enabled: false
+  url: fabio:9999
+
+extensions:
+  customErrors:
+    includeExceptionMessage: true
+
+  cors:
+    allowCredentials: true
+    allowedOrigins:
+      - '*'
+    allowedMethods:
+      - post
+      - put
+      - delete
+    allowedHeaders:
+      - '*'
+    exposedHeaders:
+      - Request-ID
+      - Resource-ID
+      - Trace-ID
+      - Total-Count
+
+  swagger:
+    name: PizzaItaliano
+    reDocEnabled: false
+    title: PizzaItaliano API
+    version: v1
+    routePrefix: docs
+    includeSecurity: true
+
+  rabbitmq:
+    enabled: true
+    connectionName: api-gateway
+    hostnames:
+      - rabbitmq
+    port: 5672
+    virtualHost: /
+    username: guest
+    password: guest
+    requestedConnectionTimeout: 3000
+    socketReadTimeout: 3000
+    socketWriteTimeout: 3000
+    requestedHeartbeat: 60
+    exchange:
+      declareExchange: true
+      durable: true
+      autoDelete: false
+      type: topic
+    messageContext:
+      enabled: true
+      header: message_context
+    logger:
+      enabled: true
+    spanContextHeader: span_context
+
+  tracing:
+    serviceName: api-gateway
+    udpHost: jaeger
+    udpPort: 6831
+    maxPacketSize: 0
+    sampler: const
+    useEmptyTracer: false
+
+modules:
+  home:
+    routes:
+      - upstream: /
+        method: GET
+        use: return_value
+        returnValue: Welcome to PizzaItaliano API [async]!
+  
+  products:
+    path: products
+    routes:
+      - upstream: /health-check
+        method: GET
+        use: downstream
+        downstream: products-service
+
+      - upstream: /
+        method: GET
+        use: downstream
+        downstream: products-service/products
+
+      - upstream: /{productId}
+        method: GET
+        use: downstream
+        downstream: products-service/products/{productId}
+
+      - upstream: /
+        method: POST
+        use: rabbitmq
+        config:
+          exchange: product
+          routing_key: add_product
+
+      - upstream: /
+        method: PUT
+        use: rabbitmq
+        config:
+          exchange: product
+          routing_key: modify_product
+
+      - upstream: /{productId}
+        method: DELETE
+        use: rabbitmq
+        config:
+          exchange: product
+          routing_key: delete_product
+        bind:
+          - productId: {productId}
+
+    services:
+      products-service:
+        localUrl: localhost:5001
+        url: products-service
+
+  orders:
+    path: orders
+    routes:
+      - upstream: /health-check
+        method: GET
+        use: downstream
+        downstream: orders-service
+
+      - upstream: /
+        method: GET
+        use: downstream
+        downstream: orders-service/orders
+
+      - upstream: /{orderId}
+        method: GET
+        use: downstream
+        downstream: orders-service/orders/{orderId}
+
+      - upstream: /
+        method: POST
+        use: rabbitmq
+        config:
+          exchange: orders
+          routing_key: add_order
+
+      - upstream: /order-product
+        method: POST
+        use: rabbitmq
+        config:
+          exchange: order
+          routing_key: add_order_product
+
+      - upstream: /
+        method: PUT
+        use: rabbitmq
+        config:
+          exchange: order
+          routing_key: modify_order
+
+      - upstream: /order-product
+        method: DELETE
+        use: rabbitmq
+        config:
+          exchange: order
+          routing_key: delete_order_product
+
+    services:
+      orders-service:
+        localUrl: localhost:5002
+        url: orders-service
+
+  releases:
+    path: releases
+    routes:
+      - upstream: /health-check
+        method: GET
+        use: downstream
+        downstream: releases-service
+
+      - upstream: /
+        method: GET
+        use: downstream
+        downstream: releases-service/releases
+
+      - upstream: /{releaseId}
+        method: GET
+        use: downstream
+        downstream: releases-service/releases/{releaseId}
+
+      - upstream: /
+        method: POST
+        use: rabbitmq
+        config:
+          exchange: release
+          routing_key: add_releases
+
+    services:
+      releases-service:
+        localUrl: localhost:5003
+        url: releases-service
+
+  payments:
+    path: payments
+    routes:
+      - upstream: /health-check
+        method: GET
+        use: downstream
+        downstream: payments-service
+
+      - upstream: /
+        method: GET
+        use: downstream
+        downstream: payments-service/payments
+
+      - upstream: /{paymentId}
+        method: GET
+        use: downstream
+        downstream: payments-service/payments/{paymentId}
+
+      - upstream: /
+        method: POST
+        use: rabbitmq
+        config:
+          exchange: payment
+          routing_key: add_payment
+
+      - upstream: /
+        method: PUT
+        use: rabbitmq
+        config:
+          exchange: payment
+          routing_key: modify_product
+
+    services:
+      payments-service:
+        localUrl: localhost:5004
+        url: payments-service
+
+  operations:
+    path: operations
+    routes:
+      - upstream: /{operationId}
+        method: GET
+        use: downstream
+        downstream: operations-service/operations/{operationId}
+        auth: false
+
+    services:
+      operations-service:
+        localUrl: localhost:5005
+        url: operations-service
