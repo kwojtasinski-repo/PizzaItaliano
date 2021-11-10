@@ -1,9 +1,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
-COPY ["/src/PizzaItaliano.Services.Products.API/PizzaItaliano.Services.Products.API.csproj", "./PizzaItaliano.Services.Products.API/"]
+COPY ["/src/PizzaItaliano.Services.Products.API/*.csproj", "./PizzaItaliano.Services.Products.API/"]
 COPY ["/src/PizzaItaliano.Services.Products.Application/*.csproj", "./PizzaItaliano.Services.Products.Application/"]
 COPY ["/src/PizzaItaliano.Services.Products.Core/*.csproj", "./PizzaItaliano.Services.Products.Core/"]
-COPY ["/src/PizzaItaliano.Services.Products.Infrastructure/PizzaItaliano.Services.Products.Infrastructure.csproj", "./PizzaItaliano.Services.Products.Infrastructure/"]
+COPY ["/src/PizzaItaliano.Services.Products.Infrastructure/*.csproj", "./PizzaItaliano.Services.Products.Infrastructure/"]
 RUN dotnet restore "PizzaItaliano.Services.Products.API/PizzaItaliano.Services.Products.API.csproj"
 
 COPY . .
