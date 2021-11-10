@@ -10,8 +10,6 @@ namespace PizzaItaliano.Services.Products.Application.Commands
     [Contract]
     public class AddProduct : ICommand
     {
-        private Guid orderId;
-
         public Guid ProductId { get; }
         public string Name { get; }
         public decimal Cost { get; }
