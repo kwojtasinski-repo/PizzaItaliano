@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+    api-gateway:
+        #image: url/dockerhub
+        build: ../../PizzaItaliano.APIGateway
+        container_name: api-gateway
+        restart: unless-stopped
+        environment:
+          - NTRADA_CONFIG=ntrada-async.docker.yml
+        ports:
+          - 5000:80
+        networks:
+          - pizzaitaliano
+          
+    product-service:
+        build: ../../PizzaItaliano.Services.Products
+        container_name: product-service
+        restart: unless-stopped
+        ports:
+          - 5001:80 
+        networks:
+          - pizzaitaliano
+
+    order-service:
+        build: ../../PizzaItaliano.Services.Orders
+        container_name: order-service
+        restart: unless-stopped
+        ports:
+          - 5002:80 
+        networks:
+          - pizzaitaliano
+          
+    release-service:
+        build: ../../PizzaItaliano.Services.Releases
+        container_name: release-service
+        restart: unless-stopped
+        ports:
+          - 5003:80 
+        networks:
+          - pizzaitaliano
+          
+    payment-service:
+        build: ../../PizzaItaliano.Services.Payments
+        container_name: payment-service
+        restart: unless-stopped
+        ports:
+          - 5004:80 
+        networks:
+          - pizzaitaliano
+          
+    operations-service:
+        build: ../../PizzaItaliano.Services.Operations
+        container_name: operations-service
+        restart: unless-stopped
+        ports:
+          - 5005:80
+        networks:
+          - pizzaitaliano
+        depends_on:
+          - product-service
+          - order-service
+          - release-service
+          - payment-service
+          
+networks:
+  pizzaitaliano:
+    name: pizza-italiano-network
+    external: true
