@@ -1,0 +1,117 @@
+@api = http://localhost:5000 
+
+#PRODUCTS
+@productId = 10000000-0000-0000-0000-000000000000
+@name = Pizza
+@cost = 20.51
+
+#ORDERS
+@orderId = 20000000-0000-0000-0000-000000000000
+@orderProductId = 10000000-0000-0000-0000-000000000000
+@quantity = 1
+
+#RELEASES
+@releaseId = 10000000-0000-0000-0000-000000000000
+
+#PAYMENTS
+@paymentId = 10000000-0000-0000-0000-000000000000
+@cost = 20.51
+
+### At first, check all products
+GET {{api}}/products
+
+### Add product
+# @name add_product_operation
+POST {{api}}/products
+Content-Type: application/json
+
+{
+  "productId": "{{productId}}",
+  "name": "{{name}}",
+  "cost": {{cost}}
+}
+
+### check operation 
+@operationId = {{add_product_operation.response.headers.Request-ID}}
+{{api}}/operations/{{operationId}}
+
+### check if exists
+GET {{api}}/products/{{productId}}
+
+### check orders
+GET {{api}}/orders
+
+### Create an order
+# @name add_order_operation
+POST {{api}}/orders
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}"
+}
+
+### check operation 
+@operationId = {{add_order_operation.response.headers.Request-ID}}
+{{api}}/operations/{{operationId}}
+
+### Check order if exits
+GET {{api}}/orders/{{orderId}}
+
+### Add products to order
+# @name add_order_product_operation
+POST {{api}}/orders/order-product
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}",
+  "orderProductId": "{{orderProductId}}",
+  "productId": "{{productId}}",
+  "quantity": {{quantity}}
+}
+
+### check operation 
+@operationId = {{add_order_product_operation.response.headers.Request-ID}}
+{{api}}/operations/{{operationId}}
+
+### Check order
+GET {{api}}/orders/{{orderId}}
+
+### Set order ready
+# @name change_status_order_operation
+PUT {{api}}/orders
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}"
+}
+
+### check operation 
+@operationId = {{change_status_order_operation.response.headers.Request-ID}}
+{{api}}/operations/{{operationId}}
+
+### Check order
+GET {{api}}/orders/{{orderId}}
+
+### check payments
+GET {{api}}/payments
+
+### Paid for order
+PUT {{api}}/payments
+Content-Type: application/json
+
+{
+  "paymentId": "{{paymentId}}"
+}
+
+### Relase product
+POST {{api}}/releases
+Content-Type: application/json
+
+{
+  "releaseId": "{{releaseId}}",
+  "orderId": "{{orderId}}",
+  "orderProductId": "{{orderProductId}}"
+}
+
+### Check order
+GET {{api}}/orders/{{orderId}}

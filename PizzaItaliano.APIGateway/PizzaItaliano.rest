@@ -1,0 +1,160 @@
+@api = http://localhost:5000 
+
+#PRODUCTS
+@productId = 10000000-0000-0000-0000-000000000000
+@name = Pizza
+@cost = 20.51
+
+#ORDERS
+@orderId = 10000000-0000-0000-0000-000000000000
+@orderProductId = 10000000-0000-0000-0000-000000000000
+@productId = 10000000-0000-0000-0000-000000000000
+@quantity = 1
+
+#RELEASES
+@releaseId = 10000000-0000-0000-0000-000000000000
+@orderId = 10000000-0000-0000-0000-000000000000
+@orderProductId = 10000000-0000-0000-0000-000000000000
+
+#PAYMENTS
+@paymentId = 10000000-0000-0000-0000-000000000000
+@orderId = 10000000-0000-0000-0000-000000000000
+@cost = 20.51
+
+#OPERATIONS
+@operationId = 00000000-0000-0000-0000-000000000000 
+
+# ============== PRODUCTS ==================== #
+
+
+### Health check
+GET {{api}}/products/health-check
+
+###
+GET {{api}}/products
+
+###
+GET {{api}}/products/{{name}}
+
+###
+GET {{api}}/products/{{productId}}
+
+###
+POST {{api}}/products
+Content-Type: application/json
+
+{
+  "productId": "{{productId}}",
+  "name": "{{name}}",
+  "cost": {{cost}}
+}
+
+### 
+PUT {{api}}/products
+Content-Type: application/json
+
+{
+  "productId": "{{productId}}",
+  "name": "{{name}}",
+  "cost": {{cost}}
+}
+
+###
+DELETE {{api}}/products/{{productId}}
+
+
+# ============== ORDERS ==================== #
+
+### Health check
+GET {{api}}/orders/health-check
+
+###
+GET {{api}}/orders
+
+###
+GET {{api}}/orders/{{orderId}}
+
+###
+POST {{api}}/orders
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}"
+}
+
+###
+POST {{api}}/orders/order-product
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}",
+  "orderProductId": "{{orderProductId}}",
+  "productId": "{{productId}}",
+  "quantity": {{quantity}}
+}
+
+### 
+PUT {{api}}/orders
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}"
+}
+
+###
+DELETE {{api}}/orders/{{orderId}}/order-product/{{orderProductId}}/quantity/{{quantity}}
+
+# ============== RELEASES ==================== #
+
+### Health check
+GET {{api}}/releases/health-check
+
+###
+GET {{api}}/releases
+
+###
+GET {{api}}/releases/{{releaseId}}
+
+###
+POST {{api}}/releases
+Content-Type: application/json
+
+{
+  "releaseId": "{{releaseId}}",
+  "orderId": "{{orderId}}",
+  "orderProductId": "{{orderProductId}}"
+}
+
+# ============== PAYMENTS ==================== #
+
+### Health check
+GET {{api}}/payments/health-check
+
+###
+GET {{api}}/payments
+
+###
+GET {{api}}/payments/{{paymentId}}
+
+###
+POST {{api}}/payments
+Content-Type: application/json
+
+{
+  "paymentId": "{{paymentId}}",
+  "cost": {{cost}},
+  "orderId": "{{orderId}}"
+}
+
+### 
+PUT {{api}}/payments
+Content-Type: application/json
+
+{
+  "paymentId": "{{paymentId}}"
+}
+
+# ============== OPERATIONS ==================== #
+
+### GET 
+{{api}}/operations/{{operationId}}
