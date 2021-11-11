@@ -88,23 +88,9 @@ services:
           - pizzaitaliano
         ports:
           - 8200:8200
-
-    vault:
-        image: vault
-        container_name: vault
-        restart: unless-stopped
-        environment:
-          - VAULT_ADDR=http://127.0.0.1:8200
-          - VAULT_DEV_ROOT_TOKEN_ID=secret
-        cap_add:
-          - IPC_LOCK
-        networks:
-          - pizzaitaliano
-        ports:
-          - 8200:8200
           
     prometheus:
-        build: ./host-prometheus
+        build: ./prometheus
         container_name: prometheus
         restart: unless-stopped
         networks:

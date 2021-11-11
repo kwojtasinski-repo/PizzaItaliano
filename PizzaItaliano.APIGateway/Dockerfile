@@ -14,5 +14,5 @@ COPY --from=build /app/out .
 ENV ASPNETCORE_URLS http://*:80
 ENV ASPNETCORE_ENVIRONMENT docker
 ENV NTRADA_CONFIG ntrada.docker
-#CMD ["/bin/bash", "-c", "pwd"]
+
 ENTRYPOINT ["dotnet", "PizzaItaliano.APIGateway.dll"]

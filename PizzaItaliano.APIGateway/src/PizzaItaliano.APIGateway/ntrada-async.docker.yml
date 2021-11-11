@@ -100,6 +100,8 @@ modules:
         method: GET
         use: downstream
         downstream: products-service/products/{productId}
+        bind:
+          - productId: {productId}
 
       - upstream: /
         method: POST
@@ -127,7 +129,7 @@ modules:
     services:
       products-service:
         localUrl: localhost:5001
-        url: products-service
+        url: product-service
 
   orders:
     path: orders
@@ -146,12 +148,14 @@ modules:
         method: GET
         use: downstream
         downstream: orders-service/orders/{orderId}
+        bind:
+          - orderId: {orderId}
 
       - upstream: /
         method: POST
         use: rabbitmq
         config:
-          exchange: orders
+          exchange: order
           routing_key: add_order
 
       - upstream: /order-product
@@ -166,19 +170,23 @@ modules:
         use: rabbitmq
         config:
           exchange: order
-          routing_key: modify_order
+          routing_key: set_order_status_ready
 
-      - upstream: /order-product
+      - upstream: /{orderId}/order-product/{orderProductId}/quantity/{quantity}
         method: DELETE
         use: rabbitmq
         config:
           exchange: order
           routing_key: delete_order_product
+        bind:
+          - orderId: {orderId}
+          - orderProductId: {orderProductId}
+          - quantity: {quantity}
 
     services:
       orders-service:
         localUrl: localhost:5002
-        url: orders-service
+        url: order-service
 
   releases:
     path: releases
@@ -197,18 +205,20 @@ modules:
         method: GET
         use: downstream
         downstream: releases-service/releases/{releaseId}
+        bind:
+          - releaseId: {releaseId}
 
       - upstream: /
         method: POST
         use: rabbitmq
         config:
           exchange: release
-          routing_key: add_releases
+          routing_key: add_release
 
     services:
       releases-service:
         localUrl: localhost:5003
-        url: releases-service
+        url: release-service
 
   payments:
     path: payments
@@ -227,6 +237,8 @@ modules:
         method: GET
         use: downstream
         downstream: payments-service/payments/{paymentId}
+        bind:
+          - paymentId: {paymentId}
 
       - upstream: /
         method: POST
@@ -240,12 +252,12 @@ modules:
         use: rabbitmq
         config:
           exchange: payment
-          routing_key: modify_product
+          routing_key: update_payment
 
     services:
       payments-service:
         localUrl: localhost:5004
-        url: payments-service
+        url: payment-service
 
   operations:
     path: operations
@@ -255,6 +267,8 @@ modules:
         use: downstream
         downstream: operations-service/operations/{operationId}
         auth: false
+        bind:
+          - operationId: {operationId}
 
     services:
       operations-service:

@@ -151,7 +151,7 @@ modules:
         method: POST
         use: rabbitmq
         config:
-          exchange: orders
+          exchange: order
           routing_key: add_order
 
       - upstream: /order-product
@@ -166,7 +166,7 @@ modules:
         use: rabbitmq
         config:
           exchange: order
-          routing_key: modify_order
+          routing_key: set_order_status_ready
 
       - upstream: /order-product
         method: DELETE
@@ -203,7 +203,7 @@ modules:
         use: rabbitmq
         config:
           exchange: release
-          routing_key: add_releases
+          routing_key: add_release
 
     services:
       releases-service:
@@ -240,7 +240,7 @@ modules:
         use: rabbitmq
         config:
           exchange: payment
-          routing_key: modify_product
+          routing_key: update_payment
 
     services:
       payments-service:

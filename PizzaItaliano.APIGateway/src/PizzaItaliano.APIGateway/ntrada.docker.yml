@@ -94,7 +94,7 @@ modules:
     services:
       products-service:
         localUrl: localhost:5001
-        url: products-service
+        url: product-service
 
   orders:
     path: orders
@@ -137,7 +137,7 @@ modules:
     services:
       orders-service:
         localUrl: localhost:5002
-        url: orders-service
+        url: order-service
 
   releases:
     path: releases
@@ -165,7 +165,7 @@ modules:
     services:
       releases-service:
         localUrl: localhost:5003
-        url: releases-service
+        url: release-service
 
   payments:
     path: payments
@@ -198,7 +198,7 @@ modules:
     services:
       payments-service:
         localUrl: localhost:5004
-        url: payments-service
+        url: payment-service
 
   operations:
     path: operations
