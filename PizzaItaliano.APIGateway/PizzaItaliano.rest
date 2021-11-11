@@ -151,7 +151,7 @@ PUT {{api}}/payments
 Content-Type: application/json
 
 {
-  "paymentId": "{{paymentId}}"
+  "orderId": "{{orderId}}"
 }
 
 # ============== OPERATIONS ==================== #

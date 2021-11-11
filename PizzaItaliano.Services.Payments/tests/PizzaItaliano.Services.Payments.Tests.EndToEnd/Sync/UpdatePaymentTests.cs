@@ -64,7 +64,6 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd.Sync
             document.PaymentStatus.ShouldBe(Core.Entities.PaymentStatus.Paid);
         }
 
-        
         [Fact]
         public async Task update_payment_endpoint_with_invalid_id_should_throw_an_exception_and_send_bad_request()
         {

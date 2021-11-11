@@ -12,18 +12,19 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Payments.Infrastructure.Mongo.Queries.Handlers
 {
-    public class GetPaymentsHandler : IQueryHandler<GetPayments, IEnumerable<PaymentDto>>
+    public class GetPaymentsWithDateAndStatusHandler : IQueryHandler<GetPaymentsWithDateAndStatus, IEnumerable<PaymentDto>>
     {
         private readonly IMongoDatabase _mongoDatabase;
 
-        public GetPaymentsHandler(IMongoDatabase mongoDatabase)
+        public GetPaymentsWithDateAndStatusHandler(IMongoDatabase mongoDatabase)
         {
             _mongoDatabase = mongoDatabase;
         }
 
-        public async Task<IEnumerable<PaymentDto>> HandleAsync(GetPayments query)
+        public async Task<IEnumerable<PaymentDto>> HandleAsync(GetPaymentsWithDateAndStatus query)
         {
-            var collection = _mongoDatabase.GetCollection<PaymentDocument>("payments").AsQueryable();
+            var collection = _mongoDatabase.GetCollection<PaymentDocument>("payments").AsQueryable()
+                .Where(p => p.CreateDate >= query.DateFrom && p.CreateDate <= query.DateTo);
 
             if (!query.PaymentStatus.HasValue)
             {

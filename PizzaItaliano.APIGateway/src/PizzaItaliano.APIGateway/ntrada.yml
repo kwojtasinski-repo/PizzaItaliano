@@ -184,6 +184,30 @@ modules:
         method: GET
         use: downstream
         downstream: payments-service/payments/{paymentId}
+        
+      - upstream: /{paymentStatus}
+        method: GET
+        use: downstream
+        downstream: payments-service/payments
+        bind:
+          - paymentStatus: {paymentStatus}
+      
+      - upstream: /from/{dateFrom}/to/{dateTo}
+        method: GET
+        use: downstream
+        downstream: payments-service/payments/from/{dateFrom}/to/{dateTo}
+        bind:
+          - dateFrom: {dateFrom}
+          - dateTo: {dateTo}
+          
+      - upstream: /from/{dateFrom}/to/{dateTo}/{paymentStatus}
+        method: GET
+        use: downstream
+        downstream: payments-service/payments/from/{dateFrom}/to/{dateTo}/{paymentStatus}
+        bind:
+          - dateFrom: {dateFrom}
+          - dateTo: {dateTo}    
+          - paymentStatus: {paymentStatus}
 
       - upstream: /
         method: POST

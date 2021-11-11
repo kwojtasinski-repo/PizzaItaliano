@@ -18,7 +18,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Exceptions
             {
                 // App Exceptions
                 CannotUpdatePaymentStatusException ex => message switch
-                { 
+                {
                     UpdatePayment command => new UpdatePaymentRejected(command.PaymentId, ex.Message, ex.Code),
                     _ => null
                 },

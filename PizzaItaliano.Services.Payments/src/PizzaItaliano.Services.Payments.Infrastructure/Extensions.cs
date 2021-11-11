@@ -86,8 +86,8 @@ namespace PizzaItaliano.Services.Payments.Infrastructure
                .UseMiddleware<CustomMetricsMiddleware>()
                .UseRabbitMq()
                .SubscribeCommand<AddPayment>()
-               .SubscribeCommand<UpdatePayment>()
-               .SubscribeEvent<OrderStateModified>(); // wywola event handler;
+               .SubscribeCommand<UpdatePayment>();
+               //.SubscribeEvent<OrderStateModified>(); // wywola event handler aktualnie nie jest potrzebny event
 
             return app;
         }

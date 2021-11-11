@@ -16,5 +16,6 @@ namespace PizzaItaliano.Services.Payments.Core.Repositories
         Task UpdateAsync(Payment payment);
         Task DeleteAsync(AggregateId id);
         IQueryable<Payment> GetCollection(Expression<Func<Payment, bool>> predicate);
+        IQueryable<Payment> GetCollection();
     }
 }

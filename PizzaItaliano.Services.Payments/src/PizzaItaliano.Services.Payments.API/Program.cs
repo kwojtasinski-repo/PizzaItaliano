@@ -38,6 +38,9 @@ namespace PizzaItaliano.Services.Payments.API
                     .UseDispatcherEndpoints(endpoints => endpoints
                         .Get("", ctx => ctx.Response.WriteAsync(ctx.RequestServices.GetService<AppOptions>().Name))
                         .Get<GetPayments, IEnumerable<PaymentDto>>("payments")
+                        .Get<GetPayments, IEnumerable<PaymentDto>>("payments/{paymentStatus:int}")
+                        .Get<GetPaymentsWithDateAndStatus, IEnumerable<PaymentDto>>("payments/from/{dateFrom}/to/{dateTo}")
+                        .Get<GetPaymentsWithDateAndStatus, IEnumerable<PaymentDto>>("payments/from/{dateFrom}/to/{dateTo}/{paymentStatus:int}")
                         .Get<GetPayment, PaymentDto>("payments/{paymentId}")
                         .Post<AddPayment>("payments", afterDispatch: (cmd, ctx) => ctx.Response.Created($"payments/{cmd.PaymentId}"))
                         .Put<UpdatePayment>("payments", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"payments/{cmd.PaymentId}"))

@@ -60,5 +60,12 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Repositories
             var payments = paymentDocuments.Map<PaymentDocument, Payment>();
             return payments;
         }
+
+        public IQueryable<Payment> GetCollection()
+        {
+            var paymentDocuments = _mongoRepository.Collection.AsQueryable();
+            var payments = paymentDocuments.Map<PaymentDocument, Payment>();
+            return payments;
+        }
     }
 }

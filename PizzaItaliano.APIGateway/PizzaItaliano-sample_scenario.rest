@@ -6,7 +6,7 @@
 @cost = 20.51
 
 #ORDERS
-@orderId = 20000000-0000-0000-0000-000000000000
+@orderId = 10000000-0000-0000-0000-000000000000
 @orderProductId = 10000000-0000-0000-0000-000000000000
 @quantity = 1
 
@@ -15,7 +15,6 @@
 
 #PAYMENTS
 @paymentId = 10000000-0000-0000-0000-000000000000
-@cost = 20.51
 
 ### At first, check all products
 GET {{api}}/products
@@ -31,7 +30,7 @@ Content-Type: application/json
   "cost": {{cost}}
 }
 
-### check operation 
+### ### check operation 
 @operationId = {{add_product_operation.response.headers.Request-ID}}
 {{api}}/operations/{{operationId}}
 
@@ -50,7 +49,7 @@ Content-Type: application/json
   "orderId": "{{orderId}}"
 }
 
-### check operation 
+### ### check operation 
 @operationId = {{add_order_operation.response.headers.Request-ID}}
 {{api}}/operations/{{operationId}}
 
@@ -69,7 +68,7 @@ Content-Type: application/json
   "quantity": {{quantity}}
 }
 
-### check operation 
+### ### check operation
 @operationId = {{add_order_product_operation.response.headers.Request-ID}}
 {{api}}/operations/{{operationId}}
 
@@ -90,10 +89,23 @@ Content-Type: application/json
 {{api}}/operations/{{operationId}}
 
 ### Check order
+# @name order_after_set_ready
 GET {{api}}/orders/{{orderId}}
+
+@cost = {{order_after_set_ready.response.body.cost}}
 
 ### check payments
 GET {{api}}/payments
+
+### Add payment
+POST {{api}}/payments
+Content-Type: application/json
+
+{
+  "paymentId": "{{paymentId}}",
+  "cost": {{cost}},
+  "orderId": "{{orderId}}"
+}
 
 ### Paid for order
 PUT {{api}}/payments
@@ -103,7 +115,11 @@ Content-Type: application/json
   "paymentId": "{{paymentId}}"
 }
 
+### Check order
+GET {{api}}/orders/{{orderId}}
+
 ### Relase product
+# @name release_product
 POST {{api}}/releases
 Content-Type: application/json
 
@@ -112,6 +128,10 @@ Content-Type: application/json
   "orderId": "{{orderId}}",
   "orderProductId": "{{orderProductId}}"
 }
+
+### check operation
+@operationId = {{release_product.response.headers.Request-ID}}
+{{api}}/operations/{{operationId}}
 
 ### Check order
 GET {{api}}/orders/{{orderId}}

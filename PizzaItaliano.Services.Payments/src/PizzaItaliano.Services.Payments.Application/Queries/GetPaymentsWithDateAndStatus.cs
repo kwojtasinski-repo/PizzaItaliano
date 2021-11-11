@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Payments.Application.Queries
 {
-    public class GetPayments : IQuery<IEnumerable<PaymentDto>>
+    public class GetPaymentsWithDateAndStatus : IQuery<IEnumerable<PaymentDto>>
     {
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
         public PaymentStatus? PaymentStatus { get; set; }
     }
 }
