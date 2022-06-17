@@ -15,7 +15,8 @@ using Xunit;
 
 namespace PizzaItaliano.Services.Payments.Tests.Intgration
 {
-    public class AddPaymentTests : IDisposable, IClassFixture<PizzaItalianoApplicationFactory<Program>>
+    [Collection("Collection")]
+    public class AddPaymentTests
     {
         private Task Act(AddPayment command) => _rabbitMqFixture.PublishAsync(command, Exchange);
 
@@ -119,11 +120,6 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration
             _rabbitMqFixture = new RabbitMqFixture();
             _mongoDbFixture = new MongoDbFixture<PaymentDocument, Guid>("payments");
             factory.Server.AllowSynchronousIO = true;
-        }
-
-        public void Dispose()
-        {
-            _mongoDbFixture.Dispose();
         }
 
         #endregion

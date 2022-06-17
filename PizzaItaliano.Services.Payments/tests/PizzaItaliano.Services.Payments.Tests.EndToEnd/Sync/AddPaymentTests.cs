@@ -15,7 +15,8 @@ using Xunit;
 
 namespace PizzaItaliano.Services.Payments.Tests.EndToEnd
 {
-    public class AddPaymentTests : IDisposable, IClassFixture<PizzaItalianoApplicationFactory<Program>>
+    [Collection("Collection")]
+    public class AddPaymentTests
     {
         private Task<HttpResponseMessage> Act(AddPayment command)
             => _httpClient.PostAsync("payments", TestHelper.GetContent(command));
@@ -141,11 +142,6 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd
             _mongoDbFixture = new MongoDbFixture<PaymentDocument, Guid>("payments");
             factory.Server.AllowSynchronousIO = true;
             _httpClient = factory.CreateClient();
-        }
-
-        public void Dispose()
-        {
-            _mongoDbFixture.Dispose();
         }
 
         #endregion

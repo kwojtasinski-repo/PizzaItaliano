@@ -118,11 +118,10 @@ namespace PizzaItaliano.Services.Releases.Tests.Shared.Fixtures
 
                 if (message is null)
                 {
-                    taskCompletionSource.TrySetCanceled();
-                    return;
+                    await Task.Run(() => taskCompletionSource.TrySetCanceled());
                 }
 
-                taskCompletionSource.TrySetResult(message);
+                await Task.Run(() => taskCompletionSource.TrySetResult(message));
             };
 
             _channel.BasicConsume(queue: queue,
