@@ -17,7 +17,8 @@ using Xunit;
 
 namespace PizzaItaliano.Services.Products.Tests.EndToEnd.Sync
 {
-    public class DeleteProductTests : IDisposable, IClassFixture<PizzaItalianoApplicationFactory<Program>>
+    [Collection("Collection")]
+    public class DeleteProductTests
     {
         private Task<HttpResponseMessage> Act(DeleteProduct command)
             => _httpClient.DeleteAsync($"products/{command.ProductId}");
@@ -106,11 +107,6 @@ namespace PizzaItaliano.Services.Products.Tests.EndToEnd.Sync
             _mongoDbFixture = new MongoDbFixture<ProductDocument, Guid>("products");
             factory.Server.AllowSynchronousIO = true;
             _httpClient = factory.CreateClient();
-        }
-
-        public void Dispose()
-        {
-            _mongoDbFixture.Dispose();
         }
 
         #endregion

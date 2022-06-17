@@ -14,7 +14,8 @@ using Xunit;
 
 namespace PizzaItaliano.Services.Products.Tests.Intgration.Async
 {
-    public class AddProductTests : IDisposable, IClassFixture<PizzaItalianoApplicationFactory<Program>>
+    [Collection("Collection")]
+    public class AddProductTests
     {
         private Task Act(AddProduct command) => _rabbitMqFixture.PublishAsync(command, Exchange);
 
@@ -71,11 +72,8 @@ namespace PizzaItaliano.Services.Products.Tests.Intgration.Async
             factory.Server.AllowSynchronousIO = true;
         }
 
-        public void Dispose()
-        {
-            _mongoDbFixture.Dispose();
-        }
-
         #endregion
     }
+
+
 }

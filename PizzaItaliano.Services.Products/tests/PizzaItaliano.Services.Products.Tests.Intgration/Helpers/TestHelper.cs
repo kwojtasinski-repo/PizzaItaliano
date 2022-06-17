@@ -2,8 +2,6 @@
 using PizzaItaliano.Services.Products.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Products.Tests.Shared.Fixtures;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
