@@ -60,7 +60,7 @@ namespace PizzaItaliano.Services.Releases.Tests.Shared.Fixtures
                 arguments: null,
                 type: "topic");
 
-            var queue = $"test_{SnakeCase(typeof(TMessage).Name)}";
+            var queue = $"test_{SnakeCase(typeof(TMessage).Name)}_{Guid.NewGuid().ToString("N")}";
 
             _channel.QueueDeclare(queue: queue,
                 durable: true,
@@ -98,7 +98,7 @@ namespace PizzaItaliano.Services.Releases.Tests.Shared.Fixtures
                 arguments: null,
                 type: "topic");
 
-            var queue = $"test_{SnakeCase(typeof(TMessage).Name)}";
+            var queue = $"test_{SnakeCase(typeof(TMessage).Name)}_{Guid.NewGuid().ToString("N")}";
 
             _channel.QueueDeclare(queue: queue,
                 durable: true,
