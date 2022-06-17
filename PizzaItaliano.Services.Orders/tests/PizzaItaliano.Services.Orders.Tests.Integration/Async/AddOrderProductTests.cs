@@ -1,11 +1,9 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-using PizzaItaliano.Services.Orders.API;
+﻿using PizzaItaliano.Services.Orders.API;
 using PizzaItaliano.Services.Orders.Application.Commands;
 using PizzaItaliano.Services.Orders.Application.DTO;
 using PizzaItaliano.Services.Orders.Application.Events;
 using PizzaItaliano.Services.Orders.Application.Events.Rejected;
 using PizzaItaliano.Services.Orders.Application.Exceptions;
-using PizzaItaliano.Services.Orders.Application.Services.Clients;
 using PizzaItaliano.Services.Orders.Core.Entities;
 using PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Orders.Tests.Integration.Helpers;
@@ -18,7 +16,8 @@ using Xunit;
 
 namespace PizzaItaliano.Services.Orders.Tests.Integration.Async
 {
-    public class AddOrderProductTests : IDisposable, IClassFixture<PizzaItalianoApplicationFactory<Program>>
+    [Collection("Collection")]
+    public class AddOrderProductTests
     {
         private Task Act(AddOrderProduct command) => _rabbitMqFixture.PublishAsync(command, Exchange);
 
@@ -131,11 +130,6 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Async
             _mongoDbFixture = new MongoDbFixture<OrderDocument, Guid>("orders");
             factory.Server.AllowSynchronousIO = true;
             _redisFixture = new RedisFixture();
-        }
-
-        public void Dispose()
-        {
-            _mongoDbFixture.Dispose();
         }
 
         #endregion

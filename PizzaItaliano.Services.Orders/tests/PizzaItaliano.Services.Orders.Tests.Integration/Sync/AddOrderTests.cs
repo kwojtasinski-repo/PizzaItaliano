@@ -12,7 +12,8 @@ using Xunit;
 
 namespace PizzaItaliano.Services.Orders.Tests.Integration.Sync
 {
-    public class AddOrderTests : IDisposable, IClassFixture<PizzaItalianoApplicationFactory<Program>>
+    [Collection("Collection")]
+    public class AddOrderTests
     {
         private Task Act(OrderDocument document) => _mongoDbFixture.InsertAsync(document);
 
@@ -46,11 +47,6 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Sync
         public AddOrderTests(PizzaItalianoApplicationFactory<Program> factory)
         {
             _mongoDbFixture = new MongoDbFixture<OrderDocument, Guid>("orders");
-        }
-
-        public void Dispose()
-        {
-            _mongoDbFixture.Dispose();
         }
 
         #endregion

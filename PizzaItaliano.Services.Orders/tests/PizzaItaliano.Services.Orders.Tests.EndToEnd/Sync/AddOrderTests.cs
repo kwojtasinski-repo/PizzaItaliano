@@ -15,7 +15,9 @@ using PizzaItaliano.Services.Orders.Application.Exceptions;
 
 namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
 {
-    public class AddOrderTests : IDisposable, IClassFixture<PizzaItalianoApplicationFactory<Program>>
+
+    [Collection("Collection")]
+    public class AddOrderTests
     {
         private Task<HttpResponseMessage> Act(AddOrder command)
             => _httpClient.PostAsync("orders", TestHelper.GetContent(command));
@@ -88,11 +90,6 @@ namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
             _mongoDbFixture = new MongoDbFixture<OrderDocument, Guid>("orders");
             factory.Server.AllowSynchronousIO = true;
             _httpClient = factory.CreateClient();
-        }
-
-        public void Dispose()
-        {
-            _mongoDbFixture.Dispose();
         }
 
         #endregion

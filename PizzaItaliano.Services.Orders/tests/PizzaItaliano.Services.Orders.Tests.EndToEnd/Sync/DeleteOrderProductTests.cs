@@ -7,17 +7,16 @@ using PizzaItaliano.Services.Orders.Tests.Shared.Factories;
 using PizzaItaliano.Services.Orders.Tests.Shared.Fixtures;
 using Shouldly;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
 {
-    public class DeleteOrderProductTests : IDisposable, IClassFixture<PizzaItalianoApplicationFactory<Program>>
+    [Collection("Collection")]
+    public class DeleteOrderProductTests
     {
         private Task<HttpResponseMessage> Act(DeleteOrderProduct command)
             => _httpClient.DeleteAsync($"orders/{command.OrderId}/order-product/{command.OrderProductId}/quantity/{command.Quantity}");
@@ -148,11 +147,6 @@ namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
             _mongoDbFixture = new MongoDbFixture<OrderDocument, Guid>("orders");
             factory.Server.AllowSynchronousIO = true;
             _httpClient = factory.CreateClient();
-        }
-
-        public void Dispose()
-        {
-            _mongoDbFixture.Dispose();
         }
 
         #endregion

@@ -9,15 +9,13 @@ using PizzaItaliano.Services.Orders.Tests.Shared.Factories;
 using PizzaItaliano.Services.Orders.Tests.Shared.Fixtures;
 using Shouldly;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace PizzaItaliano.Services.Orders.Tests.Integration.Async
 {
-    public class DeleteOrderProductTests : IDisposable, IClassFixture<PizzaItalianoApplicationFactory<Program>>
+    [Collection("Collection")]
+    public class DeleteOrderProductTests
     {
         private Task Act(DeleteOrderProduct command) => _rabbitMqFixture.PublishAsync(command, Exchange);
 
@@ -145,11 +143,6 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Async
             _rabbitMqFixture = new RabbitMqFixture();
             _mongoDbFixture = new MongoDbFixture<OrderDocument, Guid>("orders");
             factory.Server.AllowSynchronousIO = true;
-        }
-
-        public void Dispose()
-        {
-            _mongoDbFixture.Dispose();
         }
 
         #endregion

@@ -60,7 +60,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Shared.Fixtures
                 arguments: null,
                 type: "topic");
 
-            var queue = $"test_{SnakeCase(typeof(TMessage).Name)}";
+            var queue = $"test_{SnakeCase(typeof(TMessage).Name)}_{Guid.NewGuid().ToString("N")}";
 
             _channel.QueueDeclare(queue: queue,
                 durable: true,
@@ -98,7 +98,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Shared.Fixtures
                 arguments: null,
                 type: "topic");
 
-            var queue = $"test_{SnakeCase(typeof(TMessage).Name)}";
+            var queue = $"test_{SnakeCase(typeof(TMessage).Name)}_{Guid.NewGuid().ToString("N")}";
 
             _channel.QueueDeclare(queue: queue,
                 durable: true,
@@ -118,11 +118,10 @@ namespace PizzaItaliano.Services.Orders.Tests.Shared.Fixtures
 
                 if (message is null)
                 {
-                    taskCompletionSource.TrySetCanceled();
-                    return;
+                    await Task.Run(() => taskCompletionSource.TrySetCanceled());
                 }
 
-                taskCompletionSource.TrySetResult(message);
+                await Task.Run(() => taskCompletionSource.TrySetResult(message));
             };
 
             _channel.BasicConsume(queue: queue,

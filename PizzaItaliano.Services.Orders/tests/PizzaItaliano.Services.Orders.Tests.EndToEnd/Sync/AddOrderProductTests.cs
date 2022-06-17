@@ -1,7 +1,6 @@
 ﻿using PizzaItaliano.Services.Orders.API;
 using PizzaItaliano.Services.Orders.Application.Commands;
 using PizzaItaliano.Services.Orders.Application.DTO;
-using PizzaItaliano.Services.Orders.Application.Events.Rejected;
 using PizzaItaliano.Services.Orders.Application.Exceptions;
 using PizzaItaliano.Services.Orders.Core.Entities;
 using PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents;
@@ -10,17 +9,15 @@ using PizzaItaliano.Services.Orders.Tests.Shared.Factories;
 using PizzaItaliano.Services.Orders.Tests.Shared.Fixtures;
 using Shouldly;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
 {
-    public class AddOrderProductTests : IDisposable, IClassFixture<PizzaItalianoApplicationFactory<Program>>
+    [Collection("Collection")]
+    public class AddOrderProductTests
     {
         private Task<HttpResponseMessage> Act(AddOrderProduct command)
             => _httpClient.PostAsync("orders/order-product", TestHelper.GetContent(command));
@@ -165,11 +162,6 @@ namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
             _httpClient = factory.CreateClient();
             factory.Server.AllowSynchronousIO = true;
             _redisFixture = new RedisFixture();
-        }
-
-        public void Dispose()
-        {
-            _mongoDbFixture.Dispose();
         }
 
         #endregion
