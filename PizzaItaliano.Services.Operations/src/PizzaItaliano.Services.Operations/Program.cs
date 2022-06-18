@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using Convey;
 using Convey.Logging;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using PizzaItaliano.Services.Operations.Hubs;
 using PizzaItaliano.Services.Operations.Infrastructure;

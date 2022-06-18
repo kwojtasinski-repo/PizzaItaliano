@@ -38,9 +38,12 @@
   <ItemGroup>
     <Protobuf Include="Operations.proto" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <Folder Include="wwwroot\ui\js" />
+	<Content Update="wwwroot\**" ExcludeFromSingleFile="false">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
   </ItemGroup>
-  
+
+
 </Project>
