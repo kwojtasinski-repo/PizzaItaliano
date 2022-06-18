@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Convey.Persistence.MongoDB;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 
 namespace PizzaItaliano.Services.Orders.Tests.Shared.Factories
 {
@@ -13,5 +10,17 @@ namespace PizzaItaliano.Services.Orders.Tests.Shared.Factories
     {
         protected override IWebHostBuilder CreateWebHostBuilder()
             => base.CreateWebHostBuilder().UseEnvironment("tests");
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                var options = Services.GetRequiredService<MongoDbOptions>();
+                var client = new MongoClient(options.ConnectionString);
+                client.DropDatabase(options.Database);
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

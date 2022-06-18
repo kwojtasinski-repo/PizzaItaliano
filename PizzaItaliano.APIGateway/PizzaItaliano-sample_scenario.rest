@@ -31,8 +31,8 @@ Content-Type: application/json
 }
 
 ### ### check operation 
-@operationId = {{add_product_operation.response.headers.Request-ID}}
-{{api}}/operations/{{operationId}}
+@operationAddProductId = {{add_product_operation.response.headers.Request-ID}}
+{{api}}/operations/{{operationAddProductId}}
 
 ### check if exists
 GET {{api}}/products/{{productId}}
@@ -50,8 +50,8 @@ Content-Type: application/json
 }
 
 ### ### check operation 
-@operationId = {{add_order_operation.response.headers.Request-ID}}
-{{api}}/operations/{{operationId}}
+@operationAddOrderId = {{add_order_operation.response.headers.Request-ID}}
+{{api}}/operations/{{operationAddOrderId}}
 
 ### Check order if exits
 GET {{api}}/orders/{{orderId}}
@@ -69,8 +69,8 @@ Content-Type: application/json
 }
 
 ### ### check operation
-@operationId = {{add_order_product_operation.response.headers.Request-ID}}
-{{api}}/operations/{{operationId}}
+@operationAddOrderProductId = {{add_order_product_operation.response.headers.Request-ID}}
+{{api}}/operations/{{operationAddOrderProductId}}
 
 ### Check order
 GET {{api}}/orders/{{orderId}}
@@ -85,8 +85,8 @@ Content-Type: application/json
 }
 
 ### check operation 
-@operationId = {{change_status_order_operation.response.headers.Request-ID}}
-{{api}}/operations/{{operationId}}
+@operationSetOrderStatusId = {{change_status_order_operation.response.headers.Request-ID}}
+{{api}}/operations/{{operationSetOrderStatusId}}
 
 ### Check order
 # @name order_after_set_ready
@@ -130,8 +130,8 @@ Content-Type: application/json
 }
 
 ### check operation
-@operationId = {{release_product.response.headers.Request-ID}}
-{{api}}/operations/{{operationId}}
+@operationReleaseOrderId = {{release_product.response.headers.Request-ID}}
+{{api}}/operations/{{operationReleaseOrderId}}
 
 ### Check order
 GET {{api}}/orders/{{orderId}}
