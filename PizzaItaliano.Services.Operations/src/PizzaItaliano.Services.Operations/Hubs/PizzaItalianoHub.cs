@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using PizzaItaliano.Services.Operations.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,38 @@ namespace PizzaItaliano.Services.Operations.Hubs
 {
     public class PizzaItalianoHub : Hub
     {
-        // public async Task InitializeAsync(string token)
+        public async Task InitializeAsync()
+        {
+            try
+            {
+                // version with users
+                /*var payload = _jwtHandler.GetTokenPayload(token);
+                if (payload is null)
+                {
+                    await DisconnectAsync();
 
-        // private async Task ConnectAsync()
+                    return;
+                }
 
-        // private async Task DisconnectAsync()
+                var group = Guid.Parse(payload.Subject).ToUserGroup();*/
+                var group = "".ToUserGroup();
+                await Groups.AddToGroupAsync(Context.ConnectionId, group);
+                await ConnectAsync();
+            }
+            catch
+            {
+                await DisconnectAsync();
+            }
+        }
+
+        private async Task ConnectAsync()
+        {
+            await Clients.Client(Context.ConnectionId).SendAsync("connected");
+        }
+
+        private async Task DisconnectAsync()
+        {
+            await Clients.Client(Context.ConnectionId).SendAsync("disconnected");
+        }
     }
 }

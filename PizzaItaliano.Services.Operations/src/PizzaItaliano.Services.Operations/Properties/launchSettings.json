@@ -18,7 +18,7 @@
     "PizzaItaliano.Services.Operations": {
       "commandName": "Project",
       "launchBrowser": false,
-      "applicationUrl": "http://localhost:5005",
+      "applicationUrl": "http://localhost:5005;https://localhost:50050",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
