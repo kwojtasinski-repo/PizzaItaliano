@@ -30,7 +30,7 @@ Content-Type: application/json
   "cost": {{cost}}
 }
 
-### ### check operation 
+### ### check operation async gateway -> script start-async.sh
 @operationAddProductId = {{add_product_operation.response.headers.Request-ID}}
 {{api}}/operations/{{operationAddProductId}}
 
@@ -49,7 +49,7 @@ Content-Type: application/json
   "orderId": "{{orderId}}"
 }
 
-### ### check operation 
+### ### check operation async gateway -> script start-async.sh
 @operationAddOrderId = {{add_order_operation.response.headers.Request-ID}}
 {{api}}/operations/{{operationAddOrderId}}
 
@@ -68,7 +68,7 @@ Content-Type: application/json
   "quantity": {{quantity}}
 }
 
-### ### check operation
+### ### check operation async gateway -> script start-async.sh
 @operationAddOrderProductId = {{add_order_product_operation.response.headers.Request-ID}}
 {{api}}/operations/{{operationAddOrderProductId}}
 
@@ -84,7 +84,7 @@ Content-Type: application/json
   "orderId": "{{orderId}}"
 }
 
-### check operation 
+### check operation async gateway -> script start-async.sh
 @operationSetOrderStatusId = {{change_status_order_operation.response.headers.Request-ID}}
 {{api}}/operations/{{operationSetOrderStatusId}}
 
@@ -129,7 +129,7 @@ Content-Type: application/json
   "orderProductId": "{{orderProductId}}"
 }
 
-### check operation
+### check operation async gateway -> script start-async.sh
 @operationReleaseOrderId = {{release_product.response.headers.Request-ID}}
 {{api}}/operations/{{operationReleaseOrderId}}
 
