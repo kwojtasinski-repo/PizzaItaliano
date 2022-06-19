@@ -31,6 +31,7 @@ using PizzaItaliano.Services.Products.Infrastructure.Logging;
 using Convey.Metrics.AppMetrics;
 using PizzaItaliano.Services.Products.Infrastructure.Metrics;
 using Convey.Tracing.Jaeger;
+using Convey.Tracing.Jaeger.RabbitMQ;
 using PizzaItaliano.Services.Products.Infrastructure.Tracing;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Products.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
@@ -68,7 +69,7 @@ namespace PizzaItaliano.Services.Products.Infrastructure
             conveyBuilder.AddMongoRepository<ProductDocument, Guid>("products");
             conveyBuilder.AddSwaggerDocs();
             conveyBuilder.AddWebApiSwaggerDocs();
-            conveyBuilder.AddRabbitMq();
+            conveyBuilder.AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin());
             conveyBuilder.AddHandlersLogging();
             conveyBuilder.AddMetrics();
             conveyBuilder.AddJaeger();

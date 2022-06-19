@@ -13,6 +13,7 @@ using Convey.MessageBrokers.RabbitMQ;
 using Convey.Metrics.AppMetrics;
 using Convey.Persistence.MongoDB;
 using Convey.Tracing.Jaeger;
+using Convey.Tracing.Jaeger.RabbitMQ;
 using Convey.WebApi;
 using Convey.WebApi.CQRS;
 using Convey.WebApi.Swagger;
@@ -65,7 +66,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure
             conveyBuilder.AddMongoRepository<PaymentDocument, Guid>("payments");
             conveyBuilder.AddSwaggerDocs();
             conveyBuilder.AddWebApiSwaggerDocs();
-            conveyBuilder.AddRabbitMq();
+            conveyBuilder.AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin());
             conveyBuilder.AddConsul();
             conveyBuilder.AddFabio();
             conveyBuilder.AddHandlersLogging();

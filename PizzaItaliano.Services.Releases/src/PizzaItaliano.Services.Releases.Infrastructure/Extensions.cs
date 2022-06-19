@@ -31,6 +31,7 @@ using Convey.Metrics.AppMetrics;
 using PizzaItaliano.Services.Releases.Infrastructure.Metrics;
 using Convey.Tracing.Jaeger;
 using PizzaItaliano.Services.Releases.Infrastructure.Tracing;
+using Convey.Tracing.Jaeger.RabbitMQ;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Releases.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Releases.Tests.Intgration")] // widocznosc internal na poziomie testow (integration)
@@ -59,7 +60,7 @@ namespace PizzaItaliano.Services.Releases.Infrastructure
             conveyBuilder.AddSwaggerDocs();
             conveyBuilder.AddWebApiSwaggerDocs();
             conveyBuilder.AddMessageOutbox(o => o.AddMongo());
-            conveyBuilder.AddRabbitMq();
+            conveyBuilder.AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin());
             conveyBuilder.AddConsul();
             conveyBuilder.AddFabio();
             conveyBuilder.AddHandlersLogging();
