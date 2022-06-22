@@ -1,0 +1,29 @@
+.header {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    padding: 50px 15px;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.headerImage {
+    background-color: #cdcdcd;
+    background: url(../../../public/logo.jpg) center;
+    background-size: 70%;
+    position: absolute;
+    top: -5%;
+    bottom: -5%;
+    left: -5%;
+    right: -5%;
+    z-index: -1;
+}
+
+.backgroundName {
+    background-color: black;
+}
+
+.headerName {
+    color: white;
+}
