@@ -5,6 +5,7 @@ import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Layout from "./components/Layout/Layout";
 import Menu from "./components/Menu/Menu";
+import Cart from "./pages/Cart/Cart";
 import Home from "./pages/Home/Home";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   const content = (
     <Suspense fallback={<p>Loading...</p>} >
       <Routes>
+          <Route path='/cart' element = { <Cart /> } />
           <Route path="/" end element = {<Home />} />
       </Routes>
     </Suspense>

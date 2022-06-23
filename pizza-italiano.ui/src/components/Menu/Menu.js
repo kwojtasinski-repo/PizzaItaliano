@@ -44,7 +44,7 @@ function Menu() {
                         mainTitle = "My Orders"
                         navItems = {
                             <>
-                            <Nav.Link as={Link} to="/" className={`${style.menuItemDropdown}`}>
+                            <Nav.Link as={Link} to="/cart" className={`${style.menuItemDropdown}`}>
                                 Cart
                             </Nav.Link>
                             <Nav.Link as={Link} end to="/" className={`${style.menuItemDropdown}`}>

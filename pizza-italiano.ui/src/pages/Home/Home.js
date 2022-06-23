@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { createGuid } from "../../helpers/createGuid";
 import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
 import Items from "../../components/Items/Items";
 
