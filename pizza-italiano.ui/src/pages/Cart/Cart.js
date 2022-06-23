@@ -60,7 +60,7 @@ function Cart(props) {
                         //onClick={summaryHandler}
                         onClick={() => {}}
                         disabled={disabledButton} >
-                        Podsumowanie
+                        Summary
                 </LoadingButton>
             </div>
         </div>
