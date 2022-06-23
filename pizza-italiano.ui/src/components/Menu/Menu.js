@@ -63,6 +63,11 @@ function Menu() {
                         Payments
                     </Link>
                 </li>
+                <li className={style.menuItem}>
+                    <Link to='/' className={`${style.menuItem}`}>
+                        Releases
+                    </Link>
+                </li>
             </ul>
         </nav>
     )
