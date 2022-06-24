@@ -9,6 +9,8 @@ import NotFound from "./pages/404/NotFound";
 import Cart from "./pages/Cart/Cart";
 import Home from "./pages/Home/Home";
 import Order from "./pages/Order/Order";
+import { Payments } from "./pages/Payments/Payments";
+import { Releases } from "./pages/Releases/Releases";
 
 function App() {
   const header = (
@@ -22,6 +24,8 @@ function App() {
   const content = (
     <Suspense fallback={<p>Loading...</p>} >
       <Routes>
+          <Route path='/releases/:id' element = { <Releases /> } />
+          <Route path='/payments' element = { <Payments /> } />
           <Route path='/orders/:id' element = { <Order /> } />
           <Route path='/cart' element = { <Cart /> } />
           <Route path="/" end element = {<Home />} />

@@ -172,7 +172,7 @@ function Order(props) {
                                             </NavLink>
                                             <NavLink className={"btn btn-primary"}
                                                     to={`/`} >
-                                                        Show release
+                                                        Show releases
                                             </NavLink>
                                         </>
                         }[order.orderStatus]
