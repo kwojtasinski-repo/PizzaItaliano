@@ -10,6 +10,9 @@ import Cart from "./pages/Cart/Cart";
 import Home from "./pages/Home/Home";
 import Order from "./pages/Order/Order";
 import { Payments } from "./pages/Payments/Payments";
+import AddProduct from "./pages/Product/AddProduct";
+import EditProduct from "./pages/Product/EditProduct";
+import ViewProduct from "./pages/Product/ViewProduct";
 import { Releases } from "./pages/Releases/Releases";
 
 function App() {
@@ -24,6 +27,9 @@ function App() {
   const content = (
     <Suspense fallback={<p>Loading...</p>} >
       <Routes>
+          <Route path='/products/details/:id' element = { <ViewProduct /> } />
+          <Route path='/products/edit/:id' element = { <EditProduct /> } />
+          <Route path='/products/add' element = { <AddProduct /> } />
           <Route path='/releases/:id' element = { <Releases /> } />
           <Route path='/payments' element = { <Payments /> } />
           <Route path='/orders/:id' element = { <Order /> } />
