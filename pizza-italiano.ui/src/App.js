@@ -5,8 +5,10 @@ import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Layout from "./components/Layout/Layout";
 import Menu from "./components/Menu/Menu";
+import NotFound from "./pages/404/NotFound";
 import Cart from "./pages/Cart/Cart";
 import Home from "./pages/Home/Home";
+import Order from "./pages/Order/Order";
 
 function App() {
   const header = (
@@ -20,8 +22,10 @@ function App() {
   const content = (
     <Suspense fallback={<p>Loading...</p>} >
       <Routes>
+          <Route path='/orders/:id' element = { <Order /> } />
           <Route path='/cart' element = { <Cart /> } />
           <Route path="/" end element = {<Home />} />
+          <Route path="*" element = {<NotFound/>} />
       </Routes>
     </Suspense>
   )
