@@ -39,7 +39,7 @@ export default function ProductForm(props) {
             props.redirectAfterSuccess();
         } catch (exception) {
             console.log(exception);
-            setError(exception.response.data.reason);
+            setError(exception.response?.data?.reason);
         }
 
         setLoading(false);
@@ -73,7 +73,7 @@ export default function ProductForm(props) {
                 <div className="alert alert-danger">{error}</div>
             ) : null}
             <form onSubmit={submit} >
-                <Input label = "Nazwa"
+                <Input label = "Name"
                        type = "text"
                        value = {form.name.value}
                        error = {form.name.error}

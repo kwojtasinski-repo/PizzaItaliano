@@ -2,6 +2,7 @@ import axios from "../../axios-setup";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductForm from "./ProductForm";
+import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
 
 function EditProduct(props) {
     const { id } = useParams();
@@ -16,13 +17,15 @@ function EditProduct(props) {
             setItem(response.data);
         } catch(exception) {
             console.log(exception);
-            setError(exception.message);
+            setError(exception.response.data.reason);
         }
 
         setLoading(false);
     }
 
     const onSubmit = async (form) => {
+        debugger;
+        await axios.put('/products/', form);
     }
 
     const redirectAfterSuccess = () => {
@@ -34,6 +37,7 @@ function EditProduct(props) {
     }, [])
 
     return (
+        loading ? <LoadingIcon /> : 
         <div>
             {error ? (
                 <div className="alert alert-danger">{error}</div>

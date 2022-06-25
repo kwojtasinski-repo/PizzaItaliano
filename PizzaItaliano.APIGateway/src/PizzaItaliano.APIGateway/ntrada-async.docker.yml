@@ -23,9 +23,10 @@ extensions:
     allowedOrigins:
       - '*'
     allowedMethods:
-      - post
-      - put
-      - delete
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
     allowedHeaders:
       - '*'
     exposedHeaders:

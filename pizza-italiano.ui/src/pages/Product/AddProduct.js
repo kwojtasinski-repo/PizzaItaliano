@@ -1,5 +1,4 @@
 import axios from "../../axios-setup";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createGuid } from "../../helpers/createGuid";
 import ProductForm from "./ProductForm";
