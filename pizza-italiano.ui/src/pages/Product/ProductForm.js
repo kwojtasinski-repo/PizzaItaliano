@@ -34,11 +34,12 @@ export default function ProductForm(props) {
             await props.onSubmit({
                 productId: form.id.value,
                 name: form.name.value,
-                cost: form.cost.value
+                cost: Number(form.cost.value)
             });
+            props.redirectAfterSuccess();
         } catch (exception) {
             console.log(exception);
-            setError(exception.response.data.errors);
+            setError(exception.response.data.reason);
         }
 
         setLoading(false);

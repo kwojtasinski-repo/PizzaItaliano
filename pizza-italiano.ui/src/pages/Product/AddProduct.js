@@ -1,4 +1,7 @@
+import axios from "../../axios-setup";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createGuid } from "../../helpers/createGuid";
 import ProductForm from "./ProductForm";
 
 function AddProduct(props) {
@@ -6,6 +9,9 @@ function AddProduct(props) {
     const navigate = useNavigate();
 
     const onSubmit = async (form) => {
+        form.productId = createGuid();
+        id = form.productId;
+        await axios.post('/products', form);
     }
 
     const redirectAfterSuccess = () => {
