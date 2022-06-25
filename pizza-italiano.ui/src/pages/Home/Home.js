@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
 import Items from "../../components/Items/Items";
+import axios from "../../axios-setup";
 
 function Home(props) {
     const [items, setItems] = useState([]);
@@ -8,30 +9,15 @@ function Home(props) {
     const [loading, setLoading] = useState(true);
 
     const fetchItems = async () => {
-        return await new Promise(function (resolve) {
-            setTimeout(function () {
-                setItems([
-                    {
-                        id: "f8137825-7146-4282-b0fa-baaf1a099a82",
-                        name: "Pizza Margheritta",
-                        cost: Number(25.00).toFixed(2)
-                    },
-                    {
-                        id: "5daa2333-ba84-460b-adc1-a66f983bf908",
-                        name: "Pizza Funghi",
-                        cost: Number(29.25).toFixed(2)
-                    },
-                    {
-                        id: "20b2a65a-f009-4aa2-a4ca-db35ff141cb0",
-                        name: "Pizza Capriciosa",
-                        cost: Number(30.25).toFixed(2)
-                    },
-                ])
-                setError('');
-                setLoading(false);
-            }, 500);
-        });
-    }; 
+        try {
+            const response = await axios.get('/products');
+            setItems(response.data);
+        } catch(exception) {
+            console.log(exception);
+            setError(exception.message);
+        }
+        setLoading(false);
+    };
 
     useEffect(() => {
         fetchItems();
