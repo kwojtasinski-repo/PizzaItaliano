@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductForm from "./ProductForm";
 import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
+import { mapToProduct } from "../../helpers/mapper";
 
 function EditProduct(props) {
     const { id } = useParams();
@@ -14,7 +15,7 @@ function EditProduct(props) {
     const fetchItem = async () => {
         try {
             const response = await axios.get(`/products/${id}`);
-            setItem(response.data);
+            setItem(mapToProduct(response.data));
         } catch(exception) {
             console.log(exception);
             setError(exception.response.data.reason);
@@ -42,13 +43,16 @@ function EditProduct(props) {
             {error ? (
                 <div className="alert alert-danger">{error}</div>
             ) : null}
-            <ProductForm product={item}
-                      text = "Edit product"
-                      onSubmit = {onSubmit}
-                      cancelEditUrl = "/"
-                      cancelButtonText = "Cancel"
-                      buttonText = "Accept"
-                      redirectAfterSuccess = {redirectAfterSuccess} />
+            {item ? 
+                <ProductForm product={item}
+                        text = "Edit product"
+                        onSubmit = {onSubmit}
+                        cancelEditUrl = "/"
+                        cancelButtonText = "Cancel"
+                        buttonText = "Accept"
+                        redirectAfterSuccess = {redirectAfterSuccess} />
+                        : <><div>Product with id {id} not found</div></>
+            }
         </div>
     )
 }

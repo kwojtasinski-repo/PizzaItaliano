@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import { addItemToCart } from '../../Cart/Cart';
 import styles from './Item.module.css'
 
@@ -24,10 +25,17 @@ function Item(props) {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <button className={`btn btn-primary mt-2 px-5 float-end`} style={{width: '14rem'}} onClick={onClickHandler.bind(this, props)} >
-                            Add to cart
-                        </button>
+                    <div className='text-end'>
+                        <div>
+                            <button className={`btn btn-primary mt-2 px-5`} style={{width: '14rem'}} onClick={onClickHandler.bind(this, props)} >
+                                Add to cart
+                            </button>
+                        </div>
+                        <div>
+                            <NavLink to={`/products/details/${props.id}`} className={"btn btn-warning mt-2 px-5"}>
+                                Details
+                            </NavLink>
+                        </div>
                     </div>
                 </div>
             </div>

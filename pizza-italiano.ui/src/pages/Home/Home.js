@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
 import Items from "../../components/Items/Items";
 import axios from "../../axios-setup";
+import { mapToProducts } from "../../helpers/mapper";
 
 function Home(props) {
     const [items, setItems] = useState([]);
@@ -11,7 +12,7 @@ function Home(props) {
     const fetchItems = async () => {
         try {
             const response = await axios.get('/products');
-            setItems(response.data);
+            setItems(mapToProducts(response.data));
         } catch(exception) {
             console.log(exception);
             setError(exception.message);

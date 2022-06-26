@@ -21,7 +21,7 @@ export function DropdownMenu(props) {
                 onClick(e);
             }
         });
-    },)
+    }, [])
     
     return (
         <Nav className={props.classNameMenu}
