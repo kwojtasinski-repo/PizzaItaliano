@@ -30,7 +30,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Commands.OrderPr
             var quantity = 1;
             var cost = new decimal(10);
             var command = new DeleteOrderProduct(orderId, orderProductId, quantity);
-            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.New);
+            var productName = "Product #1";
+            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.New);
             var order = new Order(orderId, "abc", cost, OrderStatus.New, DateTime.Now, null, new List<OrderProduct> { orderProduct });
             _orderRepository.GetAsync(orderId).Returns(order);
 

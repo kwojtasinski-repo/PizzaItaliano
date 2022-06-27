@@ -31,7 +31,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Events
             var command = new ReleaseAdded(releaseId, orderId, orderProductId);
             var quantity = 1;
             var cost = new decimal(10);
-            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.Paid);
+            var productName = "Product #1";
+            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.Paid);
             var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.Paid, DateTime.Now, null, new List<OrderProduct> { orderProduct });
             _orderRepository.GetAsync(orderId).Returns(order);
 

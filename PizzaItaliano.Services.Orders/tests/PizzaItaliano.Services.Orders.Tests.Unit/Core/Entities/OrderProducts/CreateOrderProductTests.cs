@@ -12,7 +12,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.OrderProducts
 {
     public class CreateOrderProductTests
     {
-        private OrderProduct Act(AggregateId id, int quantity, decimal cost, Guid orderId, Guid productId) => OrderProduct.Create(id, quantity, cost, orderId, productId);
+        private OrderProduct Act(AggregateId id, int quantity, decimal cost, Guid orderId, Guid productId, string productName) => OrderProduct.Create(id, quantity, cost, orderId, productId, productName);
 
         [Fact]
         public void given_valid_parameters_order_product_should_be_created()
@@ -23,9 +23,10 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.OrderProducts
             var productId = Guid.NewGuid();
             var cost = new decimal(12.12);
             var quantity = 1;
+            var productName = "Product #1";
 
             // Act
-            var orderProduct = Act(id, quantity, cost, orderId, productId);
+            var orderProduct = Act(id, quantity, cost, orderId, productId, productName);
 
             // Assert
             orderProduct.Id.ShouldBe(id);
@@ -44,9 +45,10 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.OrderProducts
             var productId = Guid.NewGuid();
             var quantity = -1;
             var cost = new decimal(12.12);
+            var productName = "Product #1";
 
             // Act
-            var exception = Record.Exception(() => Act(id, quantity, cost, orderId, productId));
+            var exception = Record.Exception(() => Act(id, quantity, cost, orderId, productId, productName));
 
             // Assert
             exception.ShouldNotBeNull();
@@ -62,9 +64,10 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.OrderProducts
             var productId = Guid.NewGuid();
             var quantity = -1;
             var cost = new decimal(-12.12);
+            var productName = "Product #1";
 
             // Act
-            var exception = Record.Exception(() => Act(id, quantity, cost, orderId, productId));
+            var exception = Record.Exception(() => Act(id, quantity, cost, orderId, productId, productName));
 
             // Assert
             exception.ShouldNotBeNull();

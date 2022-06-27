@@ -51,7 +51,7 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
                 throw new ProductNotFoundException(command.ProductId);
             }
 
-            var orderProduct = OrderProduct.Create(command.OrderProductId, command.Quantity, product.Cost, command.OrderId, command.ProductId);
+            var orderProduct = OrderProduct.Create(command.OrderProductId, command.Quantity, product.Cost, command.OrderId, command.ProductId, product.Name);
             order.AddOrderProduct(orderProduct);
 
             await _orderRepository.UpdateAsync(order);

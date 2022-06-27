@@ -9,6 +9,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
         public Guid Id { get; set; }
         public int Quantity { get; set; }
         public decimal Cost { get; set; }
+        public string ProductName { get; set; }
         public Guid OrderId { get; set; }
         public Guid ProductId { get; set; }
         public OrderProductStatus OrderProductStatus { get; set; }

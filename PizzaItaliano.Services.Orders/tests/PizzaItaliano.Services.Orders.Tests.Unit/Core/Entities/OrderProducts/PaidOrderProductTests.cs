@@ -24,7 +24,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.OrderProducts
             var quantity = 1;
             var status = OrderProductStatus.New;
             var statusExpected = OrderProductStatus.Paid;
-            var orderProduct = new OrderProduct(id, quantity, cost, orderId, productId, status);
+            var productName = "Product #1";
+            var orderProduct = new OrderProduct(id, quantity, cost, orderId, productId, productName, status);
 
             // Act
             orderProduct.OrderProductPaid();
@@ -46,7 +47,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.OrderProducts
             var cost = new decimal(12.12);
             var quantity = 1;
             var status = OrderProductStatus.Paid;
-            var orderProduct = new OrderProduct(id, quantity, cost, orderId, productId, status);
+            var productName = "Product #1";
+            var orderProduct = new OrderProduct(id, quantity, cost, orderId, productId, productName, status);
 
             // Act
             var exception = Record.Exception(() => orderProduct.OrderProductPaid());

@@ -73,7 +73,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
         public static OrderProduct AsEntity(this OrderProductDocument orderProductDocument)
         {
             var orderProduct = new OrderProduct(orderProductDocument.Id, orderProductDocument.Quantity, orderProductDocument.Cost,
-                                                orderProductDocument.OrderId, orderProductDocument.ProductId, orderProductDocument.OrderProductStatus);
+                                                orderProductDocument.OrderId, orderProductDocument.ProductId, orderProductDocument.ProductName, orderProductDocument.OrderProductStatus);
             return orderProduct;
         }
 

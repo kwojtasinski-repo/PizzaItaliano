@@ -25,10 +25,12 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var quantity = 1;
             var quantityToDelete = 1;
             var order = new Order(orderId, number, decimal.Zero, OrderStatus.New, DateTime.Now, null);
-            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.New);
+            var productName = "Product #1";
+            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.New);
             order.AddOrderProduct(orderProduct);
             order.ClearEvents();
-            var orderProduct2 = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.New);
+            var productName2 = "Product #1";
+            var orderProduct2 = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName2, OrderProductStatus.New);
 
             // Act
             order.DeleteOrderProduct(orderProduct2, quantityToDelete);
@@ -53,7 +55,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var quantity = 1;
             var quantityToDelete = 1;
             var order = new Order(orderId, number, decimal.Zero, OrderStatus.New, DateTime.Now, null);
-            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.New);
+            var productName = "Product #1";
+            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.New);
 
             // Act
             var exception = Record.Exception(() => order.DeleteOrderProduct(orderProduct, quantityToDelete));
@@ -75,9 +78,11 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var quantity = 1;
             var quantityToDelete = -3;
             var order = new Order(orderId, number, decimal.Zero, OrderStatus.New, DateTime.Now, null);
-            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.New);
+            var productName = "Product #1";
+            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.New);
             order.AddOrderProduct(orderProduct);
-            var orderProduct2 = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.New);
+            var productName2 = "Product #1";
+            var orderProduct2 = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName2, OrderProductStatus.New);
 
             // Act
             var exception = Record.Exception(() => order.DeleteOrderProduct(orderProduct2, quantityToDelete));
@@ -99,9 +104,11 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var quantity = 1;
             var quantityToDelete = 5;
             var order = new Order(orderId, number, decimal.Zero, OrderStatus.New, DateTime.Now, null);
-            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.New);
+            var productName = "Product #1";
+            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.New);
             order.AddOrderProduct(orderProduct);
-            var orderProduct2 = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.New);
+            var productName2 = "Product #2";
+            var orderProduct2 = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName2, OrderProductStatus.New);
 
             // Act
             var exception = Record.Exception(() => order.DeleteOrderProduct(orderProduct2, quantityToDelete));

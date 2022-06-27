@@ -24,7 +24,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var cost = new decimal(12.12);
             var quantity = 1;
             var order = new Order(orderId, number, decimal.Zero, OrderStatus.New, DateTime.Now, null);
-            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.New);
+            var productName = "Product #1";
+            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.New);
 
             // Act
             order.AddOrderProduct(orderProduct);

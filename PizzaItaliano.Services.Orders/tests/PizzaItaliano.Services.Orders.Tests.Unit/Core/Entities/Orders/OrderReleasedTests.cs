@@ -26,8 +26,9 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var status = OrderStatus.Paid;
             var statusExpected = OrderStatus.Released;
             var currentTime = DateTime.Now.TimeOfDay;
+            var productName = "Product #1";
             var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null);
-            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.Released);
+            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.Released);
             order.AddOrderProduct(orderProduct);
             order.ClearEvents();
 
@@ -93,7 +94,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var quantity = 1;
             var status = OrderStatus.Paid;
             var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null);
-            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, OrderProductStatus.New);
+            var productName = "Product #1";
+            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.New);
             order.AddOrderProduct(orderProduct);
             order.ClearEvents();
 
