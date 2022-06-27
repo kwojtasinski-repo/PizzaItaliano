@@ -1,8 +1,10 @@
+import axios from "../../axios-setup";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteItemFromCart, showItemsInCart } from "../../components/Cart/Cart";
 import LoadingButton from "../../components/UI/LoadingButton/LoadingButton";
 import styles from "./Cart.module.css";
+import { createGuid } from "../../helpers/createGuid";
 
 function Cart(props) {
     const [items, setItems] = useState([]);
@@ -19,6 +21,23 @@ function Cart(props) {
     useEffect(() => {
         setItems(showItemsInCart());
     }, [])
+
+    const summaryHandler = async () => {
+        debugger;
+        const orderId = createGuid();
+        await axios.post('/orders', { orderId });
+
+        for (const item of items) {
+            await axios.post('/orders/order-product', {
+                orderId,
+                orderProductId: createGuid(),
+                productId: item.id,
+                quantity: item.quantity
+            });
+        }
+
+        navigate(`/orders/${orderId}`);
+    }
 
     return (
         <div className={styles.cart}>
@@ -57,8 +76,7 @@ function Cart(props) {
                 <LoadingButton className="btn btn-warning mt-2 float-end"
                         style={{ marginRight: "20%" }}
                         loading={loading}
-                        //onClick={summaryHandler}
-                        onClick={() => {}}
+                        onClick={summaryHandler}
                         disabled={disabledButton} >
                         Summary
                 </LoadingButton>

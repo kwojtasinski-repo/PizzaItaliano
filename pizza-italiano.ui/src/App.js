@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import React, {Suspense, useReducer} from "react";
 import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom';
 import "./App.css";
 import Footer from "./components/Footer/Footer";
@@ -14,8 +14,13 @@ import AddProduct from "./pages/Product/AddProduct";
 import EditProduct from "./pages/Product/EditProduct";
 import ViewProduct from "./pages/Product/ViewProduct";
 import { Releases } from "./pages/Releases/Releases";
+import AuthContext from './context/AuthContext';
+import { initialState, reducer } from './reducer';
+import ReducerContext from './context/ReducerContext';
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const header = (
     <Header />
   );
@@ -46,12 +51,23 @@ function App() {
 
   return (
     <Router>
-      <Layout
-          header = {header}
-          menu = {menu}
-          content = {content}
-          footer = {footer}
-          />
+      <AuthContext.Provider value = {{
+          user: state.user,
+          login: (user) => dispatch({ type: "login", user }),
+          logout: () => dispatch({ type: "logout" })
+      }}>
+        <ReducerContext.Provider value={{
+          state: state,
+          dispatch: dispatch
+        }} >
+          <Layout
+              header = {header}
+              menu = {menu}
+              content = {content}
+              footer = {footer}
+              />
+        </ReducerContext.Provider>
+      </AuthContext.Provider>
     </Router>
   );
 }

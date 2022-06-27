@@ -24,3 +24,13 @@
     color: #206199;
     text-decoration: underline;
 }
+
+.itemCartCount {
+    position: absolute;
+    font-size: 0.85rem;
+    color: #94989a;
+}
+
+.cartPosition {
+    margin-top: 10px;
+}

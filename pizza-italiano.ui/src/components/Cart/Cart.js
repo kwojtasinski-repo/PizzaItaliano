@@ -5,6 +5,10 @@ export function showItemsInCart() {
     return cart;
 }
 
+export function getItemsInCartCount() {
+    return cart.length;
+}
+
 export function addItemToCart(item) {
     const itemExists = cart.find(i => i.id === item.id);
     let newItem = {...item, quantity: 1 };

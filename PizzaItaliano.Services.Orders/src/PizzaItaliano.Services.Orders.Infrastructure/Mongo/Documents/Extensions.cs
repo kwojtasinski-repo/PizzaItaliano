@@ -64,6 +64,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
                 OrderId = orderProduct.OrderId,
                 Quantity = orderProduct.Quantity,
                 ProductId = orderProduct.ProductId,
+                ProductName = orderProduct.ProductName,
                 OrderProductStatus = orderProduct.OrderProductStatus
             };
 
