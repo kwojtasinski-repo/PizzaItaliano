@@ -1,8 +1,9 @@
+import axios from "../../axios-setup";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
-import { createGuid } from "../../helpers/createGuid";
 import styles from './Order.module.css'
+import { mapToOrder } from "../../helpers/mapper";
 
 function Order(props) {
     const { id } = useParams();
@@ -11,42 +12,15 @@ function Order(props) {
     const [error, setError] = useState('');
 
     const fetchCart = async () => {
-        return await new Promise(function (resolve) {
-            setTimeout(function () {
-                setOrder(
-                    {
-                        id: id,
-                        orderNumber: createGuid(),
-                        cost: Number(250.00).toFixed(2),
-                        orderStatus: "New",
-                        orderDate: new Date().toLocaleString(),
-                        releaseDate: null,
-                        orderProducts: [
-                            {
-                                id: createGuid(),
-                                itemName: "Pizza Funghi",
-                                quantity: 2,
-                                cost: Number(25.00).toFixed(2),
-                                orderId: id,
-                                productId: createGuid(),
-                                orderProductStatus: "New"
-                            },
-                            {
-                                id: createGuid(),
-                                itemName: "Pizza Capriciosa Big",
-                                quantity: 4,
-                                cost: Number(50.00).toFixed(2),
-                                orderId: id,
-                                productId: createGuid(),
-                                orderProductStatus: "New"
-                            }
-                        ]
-                    }
-                )
-                setLoading(false);
-                setError('');
-            }, 500);
-        });
+        try {
+            const response = await axios.get(`orders/${id}`);
+            setOrder(mapToOrder(response.data));
+        } catch(exception) {
+            console.log(exception);
+            setError(exception.response?.data?.reason)
+        }
+        
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -128,7 +102,7 @@ function Order(props) {
                                         Delete
                                 </button>
                             </td>
-                        </tr> ))) : <></>}        
+                        </tr> ))) : <></>}
                     </tbody>
                 </table>
                 <div>
@@ -179,7 +153,7 @@ function Order(props) {
                     }
                 </div>
             </div>
-        :  <h4>Currently you don't have any items ordered</h4>}
+        :  <h4>Order with id: {id} not found</h4>}
         </>
     ))
 }
