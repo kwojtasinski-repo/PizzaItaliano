@@ -30,7 +30,6 @@ function App() {
   )
 
   const content = (
-    <Suspense fallback={<p>Loading...</p>} >
       <Routes>
           <Route path='/products/details/:id' element = { <ViewProduct /> } />
           <Route path='/products/edit/:id' element = { <EditProduct /> } />
@@ -42,7 +41,6 @@ function App() {
           <Route path="/" end element = {<Home />} />
           <Route path="*" element = {<NotFound/>} />
       </Routes>
-    </Suspense>
   )
 
   const footer = (

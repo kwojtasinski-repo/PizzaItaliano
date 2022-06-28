@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
 import Items from "../../components/Items/Items";
-import axios from "../../axios-setup";
 import { mapToProducts } from "../../helpers/mapper";
+import sendHttpRequest from "../../helpers/useHttpClient";
 
 function Home(props) {
     const [items, setItems] = useState([]);
@@ -10,14 +10,15 @@ function Home(props) {
     const [loading, setLoading] = useState(true);
 
     const fetchItems = async () => {
-        try {
-            const response = await axios.get('/products');
-            setItems(mapToProducts(response.data));
-        } catch(exception) {
-            console.log(exception);
-            setError(exception.message);
-        }
+        const [data, error] = await sendHttpRequest('/products', 'GET');
         setLoading(false);
+
+        if (error) {
+            // TODO: Interceptor global handling exceptions depend on status code etc and return only messages as exception so it will be easy to pass into component
+            setError(error);
+            return;
+        }
+        setItems(mapToProducts(data));
     };
 
     useEffect(() => {

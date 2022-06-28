@@ -1,5 +1,5 @@
 @url = http://localhost:5001
-@productId = 10000000-0000-0000-0000-000000000000
+@productId = 620d2e7c-5a7e-06e2-9814-507d920a45a1
 @name = Pizza
 @cost = 20.51
 
@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 ### 
-PUT {{url}}/products
+PUT {{url}}/products/{{productId}}
 Content-Type: application/json
 
 {
