@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Convey;
 using Convey.Logging;
@@ -38,7 +41,18 @@ namespace PizzaItaliano.Services.Products.API
                         .Get<GetProducts, IEnumerable<ProductDto>>("products")
                         .Get<GetProduct, ProductDto>("products/{productId}")
                         .Post<AddProduct>("products", afterDispatch: (cmd, ctx) => ctx.Response.Created($"products/{cmd.ProductId}"))
-                        .Put<UpdateProduct>("products", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"products/{cmd.ProductId}"))
+                        .Put<UpdateProduct>("products/{productId}", beforeDispatch: (cmd, ctx) =>
+                        {
+                            var isValid = Guid.TryParse(ctx.Request.RouteValues["productId"] as string, out var productId);
+
+                            if (!isValid)
+                            {
+                                return Task.CompletedTask;
+                            }
+
+                            cmd.ProductId = productId;
+                            return Task.CompletedTask;
+                        }, afterDispatch: (cmd, ctx) => ctx.Response.Ok($"products/{cmd.ProductId}"))
                         .Delete<DeleteProduct>("products/{productId}", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"Product with {cmd.ProductId} deleted"))
                     ))
                 .UseLogging()
