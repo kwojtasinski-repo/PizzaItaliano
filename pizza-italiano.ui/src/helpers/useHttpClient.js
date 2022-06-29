@@ -12,6 +12,7 @@ export default async function sendHttpRequest(url, method, payload) {
     });
     data = response.data;
   } catch (exception) {
+    debugger;
     error = exception;
   }
 
