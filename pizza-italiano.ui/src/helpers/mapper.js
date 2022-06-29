@@ -58,7 +58,7 @@ export const mapToOrderProducts = (objects) => {
 export const mapToOrderProduct = (obj) => {
     const orderProduct = {
         id: obj.id,
-        itemName: obj.itemName,
+        productName: obj.productName,
         quantity: obj.quantity,
         cost: Number(obj.cost).toFixed(2),
         orderProductStatus: obj.orderProductStatus,

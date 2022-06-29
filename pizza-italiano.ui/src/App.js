@@ -17,6 +17,7 @@ import { Releases } from "./pages/Releases/Releases";
 import AuthContext from './context/AuthContext';
 import { initialState, reducer } from './reducer';
 import ReducerContext from './context/ReducerContext';
+import AddOrderProduct from "./pages/Order/AddOrderProduct/AddOrderProduct";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -37,7 +38,9 @@ function App() {
           <Route path='/products/add' element = { <AddProduct /> } />
           <Route path='/releases/:id' element = { <Releases /> } />
           <Route path='/payments' element = { <Payments /> } />
-          <Route path='/orders/:id' element = { <Order /> } />
+          <Route path='/orders/:id' element = { <Order /> } >
+            <Route path='add-product' element = { <AddOrderProduct /> }/>
+          </Route>
           <Route path='/cart' element = { <Cart /> } />
           <Route path="/" end element = {<Home />} />
           <Route path="*" element = {<NotFound/>} />
