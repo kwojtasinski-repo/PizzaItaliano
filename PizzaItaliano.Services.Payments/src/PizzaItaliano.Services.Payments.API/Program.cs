@@ -42,6 +42,7 @@ namespace PizzaItaliano.Services.Payments.API
                         .Get<GetPaymentsWithDateAndStatus, IEnumerable<PaymentDto>>("payments/from/{dateFrom}/to/{dateTo}")
                         .Get<GetPaymentsWithDateAndStatus, IEnumerable<PaymentDto>>("payments/from/{dateFrom}/to/{dateTo}/{paymentStatus:int}")
                         .Get<GetPayment, PaymentDto>("payments/{paymentId}")
+                        .Get<GetPaymentByOrderId, PaymentDto>("payments/by-order/{orderId}")
                         .Post<AddPayment>("payments", afterDispatch: (cmd, ctx) => ctx.Response.Created($"payments/{cmd.PaymentId}"))
                         .Put<UpdatePayment>("payments", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"payments/{cmd.PaymentId}"))
                     ))

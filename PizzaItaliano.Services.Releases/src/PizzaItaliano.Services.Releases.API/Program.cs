@@ -37,6 +37,7 @@ namespace PizzaItaliano.Services.Releases.API
                         .Get("", ctx => ctx.Response.WriteAsync(ctx.RequestServices.GetService<AppOptions>().Name))
                         .Get<GetReleases, IEnumerable<ReleaseDto>>("releases")
                         .Get<GetRelease, ReleaseDto>("releases/{releaseId}")
+                        .Get<GetReleases, IEnumerable<ReleaseDto>>("releases/by-order/{orderId}")
                         .Post<AddRelease>("releases", afterDispatch: (cmd, ctx) => ctx.Response.Created($"releases/{cmd.ReleaseId}"))
                     ))
                 .UseLogging()
