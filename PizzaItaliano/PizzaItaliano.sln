@@ -79,7 +79,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{01F74FE7-150
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Operations", "..\PizzaItaliano.Services.Operations\src\PizzaItaliano.Services.Operations\PizzaItaliano.Services.Operations.csproj", "{D63804CB-56C4-42DE-8E74-6D8C70A604A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Operations.GrpcClient", "..\PizzaItaliano.Services.Operations\src\PizzaItaliano.Services.Operations.GrpcClient\PizzaItaliano.Services.Operations.GrpcClient.csproj", "{C4081B8E-0A48-4602-8073-29D5FD8790B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Operations.GrpcClient", "..\PizzaItaliano.Services.Operations\src\PizzaItaliano.Services.Operations.GrpcClient\PizzaItaliano.Services.Operations.GrpcClient.csproj", "{C4081B8E-0A48-4602-8073-29D5FD8790B5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Products.Tests.Shared", "..\PizzaItaliano.Services.Products\tests\PizzaItaliano.Services.Products.Tests.Shared\PizzaItaliano.Services.Products.Tests.Shared.csproj", "{BA32D395-50FA-48F0-B4F9-B82F83BD042E}"
 EndProject
@@ -104,6 +104,20 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Products.Tests.EndToEnd", "..\PizzaItaliano.Services.Products\tests\PizzaItaliano.Services.Products.Tests.EndToEnd\PizzaItaliano.Services.Products.Tests.EndToEnd.csproj", "{452B3774-D4D0-48C7-909C-0487A9309E5D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Releases.Tests.EndToEnd", "..\PizzaItaliano.Services.Releases\tests\PizzaItaliano.Services.Releases.Tests.EndToEnd\PizzaItaliano.Services.Releases.Tests.EndToEnd.csproj", "{7258E872-E636-49F5-B5FD-79E26246C148}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PizzaItaliano.Services.Identity", "PizzaItaliano.Services.Identity", "{D95C47B2-B56C-497A-B0C1-EEF96E3391FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5C4890A5-BB86-44D1-BCF9-792B906F7DEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C4481DDB-9081-40BA-887F-1988367E88A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Identity", "..\PizzaItaliano.Services.Identity\src\PizzaItaliano.Services.Identity.Api\PizzaItaliano.Services.Identity.Api.csproj", "{216E884A-D6CF-44A6-BF02-4FF70DCBCCD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Identity.Application", "..\PizzaItaliano.Services.Identity\src\PizzaItaliano.Services.Identity.Application\PizzaItaliano.Services.Identity.Application.csproj", "{3100E515-DC65-4309-9BCD-E8761BC35057}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Identity.Core", "..\PizzaItaliano.Services.Identity\src\PizzaItaliano.Services.Identity.Core\PizzaItaliano.Services.Identity.Core.csproj", "{31180E9D-3F25-4E90-BBB0-26B3AD22AA95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Identity.Infrastructure", "..\PizzaItaliano.Services.Identity\src\PizzaItaliano.Services.Identity.Infrastructure\PizzaItaliano.Services.Identity.Infrastructure.csproj", "{CD6CCA7A-FE8B-491C-96BE-0A62C822976F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -199,6 +213,10 @@ Global
 		{D63804CB-56C4-42DE-8E74-6D8C70A604A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D63804CB-56C4-42DE-8E74-6D8C70A604A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D63804CB-56C4-42DE-8E74-6D8C70A604A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4081B8E-0A48-4602-8073-29D5FD8790B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4081B8E-0A48-4602-8073-29D5FD8790B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4081B8E-0A48-4602-8073-29D5FD8790B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4081B8E-0A48-4602-8073-29D5FD8790B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA32D395-50FA-48F0-B4F9-B82F83BD042E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BA32D395-50FA-48F0-B4F9-B82F83BD042E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA32D395-50FA-48F0-B4F9-B82F83BD042E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -247,10 +265,22 @@ Global
 		{7258E872-E636-49F5-B5FD-79E26246C148}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7258E872-E636-49F5-B5FD-79E26246C148}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7258E872-E636-49F5-B5FD-79E26246C148}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4081B8E-0A48-4602-8073-29D5FD8790B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4081B8E-0A48-4602-8073-29D5FD8790B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4081B8E-0A48-4602-8073-29D5FD8790B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4081B8E-0A48-4602-8073-29D5FD8790B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{216E884A-D6CF-44A6-BF02-4FF70DCBCCD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{216E884A-D6CF-44A6-BF02-4FF70DCBCCD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{216E884A-D6CF-44A6-BF02-4FF70DCBCCD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{216E884A-D6CF-44A6-BF02-4FF70DCBCCD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3100E515-DC65-4309-9BCD-E8761BC35057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3100E515-DC65-4309-9BCD-E8761BC35057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3100E515-DC65-4309-9BCD-E8761BC35057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3100E515-DC65-4309-9BCD-E8761BC35057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31180E9D-3F25-4E90-BBB0-26B3AD22AA95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31180E9D-3F25-4E90-BBB0-26B3AD22AA95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31180E9D-3F25-4E90-BBB0-26B3AD22AA95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31180E9D-3F25-4E90-BBB0-26B3AD22AA95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD6CCA7A-FE8B-491C-96BE-0A62C822976F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD6CCA7A-FE8B-491C-96BE-0A62C822976F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD6CCA7A-FE8B-491C-96BE-0A62C822976F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD6CCA7A-FE8B-491C-96BE-0A62C822976F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -288,6 +318,7 @@ Global
 		{511C0428-959C-4148-B28D-AF65E6D3C052} = {E210DDBA-A3DC-4AE6-B375-011F57807114}
 		{01F74FE7-150A-41C9-B8F3-B9D5914121CF} = {1CB6BC03-C3C4-41F7-9A89-F7DAD4121C33}
 		{D63804CB-56C4-42DE-8E74-6D8C70A604A3} = {01F74FE7-150A-41C9-B8F3-B9D5914121CF}
+		{C4081B8E-0A48-4602-8073-29D5FD8790B5} = {01F74FE7-150A-41C9-B8F3-B9D5914121CF}
 		{BA32D395-50FA-48F0-B4F9-B82F83BD042E} = {32895C85-6CC6-461C-88B9-4291CDE6021D}
 		{C4BF803B-E058-4A10-A7F1-E2601EEAC332} = {32895C85-6CC6-461C-88B9-4291CDE6021D}
 		{957139D8-E5A5-4904-9D03-B895713D41BE} = {AF59D75C-51D9-4CE7-8569-87A0F74CC386}
@@ -300,7 +331,12 @@ Global
 		{7DF72931-246D-4B46-B94A-EB46CE119685} = {DBA81E07-303B-4E37-9ECD-DBCCFE8C232B}
 		{452B3774-D4D0-48C7-909C-0487A9309E5D} = {32895C85-6CC6-461C-88B9-4291CDE6021D}
 		{7258E872-E636-49F5-B5FD-79E26246C148} = {4A31F19F-71E5-4CAD-84C3-DD8E8C943143}
-		{C4081B8E-0A48-4602-8073-29D5FD8790B5} = {01F74FE7-150A-41C9-B8F3-B9D5914121CF}
+		{5C4890A5-BB86-44D1-BCF9-792B906F7DEF} = {D95C47B2-B56C-497A-B0C1-EEF96E3391FE}
+		{C4481DDB-9081-40BA-887F-1988367E88A5} = {D95C47B2-B56C-497A-B0C1-EEF96E3391FE}
+		{216E884A-D6CF-44A6-BF02-4FF70DCBCCD0} = {5C4890A5-BB86-44D1-BCF9-792B906F7DEF}
+		{3100E515-DC65-4309-9BCD-E8761BC35057} = {5C4890A5-BB86-44D1-BCF9-792B906F7DEF}
+		{31180E9D-3F25-4E90-BBB0-26B3AD22AA95} = {5C4890A5-BB86-44D1-BCF9-792B906F7DEF}
+		{CD6CCA7A-FE8B-491C-96BE-0A62C822976F} = {5C4890A5-BB86-44D1-BCF9-792B906F7DEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30FFB666-5D1E-415D-8363-F77C72FCA839}
