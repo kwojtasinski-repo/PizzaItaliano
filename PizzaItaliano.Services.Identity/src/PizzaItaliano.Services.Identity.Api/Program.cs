@@ -17,6 +17,7 @@ using PizzaItaliano.Services.Identity.Application.DTO;
 using PizzaItaliano.Services.Identity.Application.Queries;
 using PizzaItaliano.Services.Identity.Application.Services;
 using PizzaItaliano.Services.Identity.Infrastructure;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Identity
@@ -38,7 +39,22 @@ namespace PizzaItaliano.Services.Identity
                         .UseInfrastructure()
                         .UseDispatcherEndpoints(endpoints => endpoints
                             .Get("", ctx => ctx.Response.WriteAsync(ctx.RequestServices.GetService<AppOptions>().Name))
-                            .Get<GetUser, UserDto>("users/{userId}")
+                            .Get<GetUser, UserDto>("users/{userId}", afterDispatch: (cmd, result, ctx) =>
+                            {
+                                if (result is null)
+                                {
+                                    ctx.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                                    var task = ctx.Response.WriteAsJsonAsync(new
+                                    {
+                                        code = (int)HttpStatusCode.NotFound,
+                                        reason = $"User with id {cmd.UserId} was not found"
+                                    });
+
+                                    return task;
+                                }
+
+                                return ctx.Response.Ok(result);
+                            })
                             .Post<SignIn>("sign-in", async (cmd, ctx) =>
                             {
                                 var token = await ctx.RequestServices.GetService<IIdentityService>().SignInAsync(cmd);

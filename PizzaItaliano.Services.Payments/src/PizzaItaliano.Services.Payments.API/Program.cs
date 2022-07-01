@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Convey.Logging;
 using Convey.Secrets.Vault;
+using System.Net;
 
 namespace PizzaItaliano.Services.Payments.API
 {
@@ -41,8 +42,38 @@ namespace PizzaItaliano.Services.Payments.API
                         .Get<GetPayments, IEnumerable<PaymentDto>>("payments/{paymentStatus:int}")
                         .Get<GetPaymentsWithDateAndStatus, IEnumerable<PaymentDto>>("payments/from/{dateFrom}/to/{dateTo}")
                         .Get<GetPaymentsWithDateAndStatus, IEnumerable<PaymentDto>>("payments/from/{dateFrom}/to/{dateTo}/{paymentStatus:int}")
-                        .Get<GetPayment, PaymentDto>("payments/{paymentId}")
-                        .Get<GetPaymentByOrderId, PaymentDto>("payments/by-order/{orderId}")
+                        .Get<GetPayment, PaymentDto>("payments/{paymentId}", afterDispatch: (cmd, result, ctx) =>
+                        {
+                            if (result is null)
+                            {
+                                ctx.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                                var task = ctx.Response.WriteAsJsonAsync(new
+                                {
+                                    code = (int)HttpStatusCode.NotFound,
+                                    reason = $"Payment with id {cmd.PaymentId} was not found"
+                                });
+
+                                return task;
+                            }
+
+                            return ctx.Response.Ok(result);
+                        })
+                        .Get<GetPaymentByOrderId, PaymentDto>("payments/by-order/{orderId}", afterDispatch: (cmd, result, ctx) =>
+                        {
+                            if (result is null)
+                            {
+                                ctx.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                                var task = ctx.Response.WriteAsJsonAsync(new
+                                {
+                                    code = (int)HttpStatusCode.NotFound,
+                                    reason = $"Payment for order with id {cmd.OrderId} was not found"
+                                });
+
+                                return task;
+                            }
+
+                            return ctx.Response.Ok(result);
+                        })
                         .Post<AddPayment>("payments", afterDispatch: (cmd, ctx) => ctx.Response.Created($"payments/{cmd.PaymentId}"))
                         .Put<UpdatePayment>("payments", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"payments/{cmd.PaymentId}"))
                     ))

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Convey.Logging;
 using Convey.Secrets.Vault;
+using System.Net;
 
 namespace PizzaItaliano.Services.Orders.API
 {
@@ -38,7 +39,22 @@ namespace PizzaItaliano.Services.Orders.API
                         .UseDispatcherEndpoints(endpoints => endpoints
                             .Get("", ctx => ctx.Response.WriteAsync(ctx.RequestServices.GetService<AppOptions>().Name))
                             .Get<GetOrders, IEnumerable<OrderDto>>("orders")
-                            .Get<GetOrder, OrderDto>("orders/{orderId}")
+                            .Get<GetOrder, OrderDto>("orders/{orderId}", afterDispatch: (cmd, result, ctx) =>
+                            {
+                                if (result is null)
+                                {
+                                    ctx.Response.StatusCode = (int) HttpStatusCode.NotFound;
+                                    var task = ctx.Response.WriteAsJsonAsync(new
+                                    {
+                                        code = (int) HttpStatusCode.NotFound,
+                                        reason = $"Order with id {cmd.OrderId} was not found"
+                                    });
+
+                                    return task;
+                                }
+
+                                return ctx.Response.Ok(result);
+                            })
                             .Post<AddOrder>("orders", afterDispatch: (cmd, ctx) => ctx.Response.Created($"orders/{cmd.OrderId}"))
                             .Post<AddOrderProduct>("orders/order-product", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"orders/order-product/{cmd.OrderProductId}"))
                             .Put<SetOrderStatusReady>("orders", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"Set status ready orders/{cmd.OrderId}"))
