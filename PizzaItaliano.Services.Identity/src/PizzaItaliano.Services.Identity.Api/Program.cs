@@ -1,4 +1,5 @@
 using Convey;
+using Convey.Auth;
 using Convey.Logging;
 using Convey.Secrets.Vault;
 using Convey.Types;
@@ -11,6 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PizzaItaliano.Services.Identity.Application;
+using PizzaItaliano.Services.Identity.Application.Commands;
+using PizzaItaliano.Services.Identity.Application.DTO;
+using PizzaItaliano.Services.Identity.Application.Queries;
+using PizzaItaliano.Services.Identity.Application.Services;
 using PizzaItaliano.Services.Identity.Infrastructure;
 using System.Threading.Tasks;
 
@@ -33,6 +38,28 @@ namespace PizzaItaliano.Services.Identity
                         .UseInfrastructure()
                         .UseDispatcherEndpoints(endpoints => endpoints
                             .Get("", ctx => ctx.Response.WriteAsync(ctx.RequestServices.GetService<AppOptions>().Name))
+                            .Get<GetUser, UserDto>("users/{userId}")
+                            .Post<SignIn>("sign-in", async (cmd, ctx) =>
+                            {
+                                var token = await ctx.RequestServices.GetService<IIdentityService>().SignInAsync(cmd);
+                                await ctx.Response.WriteJsonAsync(token);
+                            })
+                            .Post<SignUp>("sign-up", afterDispatch: (cmd, ctx) => ctx.Response.Created("identity/me"))
+                            .Post<RevokeAccessToken>("access-tokens/revoke", async (cmd, ctx) =>
+                            {
+                                await ctx.RequestServices.GetService<IAccessTokenService>().DeactivateAsync(cmd.AccessToken);
+                                ctx.Response.StatusCode = 204;
+                            })
+                            .Post<UseRefreshToken>("refresh-tokens/use", async (cmd, ctx) =>
+                            {
+                                var token = await ctx.RequestServices.GetService<IRefreshTokenService>().UseAsync(cmd.RefreshToken);
+                                await ctx.Response.WriteJsonAsync(token);
+                            })
+                            .Post<RevokeRefreshToken>("refresh-tokens/revoke", async (cmd, ctx) =>
+                            {
+                                await ctx.RequestServices.GetService<IRefreshTokenService>().RevokeAsync(cmd.RefreshToken);
+                                ctx.Response.StatusCode = 204;
+                            })
                         ))
                     .UseLogging()
                     .UseVault();
