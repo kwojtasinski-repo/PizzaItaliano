@@ -1,4 +1,5 @@
-﻿using PizzaItaliano.Services.Identity.Core.Exceptions;
+﻿using PizzaItaliano.Services.Identity.Core.Entities.ValueObjects;
+using PizzaItaliano.Services.Identity.Core.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ namespace PizzaItaliano.Services.Identity.Core.Entities
 {
     public class User : AggregateRoot
     {
-        public string Email { get; private set; }
+        public Email Email { get; private set; }
         public string Role { get; private set; }
         public string Password { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -16,11 +17,6 @@ namespace PizzaItaliano.Services.Identity.Core.Entities
         public User(Guid id, string email, string password, string role, DateTime createdAt,
             IEnumerable<string> permissions = null)
         {
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                throw new InvalidEmailException(email);
-            }
-
             if (string.IsNullOrWhiteSpace(password))
             {
                 throw new InvalidPasswordException();
@@ -32,7 +28,7 @@ namespace PizzaItaliano.Services.Identity.Core.Entities
             }
 
             Id = id;
-            Email = email.ToLowerInvariant();
+            Email = Email.From(email);
             Password = password;
             Role = role.ToLowerInvariant();
             CreatedAt = createdAt;

@@ -6,10 +6,19 @@
 
   <ItemGroup>
     <PackageReference Include="Convey" Version="0.5.506" />
+	<PackageReference Include="Convey.CQRS.Commands" Version="0.5.506" />
+	<PackageReference Include="Convey.CQRS.Events" Version="0.5.506" />
+	<PackageReference Include="Convey.CQRS.Queries" Version="0.5.506" />
+    <PackageReference Include="Convey.MessageBrokers" Version="0.5.506" />
+	<PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PizzaItaliano.Services.Identity.Core\PizzaItaliano.Services.Identity.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
 
 </Project>
