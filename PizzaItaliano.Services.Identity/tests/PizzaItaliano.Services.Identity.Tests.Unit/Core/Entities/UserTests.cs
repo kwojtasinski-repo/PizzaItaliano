@@ -68,7 +68,7 @@ namespace PizzaItaliano.Services.Identity.Tests.Unit.Entities
             var user = new User(id, email, password, role, createdAt);
 
             user.ShouldNotBeNull();
-            user.Email.ShouldBe(email);
+            user.Email.Value.ShouldBe(email);
             user.Password.ShouldBe(password);
             user.Role.ShouldBe(role);
             user.CreatedAt.ShouldBe(createdAt);
