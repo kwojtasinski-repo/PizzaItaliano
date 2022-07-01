@@ -1,0 +1,57 @@
+@url = http://localhost:5006
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YjhlMjZiODg1MzY0MGIwOWU4YWIzOTZiMjVjMzY2NSIsInVuaXF1ZV9uYW1lIjoiOWI4ZTI2Yjg4NTM2NDBiMDllOGFiMzk2YjI1YzM2NjUiLCJqdGkiOiJkMWFhYzFkMC0xY2U4LTQ4MTgtYTU3OC05ZWYzMmIxNzdjODYiLCJpYXQiOiIxNjU2NzA3NTgwIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidXNlciIsIm5iZiI6MTY1NjcwNzU4MCwiZXhwIjoxNjU2NzExMTgwLCJpc3MiOiJwaXp6YS1pdGFsaWFubyJ9.moqjKIrdo1ZsTPgcgMSSJvwsDpshpO23j_pIuzRMskU
+@refreshToken = secret
+@userId = 9b8e26b8-8536-40b0-9e8a-b396b25c3665
+
+###
+GET {{url}}
+
+###
+POST {{url}}/sign-up
+Content-Type: application/json
+
+{
+  "email": "pizza-italiano-user3@mail.com",
+  "password": "secretAbcas12"
+}
+
+###
+POST {{url}}/sign-in
+Content-Type: application/json
+
+{
+  "email": "pizza-italiano-user1@mail.com",
+  "password": "secretAbcas12"
+}
+
+###
+GET {{url}}/me
+Authorization: Bearer {{accessToken}}
+
+###
+GET {{url}}/users/{{userId}}
+Authorization: Bearer {{accessToken}}
+
+###
+POST {{url}}/refresh-tokens/use
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}",
+}
+
+###
+POST {{url}}/refresh-tokens/revoke
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}",
+}
+
+###
+POST {{url}}/access-tokens/revoke
+Content-Type: application/json
+
+{
+  "accessToken": "{{accessToken}}",
+}

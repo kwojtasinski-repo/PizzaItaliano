@@ -1,4 +1,5 @@
 ﻿using Convey.CQRS.Commands;
+using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Identity.Application.Commands
 {
@@ -9,6 +10,14 @@ namespace PizzaItaliano.Services.Identity.Application.Commands
         public UseRefreshToken(string refreshToken)
         {
             RefreshToken = refreshToken;
+        }
+    }
+
+    internal class UseRefreshTokenHandler : ICommandHandler<UseRefreshToken>
+    {
+        public Task HandleAsync(UseRefreshToken command)
+        {
+            return Task.CompletedTask;
         }
     }
 }

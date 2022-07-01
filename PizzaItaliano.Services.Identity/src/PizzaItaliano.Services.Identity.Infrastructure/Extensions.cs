@@ -21,6 +21,8 @@ using Convey.Tracing.Jaeger.RabbitMQ;
 using Convey.WebApi;
 using Convey.WebApi.CQRS;
 using Convey.WebApi.Swagger;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -43,6 +45,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Identity.Infrastructure
 {
@@ -136,6 +139,12 @@ namespace PizzaItaliano.Services.Identity.Infrastructure
             }
 
             return string.Empty;
+        }
+
+        public static async Task<Guid> AuthenticateUsingJwtAsync(this HttpContext context)
+        {
+            var authentication = await context.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
+            return authentication.Succeeded ? Guid.Parse(authentication.Principal.Identity.Name) : Guid.Empty;
         }
     }
 }

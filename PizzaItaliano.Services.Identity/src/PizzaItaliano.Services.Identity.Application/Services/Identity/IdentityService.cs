@@ -22,6 +22,17 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
         private readonly IMessageBroker _messageBroker;
         private readonly ILogger<IdentityService> _logger;
 
+        public IdentityService(IUserRepository userRepository, IPasswordService passwordService, IJwtProvider jwtProvider,
+            IRefreshTokenService refreshTokenService, IMessageBroker messageBroker, ILogger<IdentityService> logger)
+        {
+            _userRepository = userRepository;
+            _passwordService = passwordService;
+            _jwtProvider = jwtProvider;
+            _refreshTokenService = refreshTokenService;
+            _messageBroker = messageBroker;
+            _logger = logger;
+        }
+
         public async Task<UserDto> GetAsync(Guid id)
         {
             var user = await _userRepository.GetAsync(id);

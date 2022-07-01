@@ -15,6 +15,7 @@ namespace PizzaItaliano.Services.Identity.Infrastructure.Exceptions
         public ExceptionResponse Map(Exception exception)
             => exception switch
             {
+                UnauthorizedException ex => new ExceptionResponse(new { code = GetCode(ex), reason = ex.Message }, HttpStatusCode.Unauthorized),
                 DomainException ex => new ExceptionResponse(new { code = GetCode(ex), reason = ex.Message },
                     HttpStatusCode.BadRequest),
                 AppException ex => new ExceptionResponse(new { code = GetCode(ex), reason = ex.Message },
