@@ -43,8 +43,9 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
         {
             var email = Email.From(command.Email);
             var user = await _userRepository.GetAsync(email.Value);
-
-            if (user is null || _passwordService.IsValid(user.Password.Value, command.Password))
+            var test1 = _passwordService.IsValid(user.Password, command.Password);
+            var test2 = user is null;
+            if (user is null || !_passwordService.IsValid(user.Password, command.Password))
             {
                 _logger.LogError($"Invalid password for user with id: {user.Id.Value}");
                 throw new InvalidCredentialsException(command.Email);
@@ -76,8 +77,9 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
             }
 
             var role = string.IsNullOrWhiteSpace(command.Role) ? "user" : command.Role.ToLowerInvariant();
-            var password = _passwordService.Hash(command.Password);
-            user = new User(command.UserId, command.Email, password, role, DateTime.UtcNow, command.Permissions);
+            var password = Password.From(command.Password);
+            var passwordHash = _passwordService.Hash(password.Value);
+            user = new User(command.UserId, command.Email, passwordHash, role, DateTime.UtcNow, command.Permissions);
             await _userRepository.AddAsync(user);
 
             _logger.LogInformation($"Created an account for the user with id: {user.Id}.");

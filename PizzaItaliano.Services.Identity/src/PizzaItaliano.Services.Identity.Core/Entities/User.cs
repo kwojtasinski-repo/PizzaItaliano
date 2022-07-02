@@ -10,7 +10,7 @@ namespace PizzaItaliano.Services.Identity.Core.Entities
     {
         public Email Email { get; private set; }
         public string Role { get; private set; }
-        public Password Password { get; private set; }
+        public string Password { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public IEnumerable<string> Permissions { get; private set; }
 
@@ -24,7 +24,7 @@ namespace PizzaItaliano.Services.Identity.Core.Entities
 
             Id = id;
             Email = Email.From(email);
-            Password = Password.From(password);
+            Password = password;
             Role = role.ToLowerInvariant();
             CreatedAt = createdAt;
             Permissions = permissions ?? Enumerable.Empty<string>();
