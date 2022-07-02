@@ -1,9 +1,10 @@
 ﻿using PizzaItaliano.Services.Identity.Core.Exceptions;
+using System;
 using System.Text.RegularExpressions;
 
 namespace PizzaItaliano.Services.Identity.Core.Entities.ValueObjects
 {
-    public class Email
+    public class Email : IEquatable<Email>
     {
         public static readonly Regex EmailRegex = new Regex(
            @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
@@ -29,5 +30,30 @@ namespace PizzaItaliano.Services.Identity.Core.Entities.ValueObjects
         }
 
         public static Email From(string email) => new(email);
+
+        public bool Equals(Email other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Value == other.Value;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj as Email == null) return false;
+            return Equals((Email)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _email.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return Value;
+        }
     }
 }

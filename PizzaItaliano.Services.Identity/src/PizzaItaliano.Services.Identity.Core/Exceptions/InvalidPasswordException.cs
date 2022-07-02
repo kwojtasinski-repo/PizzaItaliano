@@ -4,7 +4,7 @@
     {
         public override string Code { get; } = "invalid_password";
 
-        public InvalidPasswordException() : base($"Invalid password.")
+        public InvalidPasswordException() : base($"Invalid password. Password should have at least 8 characters, including upper letter and number")
         {
         }
     }
