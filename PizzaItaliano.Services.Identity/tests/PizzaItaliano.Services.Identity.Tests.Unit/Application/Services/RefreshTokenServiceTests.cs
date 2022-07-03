@@ -1,12 +1,13 @@
 ﻿using NSubstitute;
 using PizzaItaliano.Services.Identity.Application.DTO;
+using PizzaItaliano.Services.Identity.Application.Exceptions;
 using PizzaItaliano.Services.Identity.Application.Services;
 using PizzaItaliano.Services.Identity.Application.Services.Identity;
 using PizzaItaliano.Services.Identity.Core.Entities;
 using PizzaItaliano.Services.Identity.Core.Repositories;
+using Shouldly;
 using System;
 using System.Collections.Generic;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -26,7 +27,20 @@ namespace PizzaItaliano.Services.Identity.Tests.Unit.Application.Services
         }
 
         [Fact]
-        public async Task should_use_token()
+        public async Task given_invalid_token_when_revoke_should_throw_an_exception()
+        {
+            var token = "abc";
+            var expectedException = new InvalidRefreshTokenException();
+
+            var exception = await Record.ExceptionAsync(() => _refreshTokenService.RevokeAsync(token));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task should_refresh_token()
         {
             var token = "Token123";
             var userId = Guid.NewGuid();
@@ -38,6 +52,48 @@ namespace PizzaItaliano.Services.Identity.Tests.Unit.Application.Services
                 .Returns(new AuthDto { AccessToken = "token", Expires = DateTime.Now.AddHours(1.0).Ticks, RefreshToken = "", Role = user.Role });
 
             await _refreshTokenService.UseAsync(token);
+        }
+
+        [Fact]
+        public async Task given_invalid_token_when_refresh_should_throw_an_exception()
+        {
+            var token = "Token";
+            var expectedException = new InvalidRefreshTokenException();
+
+            var exception = await Record.ExceptionAsync(() => _refreshTokenService.UseAsync(token));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task given_revoked_token_when_refresh_should_throw_an_exception()
+        {
+            var token = "Token123";
+            var expectedException = new RevokedRefreshTokenException();
+            _refreshTokenRepository.GetAsync(token).Returns(new RefreshToken(Guid.NewGuid(), Guid.NewGuid(), token, DateTime.Now.AddHours(-1.0), DateTime.Now));
+
+            var exception = await Record.ExceptionAsync(() => _refreshTokenService.UseAsync(token));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task given_token_with_not_found_user_when_refresh_should_throw_an_exception()
+        {
+            var token = "Token123";
+            var userId = Guid.NewGuid();
+            _refreshTokenRepository.GetAsync(token).Returns(new RefreshToken(Guid.NewGuid(), userId, token, DateTime.Now));
+            var expectedException = new UserNotFoundException(userId);
+
+            var exception = await Record.ExceptionAsync(() => _refreshTokenService.UseAsync(token));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
         }
 
         private User CreateUser(string email, string password, string role, IEnumerable<string> permissions = null)

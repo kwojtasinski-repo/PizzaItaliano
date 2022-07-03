@@ -3,10 +3,13 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using PizzaItaliano.Services.Identity.Application.Commands;
 using PizzaItaliano.Services.Identity.Application.DTO;
+using PizzaItaliano.Services.Identity.Application.Exceptions;
 using PizzaItaliano.Services.Identity.Application.Services;
 using PizzaItaliano.Services.Identity.Application.Services.Identity;
 using PizzaItaliano.Services.Identity.Core.Entities;
+using PizzaItaliano.Services.Identity.Core.Exceptions;
 using PizzaItaliano.Services.Identity.Core.Repositories;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -34,6 +37,48 @@ namespace PizzaItaliano.Services.Identity.Tests.Unit.Application.Services
         }
 
         [Fact]
+        public async Task given_invalid_email_when_sign_in_should_throw_an_exception()
+        {
+            var command = new SignIn("invalid_email", "PasW0Rd12!");
+            var expectedException = new InvalidEmailException(command.Email);
+
+            var exception = await Record.ExceptionAsync(() => _identityService.SignInAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task given_invalid_password_when_sign_in_should_throw_an_exception()
+        {
+            var command = new SignIn("test@test.abc", "PasW0Rd12!");
+            var user = CreateUser(command.Email, command.Password, "user");
+            _passwordService.IsValid(Arg.Any<string>(), Arg.Any<string>()).Returns(false);
+            _userRepository.GetAsync(command.Email).Returns(user);
+            var expectedException = new InvalidCredentialsException(command.Email);
+            
+            var exception = await Record.ExceptionAsync(() => _identityService.SignInAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task given_invalid_user_when_sign_in_should_throw_an_exception()
+        {
+            var command = new SignIn("test@test.abc", "PasW0Rd12!");
+            var expectedException = new InvalidCredentialsException(command.Email);
+            
+            var exception = await Record.ExceptionAsync(() => _identityService.SignInAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
         public async Task should_sign_up()
         {
             var command = new SignUp(Guid.NewGuid(), "Email@email.com", "PAs@WAORD121", null, null);
@@ -43,6 +88,47 @@ namespace PizzaItaliano.Services.Identity.Tests.Unit.Application.Services
 
             await _userRepository.Received(1).AddAsync(Arg.Any<User>());
             await _messageBroker.Received(1).PublishAsync(Arg.Any<IEvent[]>());
+        }
+
+        [Fact]
+        public async Task given_invalid_email_when_sign_up_should_should_throw_an_exception()
+        {
+            var command = new SignUp(Guid.NewGuid(), "invalid_email", "PAs@WAORD121", null, null);
+            var expectedException = new InvalidEmailException(command.Email);
+
+            var exception = await Record.ExceptionAsync(() => _identityService.SignUpAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task given_existing_user_with_email_when_sign_up_should_throw_an_exception()
+        {
+            var command = new SignUp(Guid.NewGuid(), "email@email.com", "PAs@WAORD121", null, null);
+            var user = CreateUser(command.Email, command.Password, "user");
+            _userRepository.GetAsync(command.Email).Returns(user);
+            var expectedException = new EmailInUseException(command.Email);
+
+            var exception = await Record.ExceptionAsync(() => _identityService.SignUpAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task given_invalid_password_when_sign_up_should_throw_an_exception()
+        {
+            var command = new SignUp(Guid.NewGuid(), "Email@email.com", "invalidPassword", null, null);
+            var expectedException = new InvalidPasswordException();
+
+            var exception = await Record.ExceptionAsync(() => _identityService.SignUpAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
         }
 
         private User CreateUser(string email, string password, string role, IEnumerable<string> permissions = null)

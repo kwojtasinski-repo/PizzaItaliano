@@ -44,7 +44,13 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
             var email = Email.From(command.Email);
             var user = await _userRepository.GetAsync(email.Value);
 
-            if (user is null || !_passwordService.IsValid(user.Password, command.Password))
+            if (user is null)
+            {
+                _logger.LogError($"User with email: {email.Value} was not found");
+                throw new InvalidCredentialsException(command.Email);
+            }
+
+            if (!_passwordService.IsValid(user.Password, command.Password))
             {
                 _logger.LogError($"Invalid password for user with id: {user.Id.Value}");
                 throw new InvalidCredentialsException(command.Email);

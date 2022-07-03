@@ -25,22 +25,6 @@ namespace PizzaItaliano.Services.Identity.Tests.Unit.Entities
         }
 
         [Fact]
-        public void given_empty_password_should_throw_an_exception()
-        {
-            var id = Guid.NewGuid();
-            var email = "test@test.com";
-            var password = "";
-            var role = Role.User;
-            var createdAt = DateTime.UtcNow;
-            var expectedException = new InvalidPasswordException();
-
-            var exception = Record.Exception(() => new User(id, email, password, role, createdAt));
-
-            exception.ShouldNotBeNull();
-            exception.ShouldBeOfType(expectedException.GetType());
-        }
-
-        [Fact]
         public void given_invalid_role_should_throw_an_exception()
         {
             var id = Guid.NewGuid();

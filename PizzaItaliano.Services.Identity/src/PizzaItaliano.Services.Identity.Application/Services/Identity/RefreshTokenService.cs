@@ -25,8 +25,6 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
             _rng = rng;
         }
 
-        public IUserRepository UserRepository => _userRepository;
-
         public async Task<string> CreateAsync(Guid userId)
         {
             var token = _rng.Generate(30, true);
@@ -39,6 +37,7 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
         public async Task RevokeAsync(string refreshToken)
         {
             var token = await _refreshTokenRepository.GetAsync(refreshToken);
+
             if (token is null)
             {
                 throw new InvalidRefreshTokenException();
@@ -51,6 +50,7 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
         public async Task<AuthDto> UseAsync(string refreshToken)
         {
             var token = await _refreshTokenRepository.GetAsync(refreshToken);
+
             if (token is null)
             {
                 throw new InvalidRefreshTokenException();
@@ -61,7 +61,8 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
                 throw new RevokedRefreshTokenException();
             }
 
-            var user = await UserRepository.GetAsync(token.UserId);
+            var user = await _userRepository.GetAsync(token.UserId);
+
             if (user is null)
             {
                 throw new UserNotFoundException(token.UserId);
