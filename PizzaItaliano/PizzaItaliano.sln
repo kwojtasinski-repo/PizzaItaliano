@@ -119,7 +119,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Iden
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Identity.Infrastructure", "..\PizzaItaliano.Services.Identity\src\PizzaItaliano.Services.Identity.Infrastructure\PizzaItaliano.Services.Identity.Infrastructure.csproj", "{CD6CCA7A-FE8B-491C-96BE-0A62C822976F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Identity.Tests.Unit", "..\PizzaItaliano.Services.Identity\tests\PizzaItaliano.Services.Identity.Tests.Unit\PizzaItaliano.Services.Identity.Tests.Unit.csproj", "{472ADED8-5BF0-4269-AEB8-53C6452EEF58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Identity.Tests.Unit", "..\PizzaItaliano.Services.Identity\tests\PizzaItaliano.Services.Identity.Tests.Unit\PizzaItaliano.Services.Identity.Tests.Unit.csproj", "{472ADED8-5BF0-4269-AEB8-53C6452EEF58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Identity.Tests.Integration", "..\PizzaItaliano.Services.Identity\tests\PizzaItaliano.Services.Identity.Tests.Integration\PizzaItaliano.Services.Identity.Tests.Integration.csproj", "{BA8F93D8-70D2-4F6E-BE81-3EA8D14B93D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -287,6 +289,10 @@ Global
 		{472ADED8-5BF0-4269-AEB8-53C6452EEF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{472ADED8-5BF0-4269-AEB8-53C6452EEF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{472ADED8-5BF0-4269-AEB8-53C6452EEF58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA8F93D8-70D2-4F6E-BE81-3EA8D14B93D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA8F93D8-70D2-4F6E-BE81-3EA8D14B93D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA8F93D8-70D2-4F6E-BE81-3EA8D14B93D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA8F93D8-70D2-4F6E-BE81-3EA8D14B93D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -344,6 +350,7 @@ Global
 		{31180E9D-3F25-4E90-BBB0-26B3AD22AA95} = {5C4890A5-BB86-44D1-BCF9-792B906F7DEF}
 		{CD6CCA7A-FE8B-491C-96BE-0A62C822976F} = {5C4890A5-BB86-44D1-BCF9-792B906F7DEF}
 		{472ADED8-5BF0-4269-AEB8-53C6452EEF58} = {C4481DDB-9081-40BA-887F-1988367E88A5}
+		{BA8F93D8-70D2-4F6E-BE81-3EA8D14B93D1} = {C4481DDB-9081-40BA-887F-1988367E88A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30FFB666-5D1E-415D-8363-F77C72FCA839}
