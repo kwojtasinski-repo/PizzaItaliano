@@ -40,7 +40,7 @@ namespace PizzaItaliano.Services.Identity
                     .Configure(app => app
                         .UseInfrastructure()
                         .UseDispatcherEndpoints(endpoints => endpoints
-                            .Get("", ctx => ctx.Response.WriteAsync(ctx.RequestServices.GetService<AppOptions>().Name))
+                            .Get("", ctx => ctx.Response.WriteAsJsonAsync(ctx.RequestServices.GetService<AppOptions>().Name))
                             .Get<GetUser, UserDto>("users/{userId}", beforeDispatch: async (cmd, ctx) =>
                             {
                                 var userId = await ctx.AuthenticateUsingJwtAsync();
