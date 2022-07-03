@@ -1,8 +1,7 @@
 ﻿auth:
   enabled: true
   global: false
-  claims:
-    role: http://schemas.microsoft.com/ws/2008/06/identity/claims/role
+  role: http://schemas.microsoft.com/ws/2008/06/identity/claims/role
 
 http:
   retries: 2
@@ -110,8 +109,7 @@ modules:
         use: downstream
         downstream: identity-service/users/{userId}
         auth: true
-        claims:
-          role: admin
+        role: admin
 
       - upstream: /me
         method: GET
