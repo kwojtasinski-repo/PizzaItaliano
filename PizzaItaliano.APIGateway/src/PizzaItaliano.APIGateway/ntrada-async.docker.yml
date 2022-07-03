@@ -34,6 +34,13 @@ extensions:
       - Resource-ID
       - Trace-ID
       - Total-Count
+          
+  jwt:
+    issuerSigningKey: afas35svG34gh5SH9jNUOsdoig914352Tasfdfgw5r23agmnbidpo235521sdngoiusnhgqwr2sgghAC
+    validIssuer: pizza-italiano
+    validateAudience: false
+    validateIssuer: true
+    validateLifetime: true
 
   swagger:
     name: PizzaItaliano
@@ -84,6 +91,50 @@ modules:
         use: return_value
         returnValue: Welcome to PizzaItaliano API [async]!
   
+  identity:
+    path: identity
+    routes:
+      - upstream: /health-check
+        method: GET
+        use: downstream
+        downstream: identity-service
+
+      - upstream: /users/{userId}
+        method: GET
+        use: downstream
+        downstream: identity-service/users/{userId}
+        auth: true
+        claims:
+          role: admin
+
+      - upstream: /me
+        method: GET
+        use: downstream
+        downstream: identity-service/me
+        auth: true
+    
+      - upstream: /sign-up
+        method: POST
+        use: downstream
+        downstream: identity-service/sign-up
+        auth: false
+        resourceId:
+          property: userId
+          generate: true
+    
+      - upstream: /sign-in
+        method: POST
+        use: downstream
+        downstream: identity-service/sign-in
+        auth: false
+        responseHeaders:
+          content-type: application/json
+
+    services:
+      identity-service:
+        localUrl: localhost:5006
+        url: identity-service
+
   products:
     path: products
     routes:
