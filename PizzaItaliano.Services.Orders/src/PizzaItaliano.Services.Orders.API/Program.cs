@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 using Convey.Logging;
 using Convey.Secrets.Vault;
 using System.Net;
+using System;
+using PizzaItaliano.Services.Orders.Application.Exceptions;
 
 namespace PizzaItaliano.Services.Orders.API
 {
@@ -55,6 +57,7 @@ namespace PizzaItaliano.Services.Orders.API
 
                                 return ctx.Response.Ok(result);
                             })
+                            .Get<GetOrdersByUserId, IEnumerable<OrderDto>>("orders/by-user/{userId}")
                             .Post<AddOrder>("orders", afterDispatch: (cmd, ctx) => ctx.Response.Created($"orders/{cmd.OrderId}"))
                             .Post<AddOrderProduct>("orders/order-product", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"orders/order-product/{cmd.OrderProductId}"))
                             .Put<SetOrderStatusReady>("orders", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"Set status ready orders/{cmd.OrderId}"))

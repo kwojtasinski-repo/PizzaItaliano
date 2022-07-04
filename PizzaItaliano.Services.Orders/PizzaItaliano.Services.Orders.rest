@@ -5,6 +5,7 @@
 @orderProductId = 10000000-0000-0000-0000-000000000000
 @productId = 10000000-0000-0000-0000-000000000000
 @quantity = 1
+@email = pizza-italiano-user3@mail.com
 
 ###
 GET {{url}}/orders
@@ -41,3 +42,6 @@ Content-Type: application/json
 
 ###
 DELETE {{url}}/orders/{{orderId}}/order-product/{{orderProductId}}/quantity/{{quantity}}
+
+###
+GET {{url}}/orders/by-user/{{email}}

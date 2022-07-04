@@ -1,9 +1,6 @@
 ﻿using PizzaItaliano.Services.Orders.Core.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Application.DTO
 {
@@ -15,6 +12,7 @@ namespace PizzaItaliano.Services.Orders.Application.DTO
         public OrderStatus OrderStatus { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime? ReleaseDate { get; set; }
+        public string Email { get; set; }
         public IEnumerable<OrderProductDto> OrderProducts { get; set; }
     }
 }

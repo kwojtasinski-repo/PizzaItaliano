@@ -42,6 +42,8 @@ using PizzaItaliano.Services.Orders.Infrastructure.Contexts;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
+using Microsoft.AspNetCore.Authentication;
+using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Orders.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Orders.Tests.Integration")] // widocznosc internal na poziomie testow (integration)
