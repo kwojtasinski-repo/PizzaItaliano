@@ -25,6 +25,7 @@ using PizzaItaliano.Services.Payments.Application.Events.External;
 using PizzaItaliano.Services.Payments.Application.Services;
 using PizzaItaliano.Services.Payments.Application.Services.Clients;
 using PizzaItaliano.Services.Payments.Core.Repositories;
+using PizzaItaliano.Services.Payments.Infrastructure.Contexts;
 using PizzaItaliano.Services.Payments.Infrastructure.Decorators;
 using PizzaItaliano.Services.Payments.Infrastructure.Exceptions;
 using PizzaItaliano.Services.Payments.Infrastructure.Logging;
@@ -52,6 +53,9 @@ namespace PizzaItaliano.Services.Payments.Infrastructure
             conveyBuilder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(OutboxCommandHandlerDecorator<>));
             conveyBuilder.Services.TryDecorate(typeof(IEventHandler<>), typeof(OutboxEventHandlerDecorator<>));
             conveyBuilder.Services.TryDecorate(typeof(ICommandHandler<>), typeof(JaegerCommandHandlerDecorator<>));
+
+            conveyBuilder.Services.AddTransient<IAppContextFactory, AppContextFactory>();
+            conveyBuilder.Services.AddTransient(ctx => ctx.GetRequiredService<IAppContextFactory>().Create());
 
             conveyBuilder.Services.AddHostedService<MetricsJob>();
             conveyBuilder.Services.AddSingleton<CustomMetricsMiddleware>();
