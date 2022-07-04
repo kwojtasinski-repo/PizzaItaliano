@@ -33,6 +33,9 @@ using Convey.Tracing.Jaeger;
 using PizzaItaliano.Services.Releases.Infrastructure.Tracing;
 using Convey.Tracing.Jaeger.RabbitMQ;
 using PizzaItaliano.Services.Releases.Infrastructure.Contexts;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Releases.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Releases.Tests.Intgration")] // widocznosc internal na poziomie testow (integration)
@@ -88,5 +91,10 @@ namespace PizzaItaliano.Services.Releases.Infrastructure
 
             return app;
         }
+
+        internal static CorrelationContext GetCorrelationContext(this IHttpContextAccessor accessor)
+            => accessor.HttpContext?.Request.Headers.TryGetValue("Correlation-Context", out var json) is true
+                ? JsonConvert.DeserializeObject<CorrelationContext>(json.FirstOrDefault())
+                : null;
     }
 }

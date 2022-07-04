@@ -18,7 +18,9 @@ using Convey.WebApi;
 using Convey.WebApi.CQRS;
 using Convey.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using PizzaItaliano.Services.Payments.Application;
 using PizzaItaliano.Services.Payments.Application.Commands;
 using PizzaItaliano.Services.Payments.Application.Events.External;
@@ -36,6 +38,7 @@ using PizzaItaliano.Services.Payments.Infrastructure.Services;
 using PizzaItaliano.Services.Payments.Infrastructure.Services.Clients;
 using PizzaItaliano.Services.Payments.Infrastructure.Tracing;
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Payments.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
@@ -96,5 +99,10 @@ namespace PizzaItaliano.Services.Payments.Infrastructure
 
             return app;
         }
+
+        internal static CorrelationContext GetCorrelationContext(this IHttpContextAccessor accessor)
+            => accessor.HttpContext?.Request.Headers.TryGetValue("Correlation-Context", out var json) is true
+                ? JsonConvert.DeserializeObject<CorrelationContext>(json.FirstOrDefault())
+                : null;
     }
 }
