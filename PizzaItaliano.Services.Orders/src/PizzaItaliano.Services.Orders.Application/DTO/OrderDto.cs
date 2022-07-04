@@ -12,7 +12,7 @@ namespace PizzaItaliano.Services.Orders.Application.DTO
         public OrderStatus OrderStatus { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime? ReleaseDate { get; set; }
-        public string Email { get; set; }
+        public Guid UserId { get; set; }
         public IEnumerable<OrderProductDto> OrderProducts { get; set; }
     }
 }

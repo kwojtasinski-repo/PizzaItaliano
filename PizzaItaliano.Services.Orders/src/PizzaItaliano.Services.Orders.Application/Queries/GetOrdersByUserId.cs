@@ -7,6 +7,5 @@ namespace PizzaItaliano.Services.Orders.Application.Queries
 {
     public class GetOrdersByUserId : IQuery<IEnumerable<OrderDto>>
     {
-        public string UserId { get; set; }
     }
 }

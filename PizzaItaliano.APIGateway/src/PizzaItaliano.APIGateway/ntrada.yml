@@ -167,6 +167,11 @@ modules:
         use: downstream
         downstream: orders-service/orders/{orderId}
 
+      - upstream: /my
+        method: GET
+        use: downstream
+        downstream: orders-service/orders/my
+
       - upstream: /
         method: POST
         use: downstream

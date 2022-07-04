@@ -3,8 +3,6 @@ using PizzaItaliano.Services.Orders.Core.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Core.Entities
 {
@@ -17,10 +15,10 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
         public OrderStatus OrderStatus { get; private set; }
         public DateTime OrderDate { get; private set; }
         public DateTime? ReleaseDate { get; private set; }
-        public string Email { get; private set; }
+        public Guid UserId { get; private set; }
         public bool HasProducts => _orderProducts.Any();
 
-        public Order(Guid id, string orderNumber, decimal cost, OrderStatus orderStatus, DateTime orderDate, DateTime? releaseDate, string email, IEnumerable<OrderProduct> orderProducts = null, int version = 0)
+        public Order(Guid id, string orderNumber, decimal cost, OrderStatus orderStatus, DateTime orderDate, DateTime? releaseDate, Guid userId, IEnumerable<OrderProduct> orderProducts = null, int version = 0)
         {
             ValidCost(id, cost);
             ValidOrderNumber(id, orderNumber);
@@ -32,7 +30,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             ReleaseDate = releaseDate;
             OrderProducts = orderProducts ?? Enumerable.Empty<OrderProduct>();
             Version = version;
-            Email = email;
+            UserId = userId;
         }
 
         public Order(Guid id, string orderNumber, decimal cost, OrderStatus orderStatus, DateTime orderDate, DateTime? releaseDate, IEnumerable<OrderProduct> orderProducts = null, int version = 0)
@@ -47,7 +45,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             ReleaseDate = releaseDate;
             OrderProducts = orderProducts ?? Enumerable.Empty<OrderProduct>();
             Version = version;
-            Email = string.Empty;
+            UserId = Guid.Empty;
         }
 
         public IEnumerable<OrderProduct> OrderProducts

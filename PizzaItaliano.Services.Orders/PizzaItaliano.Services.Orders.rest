@@ -44,4 +44,5 @@ Content-Type: application/json
 DELETE {{url}}/orders/{{orderId}}/order-product/{{orderProductId}}/quantity/{{quantity}}
 
 ###
-GET {{url}}/orders/by-user/{{email}}
+GET {{url}}/orders/my
+Correlation-Context: { "user": { "id": "5ade56cd-76d4-48a5-804b-f3ba033e136d", "isAuthenticated": "true", "role": "admin", claims: {} } }

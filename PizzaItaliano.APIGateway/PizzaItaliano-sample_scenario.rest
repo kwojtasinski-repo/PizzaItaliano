@@ -15,6 +15,7 @@
 
 #PAYMENTS
 @paymentId = 10000000-0000-0000-0000-000000000000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YWRlNTZjZDc2ZDQ0OGE1ODA0YmYzYmEwMzNlMTM2ZCIsInVuaXF1ZV9uYW1lIjoiNWFkZTU2Y2Q3NmQ0NDhhNTgwNGJmM2JhMDMzZTEzNmQiLCJqdGkiOiJhOTgxNmM1My04N2I0LTQyMzItOWUyMS1hM2U3YzdiOTQ1MWEiLCJpYXQiOiIxNjU2OTY4OTU1IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2NTY5Njg5NTUsImV4cCI6MTY1Njk3MjU1NSwiaXNzIjoicGl6emEtaXRhbGlhbm8ifQ.B09_M84XJjGJvKPmq5gnnzD1iODlpwEgbwVIht4kCIg
 
 ### At first, check all products
 GET {{api}}/products
@@ -48,6 +49,11 @@ Content-Type: application/json
 {
   "orderId": "{{orderId}}"
 }
+
+
+###
+GET http://localhost:5000/orders/my
+Authorization: Bearer {{token}}
 
 ### ### check operation async gateway -> script start-async.sh
 @operationAddOrderId = {{add_order_operation.response.headers.Request-ID}}

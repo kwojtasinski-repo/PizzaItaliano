@@ -25,7 +25,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
                 ReleaseDate = order.ReleaseDate,
                 OrderProductDocuments = order.OrderProducts.Select(op => op.AsDocument()),
                 OrderStatus = order.OrderStatus,
-                Email = order.Email,
+                UserId = order.UserId,
                 Version = order.Version
             };
 
@@ -49,7 +49,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
                 OrderNumber = orderDocument.OrderNumber,
                 OrderDate = orderDocument.OrderDate,
                 ReleaseDate = orderDocument.ReleaseDate,
-                Email = orderDocument.Email,
+                UserId = orderDocument.UserId,
                 OrderStatus = orderDocument.OrderStatus,
                 
                 OrderProducts = orderDocument.OrderProductDocuments.Select(op => op.AsDto())
