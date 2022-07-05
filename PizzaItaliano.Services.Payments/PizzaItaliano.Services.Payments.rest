@@ -2,6 +2,7 @@
 @paymentId = 10000000-0000-0000-0000-000000000000
 @orderId = 10000000-0000-0000-0000-000000000000
 @cost = 20.51
+@user = "user": { "id": "5ade56cd-76d4-48a5-804b-f3ba033e136d", "isAuthenticated": "true", "role": "admin", claims: {} }
 
 ###
 GET {{url}}/payments
@@ -12,6 +13,7 @@ GET {{url}}/payments/{{paymentId}}
 ###
 POST {{url}}/payments
 Content-Type: application/json
+Correlation-Context: { {{user}} }
 
 {
   "paymentId": "{{paymentId}}",

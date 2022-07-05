@@ -33,30 +33,15 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             UserId = userId;
         }
 
-        public Order(Guid id, string orderNumber, decimal cost, OrderStatus orderStatus, DateTime orderDate, DateTime? releaseDate, IEnumerable<OrderProduct> orderProducts = null, int version = 0)
-        {
-            ValidCost(id, cost);
-            ValidOrderNumber(id, orderNumber);
-            Id = id;
-            OrderNumber = orderNumber;
-            Cost = cost;
-            OrderStatus = orderStatus;
-            OrderDate = orderDate;
-            ReleaseDate = releaseDate;
-            OrderProducts = orderProducts ?? Enumerable.Empty<OrderProduct>();
-            Version = version;
-            UserId = Guid.Empty;
-        }
-
         public IEnumerable<OrderProduct> OrderProducts
         {
             get => _orderProducts;
             private set => _orderProducts = new HashSet<OrderProduct>(value);
         }
 
-        public static Order Create(Guid id, string orderNumber, decimal cost)
+        public static Order Create(Guid id, string orderNumber, decimal cost, Guid userId)
         {
-            var order = new Order(id, orderNumber, cost, OrderStatus.New, DateTime.Now, null);
+            var order = new Order(id, orderNumber, cost, OrderStatus.New, DateTime.Now, null, userId);
             order.AddEvent(new OrderCreated(order));
             return order;
         }
@@ -112,7 +97,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
 
         public void OrderReady()
         {
-            var orderBeforeChange = new Order(Id, OrderNumber, Cost, OrderStatus, OrderDate, ReleaseDate, OrderProducts, Version);
+            var orderBeforeChange = new Order(Id, OrderNumber, Cost, OrderStatus, OrderDate, ReleaseDate, UserId, OrderProducts, Version);
 
             if (OrderStatus != OrderStatus.New)
             {
@@ -129,7 +114,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
                 throw new CannotChangeOrderStateException(Id, OrderStatus, OrderStatus.Paid);
             }
 
-            var orderBeforeChange = new Order(Id, OrderNumber, Cost, OrderStatus, OrderDate, ReleaseDate, OrderProducts, Version);
+            var orderBeforeChange = new Order(Id, OrderNumber, Cost, OrderStatus, OrderDate, ReleaseDate, UserId, OrderProducts, Version);
 
             OrderStatus = OrderStatus.Paid;
             if (HasProducts)
@@ -155,7 +140,7 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
                 throw new CannotChangeOrderStateException(Id, OrderStatus, OrderStatus.Released);
             }
 
-            var orderBeforeChange = new Order(Id, OrderNumber, Cost, OrderStatus, OrderDate, ReleaseDate, OrderProducts, Version);
+            var orderBeforeChange = new Order(Id, OrderNumber, Cost, OrderStatus, OrderDate, ReleaseDate, UserId, OrderProducts, Version);
             OrderStatus = OrderStatus.Released;
             ReleaseDate = DateTime.Now;
             AddEvent(new OrderStateChanged(orderBeforeChange, this));

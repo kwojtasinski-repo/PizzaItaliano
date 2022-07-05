@@ -21,7 +21,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var number = "ORD/2021/10/31/1";
             var status = OrderStatus.New;
             var statusExpected = OrderStatus.Ready;
-            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null);
+            var userId = Guid.NewGuid();
+            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
 
             // Act
             order.OrderReady();
@@ -42,7 +43,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var number = "ORD/2021/10/31/1";
             var cost = new decimal(12.12);
             var status = OrderStatus.Released;
-            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null);
+            var userId = Guid.NewGuid();
+            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
 
             // Act
             var exception = Record.Exception(() => order.OrderPaid());

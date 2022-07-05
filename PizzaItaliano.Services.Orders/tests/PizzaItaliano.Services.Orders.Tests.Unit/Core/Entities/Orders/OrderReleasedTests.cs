@@ -27,7 +27,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var statusExpected = OrderStatus.Released;
             var currentTime = DateTime.Now.TimeOfDay;
             var productName = "Product #1";
-            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null);
+            var userId = Guid.NewGuid();
+            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
             var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.Released);
             order.AddOrderProduct(orderProduct);
             order.ClearEvents();
@@ -52,7 +53,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var number = "ORD/2021/10/31/1";
             var cost = new decimal(12.12);
             var status = OrderStatus.Released;
-            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null);
+            var userId = Guid.NewGuid();
+            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
 
             // Act
             var exception = Record.Exception(() => order.OrderPaid());
@@ -72,7 +74,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var number = "ORD/2021/10/31/1";
             var cost = new decimal(12.12);
             var status = OrderStatus.Paid;
-            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null);
+            var userId = Guid.NewGuid();
+            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
 
             // Act
             var exception = Record.Exception(() => order.OrderPaid());
@@ -93,7 +96,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var cost = new decimal(12.12);
             var quantity = 1;
             var status = OrderStatus.Paid;
-            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null);
+            var userId = Guid.NewGuid();
+            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
             var productName = "Product #1";
             var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.New);
             order.AddOrderProduct(orderProduct);

@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Queries.Handlers
 {
-    internal sealed class GetOrdersByUserIdHandler : IQueryHandler<GetOrdersByUserId, IEnumerable<OrderDto>>
+    internal sealed class GetMyOrdersHandler : IQueryHandler<GetMyOrders, IEnumerable<OrderDto>>
     {
         private readonly IMongoDatabase _mongoDatabase;
         private readonly IAppContext _appContext;
 
-        public GetOrdersByUserIdHandler(IMongoDatabase mongoDatabase, IAppContext appContext)
+        public GetMyOrdersHandler(IMongoDatabase mongoDatabase, IAppContext appContext)
         {
             _mongoDatabase = mongoDatabase;
             _appContext = appContext;
         }
 
-        public Task<IEnumerable<OrderDto>> HandleAsync(GetOrdersByUserId query)
+        public Task<IEnumerable<OrderDto>> HandleAsync(GetMyOrders query)
         {
             if (_appContext.Identity is null)
             {

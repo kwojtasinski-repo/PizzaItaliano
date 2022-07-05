@@ -13,7 +13,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
 {
     public class CreateOrderTests
     {
-        private Order Act(AggregateId id, string number, decimal cost) => Order.Create(id, number, cost);
+        private Order Act(AggregateId id, string number, decimal cost, Guid userId) => Order.Create(id, number, cost, userId);
 
         [Fact]
         public void given_valid_parameters_order_should_be_created()
@@ -22,9 +22,10 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var id = new AggregateId();
             var number = "ORD/2021/10/31/1";
             var cost = new decimal(12.12);
+            var userId = Guid.NewGuid();
 
             // Act
-            var order = Act(id, number, cost);
+            var order = Act(id, number, cost, userId);
 
             // Assert
             order.Id.ShouldBe(id);
@@ -41,9 +42,10 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var id = new AggregateId();
             var number = "ORD/2021/10/31/1";
             var cost = new decimal(-12.12);
+            var userId = Guid.NewGuid();
 
             // Act
-            var exception = Record.Exception(() => Act(id, number, cost));
+            var exception = Record.Exception(() => Act(id, number, cost, userId));
 
             // Assert
             exception.ShouldNotBeNull();
@@ -57,9 +59,10 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var id = new AggregateId();
             var number = "";
             var cost = new decimal(12.12);
+            var userId = Guid.NewGuid();
 
             // Act
-            var exception = Record.Exception(() => Act(id, number, cost));
+            var exception = Record.Exception(() => Act(id, number, cost, userId));
 
             // Assert
             exception.ShouldNotBeNull();

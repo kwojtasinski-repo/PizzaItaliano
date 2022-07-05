@@ -12,5 +12,6 @@ namespace PizzaItaliano.Services.Releases.Application.DTO
         public Guid OrderId { get; set; }
         public Guid OrderProductId { get; set; }
         public DateTime Date { get; set; }
+        public Guid UserId { get; set; }
     }
 }

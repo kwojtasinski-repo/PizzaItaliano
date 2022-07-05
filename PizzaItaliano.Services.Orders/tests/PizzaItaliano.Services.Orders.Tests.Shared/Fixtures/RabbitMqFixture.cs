@@ -15,6 +15,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Shared.Fixtures
     {
         private readonly IModel _channel;
         private bool _disposed = false;
+        private Dictionary<string, object> headers = new();
 
         public RabbitMqFixture()
         {
@@ -42,7 +43,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Shared.Fixtures
             var json = JsonConvert.SerializeObject(message);
             var body = Encoding.UTF8.GetBytes(json);
             var properties = _channel.CreateBasicProperties();
-            properties.Headers = new Dictionary<string, object>();
+            properties.Headers = headers;
             properties.MessageId = Guid.NewGuid().ToString();
             properties.CorrelationId = Guid.NewGuid().ToString();
             _channel.BasicPublish(exchange, routingKey, properties, body);
@@ -130,6 +131,25 @@ namespace PizzaItaliano.Services.Orders.Tests.Shared.Fixtures
 
             return taskCompletionSource;
         }
+
+        public void AddHeader(string key, string value)
+        {
+            headers.Add(key, value);
+        }
+
+        public void DeleteHeader(string key)
+        {
+            var exists = headers.TryGetValue(key, out var value);
+
+            if (!exists)
+            {
+                return;
+            }
+
+            headers.Remove(key);
+        }
+
+        public void ClearHeader() => headers = new Dictionary<string, object>();
 
         private static string SnakeCase(string value)
             => string.Concat(value.Select((x, i) =>

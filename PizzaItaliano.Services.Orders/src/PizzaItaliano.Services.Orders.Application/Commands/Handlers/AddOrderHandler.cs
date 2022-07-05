@@ -16,16 +16,23 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
         private readonly IOrderRepository _orderRepository;
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
+        private readonly IAppContext _appContext;
 
-        public AddOrderHandler(IOrderRepository orderRepository, IMessageBroker messageBroker, IEventMapper eventMapper)
+        public AddOrderHandler(IOrderRepository orderRepository, IMessageBroker messageBroker, IEventMapper eventMapper, IAppContext appContext)
         {
             _orderRepository = orderRepository;
             _messageBroker = messageBroker;
             _eventMapper = eventMapper;
+            _appContext = appContext;
         }
 
         public async Task HandleAsync(AddOrder command)
         {
+            if (_appContext.Identity.Id == Guid.Empty)
+            {
+                throw new InvalidUserIdException(_appContext.Identity.Id);
+            }
+
             var exists = await _orderRepository.ExistsAsync(command.OrderId);
             if (exists)
             {
@@ -46,7 +53,7 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
                 .Append(currentDate.Year).Append("/").Append(currentDate.Month.ToString("d2"))
                 .Append("/").Append(currentDate.Day.ToString("00")).Append("/").Append(number).ToString();
 
-            var order = Order.Create(command.OrderId, orderNumber, decimal.Zero);
+            var order = Order.Create(command.OrderId, orderNumber, decimal.Zero, _appContext.Identity.Id);
 
             await _orderRepository.AddAsync(order);
             var integrationEvents = _eventMapper.MapAll(order.Events);

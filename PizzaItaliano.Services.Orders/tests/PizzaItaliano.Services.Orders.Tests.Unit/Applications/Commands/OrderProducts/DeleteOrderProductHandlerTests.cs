@@ -32,7 +32,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Commands.OrderPr
             var command = new DeleteOrderProduct(orderId, orderProductId, quantity);
             var productName = "Product #1";
             var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.New);
-            var order = new Order(orderId, "abc", cost, OrderStatus.New, DateTime.Now, null, new List<OrderProduct> { orderProduct });
+            var order = new Order(orderId, "abc", cost, OrderStatus.New, DateTime.Now, null, Guid.NewGuid(), new List<OrderProduct> { orderProduct });
             _orderRepository.GetAsync(orderId).Returns(order);
 
             // Act
@@ -85,7 +85,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Commands.OrderPr
             var orderProductId = Guid.NewGuid();
             var quantity = 1;
             var command = new DeleteOrderProduct(orderId, orderProductId, quantity);
-            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.Ready, DateTime.Now, null);
+            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.Ready, DateTime.Now, null, Guid.NewGuid());
             _orderRepository.GetAsync(orderId).Returns(order);
 
             // Act

@@ -15,5 +15,6 @@ namespace PizzaItaliano.Services.Releases.Infrastructure.Mongo.Documents
         public Guid OrderProductId { get; set; }
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime Date { get; set; }
+        public Guid UserId { get; set; }
     }
 }

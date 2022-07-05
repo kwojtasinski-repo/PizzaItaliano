@@ -23,7 +23,8 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents
                 CreateDate = payment.CreateDate,
                 ModifiedDate = payment.ModifiedDate,
                 OrderId = payment.OrderId,
-                PaymentStatus = payment.PaymentStatus
+                PaymentStatus = payment.PaymentStatus,
+                UserId = payment.UserId
             };
 
             return document;
@@ -32,7 +33,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents
         public static Payment AsEntity(this PaymentDocument paymentDocument)
         {
             var payment = new Payment(paymentDocument.Id, paymentDocument.PaymentNumber, paymentDocument.Cost, paymentDocument.OrderId, 
-                paymentDocument.CreateDate, paymentDocument.ModifiedDate, paymentDocument.PaymentStatus);
+                paymentDocument.CreateDate, paymentDocument.ModifiedDate, paymentDocument.PaymentStatus, paymentDocument.UserId);
             return payment;
         }
 
@@ -46,7 +47,8 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents
                 OrderId = paymentDocument.OrderId,
                 CreateDate = paymentDocument.CreateDate,
                 ModifiedDate = paymentDocument.ModifiedDate,
-                PaymentStatus = paymentDocument.PaymentStatus
+                PaymentStatus = paymentDocument.PaymentStatus,
+                UserId = paymentDocument.UserId
             };
 
             return paymentDto;

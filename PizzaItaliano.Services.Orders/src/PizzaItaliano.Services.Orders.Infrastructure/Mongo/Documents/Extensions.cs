@@ -36,6 +36,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
         {
             var order = new Order(orderDocument.Id, orderDocument.OrderNumber, orderDocument.Cost, orderDocument.OrderStatus, orderDocument.OrderDate,
                             orderDocument.ReleaseDate,
+                            orderDocument.UserId,
                             orderDocument.OrderProductDocuments?.Select(op => op.AsEntity()));
             return order;
         }

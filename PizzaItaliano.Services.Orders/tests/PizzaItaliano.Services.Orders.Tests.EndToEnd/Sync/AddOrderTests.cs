@@ -27,6 +27,7 @@ namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
         {
             var orderId = Guid.NewGuid();
             var command = new AddOrder(orderId);
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", "{\"user\": { \"id\": \"5ade56cd-76d4-48a5-804b-f3ba033e136d\", \"isAuthenticated\": \"true\", \"role\": \"admin\", \"claims\": {} }}");
 
             var response = await Act(command);
 

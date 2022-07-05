@@ -31,7 +31,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Commands.OrderPr
             var productId = Guid.NewGuid();
             var quantity = 1;
             var command = new AddOrderProduct(orderId, orderProductId, productId, quantity);
-            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.New, DateTime.Now, null);
+            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.New, DateTime.Now, null, Guid.NewGuid());
             var product = new ProductDto() { Id = productId, Cost = decimal.One, Name = "product", ProductStatus = ProductStatus.Used };
             _orderRepository.GetWithCollectionAsync(orderId).Returns(order);
             _productServiceClient.GetAsync(productId).Returns(product);
@@ -89,7 +89,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Commands.OrderPr
             var productId = Guid.NewGuid();
             var quantity = 1;
             var command = new AddOrderProduct(orderId, orderProductId, productId, quantity);
-            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.Ready, DateTime.Now, null);
+            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.Ready, DateTime.Now, null,Guid.NewGuid());
             _orderRepository.GetWithCollectionAsync(orderId).Returns(order);
 
             // Act
@@ -109,7 +109,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Commands.OrderPr
             var productId = Guid.NewGuid();
             var quantity = 1;
             var command = new AddOrderProduct(orderId, orderProductId, productId, quantity);
-            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.New, DateTime.Now, null);
+            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.New, DateTime.Now, null, Guid.NewGuid());
             _orderRepository.GetWithCollectionAsync(orderId).Returns(order);
 
             // Act

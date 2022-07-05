@@ -26,7 +26,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Commands.Orders
             // Arrange
             var id = Guid.NewGuid();
             var command = new SetOrderStatusReady(id);
-            var order = new Order(id, "abc", decimal.Zero, OrderStatus.New, DateTime.Now, null);
+            var order = new Order(id, "abc", decimal.Zero, OrderStatus.New, DateTime.Now, null, Guid.NewGuid());
             _orderRepository.GetAsync(id).Returns(order);
 
             // Act
@@ -59,7 +59,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Commands.Orders
             // Arrange
             var id = Guid.NewGuid();
             var command = new SetOrderStatusReady(id);
-            var order = new Order(id, "abc", decimal.Zero, OrderStatus.Released, DateTime.Now, null);
+            var order = new Order(id, "abc", decimal.Zero, OrderStatus.Released, DateTime.Now, null, Guid.NewGuid());
             _orderRepository.GetAsync(id).Returns(order);
 
             // Act

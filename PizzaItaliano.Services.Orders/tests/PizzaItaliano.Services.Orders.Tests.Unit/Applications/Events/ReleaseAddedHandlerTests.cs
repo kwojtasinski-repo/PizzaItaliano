@@ -33,7 +33,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Events
             var cost = new decimal(10);
             var productName = "Product #1";
             var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.Paid);
-            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.Paid, DateTime.Now, null, new List<OrderProduct> { orderProduct });
+            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.Paid, DateTime.Now, null, Guid.NewGuid(), new List<OrderProduct> { orderProduct });
             _orderRepository.GetAsync(orderId).Returns(order);
 
             // Act
@@ -69,7 +69,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Events
             var orderId = Guid.NewGuid();
             var orderProductId = Guid.NewGuid();
             var command = new ReleaseAdded(releaseId, orderId, orderProductId);
-            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.New, DateTime.Now, null);
+            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.New, DateTime.Now, null, Guid.NewGuid());
             _orderRepository.GetAsync(orderId).Returns(order);
 
             // Act
@@ -88,7 +88,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Events
             var orderId = Guid.NewGuid();
             var orderProductId = Guid.NewGuid();
             var command = new ReleaseAdded(releaseId, orderId, orderProductId);
-            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.Paid, DateTime.Now, null);
+            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.Paid, DateTime.Now, null, Guid.NewGuid());
             _orderRepository.GetAsync(orderId).Returns(order);
 
             // Act

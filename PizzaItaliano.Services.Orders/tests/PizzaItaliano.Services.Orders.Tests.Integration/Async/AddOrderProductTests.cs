@@ -1,5 +1,4 @@
-﻿using PizzaItaliano.Services.Orders.API;
-using PizzaItaliano.Services.Orders.Application.Commands;
+﻿using PizzaItaliano.Services.Orders.Application.Commands;
 using PizzaItaliano.Services.Orders.Application.DTO;
 using PizzaItaliano.Services.Orders.Application.Events;
 using PizzaItaliano.Services.Orders.Application.Events.Rejected;
@@ -7,7 +6,6 @@ using PizzaItaliano.Services.Orders.Application.Exceptions;
 using PizzaItaliano.Services.Orders.Core.Entities;
 using PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Orders.Tests.Integration.Helpers;
-using PizzaItaliano.Services.Orders.Tests.Shared.Factories;
 using PizzaItaliano.Services.Orders.Tests.Shared.Fixtures;
 using Shouldly;
 using System;
@@ -124,7 +122,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Async
         private readonly RabbitMqFixture _rabbitMqFixture;
         private readonly RedisFixture _redisFixture;
 
-        public AddOrderProductTests(PizzaItalianoApplicationFactory<Program> factory)
+        public AddOrderProductTests(TestAppFactory factory)
         {
             _rabbitMqFixture = new RabbitMqFixture();
             _mongoDbFixture = new MongoDbFixture<OrderDocument, Guid>("orders");

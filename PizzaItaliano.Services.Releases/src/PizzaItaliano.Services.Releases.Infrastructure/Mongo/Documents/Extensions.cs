@@ -1,10 +1,5 @@
 ﻿using PizzaItaliano.Services.Releases.Application.DTO;
 using PizzaItaliano.Services.Releases.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Releases.Infrastructure.Mongo.Documents
 {
@@ -12,7 +7,7 @@ namespace PizzaItaliano.Services.Releases.Infrastructure.Mongo.Documents
     {
         public static Release AsEntity(this ReleaseDocument document)
         {
-            var release = new Release(document.Id, document.OrderId, document.OrderProductId, document.Date);
+            var release = new Release(document.Id, document.OrderId, document.OrderProductId, document.Date, document.UserId);
             return release;
         }
 
@@ -23,7 +18,8 @@ namespace PizzaItaliano.Services.Releases.Infrastructure.Mongo.Documents
                 Id = entity.Id,
                 Date = entity.Date,
                 OrderId = entity.OrderId,
-                OrderProductId = entity.OrderProductId
+                OrderProductId = entity.OrderProductId,
+                UserId = entity.UserId
             };
 
             return releaseDocument;
@@ -36,7 +32,8 @@ namespace PizzaItaliano.Services.Releases.Infrastructure.Mongo.Documents
                 Id = document.Id,
                 OrderId = document.OrderId,
                 Date = document.Date,
-                OrderProductId = document.OrderProductId
+                OrderProductId = document.OrderProductId,
+                UserId = document.UserId
             };
 
             return releaseDto;

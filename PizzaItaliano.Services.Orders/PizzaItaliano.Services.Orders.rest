@@ -6,6 +6,7 @@
 @productId = 10000000-0000-0000-0000-000000000000
 @quantity = 1
 @email = pizza-italiano-user3@mail.com
+@user = "user": { "id": "5ade56cd-76d4-48a5-804b-f3ba033e136d", "isAuthenticated": "true", "role": "admin", claims: {} }
 
 ###
 GET {{url}}/orders
@@ -16,6 +17,7 @@ GET {{url}}/orders/{{orderId}}
 ###
 POST {{url}}/orders
 Content-Type: application/json
+Correlation-Context: { {{user}} }
 
 {
   "orderId": "{{orderId}}"
@@ -45,4 +47,4 @@ DELETE {{url}}/orders/{{orderId}}/order-product/{{orderProductId}}/quantity/{{qu
 
 ###
 GET {{url}}/orders/my
-Correlation-Context: { "user": { "id": "5ade56cd-76d4-48a5-804b-f3ba033e136d", "isAuthenticated": "true", "role": "admin", claims: {} } }
+Correlation-Context: { {{user}} }

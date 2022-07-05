@@ -25,7 +25,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Events
             var orderId = Guid.NewGuid();
             var paymentId = Guid.NewGuid();
             var command = new PaidPayment(paymentId, orderId);
-            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.Ready, DateTime.Now, null);
+            var userId = Guid.NewGuid();
+            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.Ready, DateTime.Now, null, userId);
             _orderRepository.GetAsync(orderId).Returns(order);
 
             // Act
@@ -43,7 +44,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Events
             var orderId = Guid.NewGuid();
             var paymentId = Guid.NewGuid();
             var command = new PaidPayment(paymentId, orderId);
-            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.New, DateTime.Now, null);
+            var userId = Guid.NewGuid();
+            var order = new Order(orderId, "abc", decimal.Zero, OrderStatus.New, DateTime.Now, null, userId);
             _orderRepository.GetAsync(orderId).Returns(order);
 
             // Act

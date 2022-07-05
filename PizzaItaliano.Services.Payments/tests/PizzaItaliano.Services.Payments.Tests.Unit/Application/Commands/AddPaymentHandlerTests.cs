@@ -1,5 +1,6 @@
 using Convey.CQRS.Events;
 using NSubstitute;
+using PizzaItaliano.Services.Payments.Application;
 using PizzaItaliano.Services.Payments.Application.Commands;
 using PizzaItaliano.Services.Payments.Application.Commands.Handlers;
 using PizzaItaliano.Services.Payments.Application.Exceptions;
@@ -99,7 +100,8 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
             var number = 1021;
             var paymentNumber = $"PAY/2021/10/31/{number}";
             var command = new AddPayment() { PaymentId = paymentId, Cost = cost, OrderId = orderId };
-            var payment = new Payment(paymentId, paymentNumber, new decimal(100), orderId, DateTime.Now, DateTime.Now, PaymentStatus.Unpaid);
+            var userId = Guid.NewGuid();
+            var payment = new Payment(paymentId, paymentNumber, new decimal(100), orderId, DateTime.Now, DateTime.Now, PaymentStatus.Unpaid, userId);
             var orders = new List<Payment> { payment };
             var queryablePayments = Queryable.AsQueryable(orders);
             _paymentRepository.GetCollection(Arg.Any<Expression<Func<Payment, bool>>>()).Returns(queryablePayments);
@@ -118,13 +120,15 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
         private readonly IPaymentRepository _paymentRepository;
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
+        private readonly IAppContext _appContext;
 
         public AddPaymentHandlerTests()
         {
             _paymentRepository = Substitute.For<IPaymentRepository>();
             _messageBroker = Substitute.For<IMessageBroker>();
             _eventMapper = Substitute.For<IEventMapper>();
-            _handler = new AddPaymentHandler(_paymentRepository, _messageBroker, _eventMapper);
+            _appContext = Substitute.For<IAppContext>();
+            _handler = new AddPaymentHandler(_paymentRepository, _messageBroker, _eventMapper, _appContext);
         }
 
         #endregion

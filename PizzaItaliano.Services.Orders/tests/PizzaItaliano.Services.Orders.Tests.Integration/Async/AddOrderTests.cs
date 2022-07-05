@@ -1,17 +1,12 @@
-using Microsoft.AspNetCore.TestHost;
-using Newtonsoft.Json;
-using PizzaItaliano.Services.Orders.API;
 using PizzaItaliano.Services.Orders.Application.Commands;
 using PizzaItaliano.Services.Orders.Application.Events;
 using PizzaItaliano.Services.Orders.Application.Events.Rejected;
 using PizzaItaliano.Services.Orders.Application.Exceptions;
 using PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Orders.Tests.Integration.Helpers;
-using PizzaItaliano.Services.Orders.Tests.Shared.Factories;
 using PizzaItaliano.Services.Orders.Tests.Shared.Fixtures;
 using Shouldly;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -67,7 +62,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Async
         private readonly MongoDbFixture<OrderDocument, Guid> _mongoDbFixture;
         private readonly RabbitMqFixture _rabbitMqFixture;
 
-        public AddOrderTests(PizzaItalianoApplicationFactory<Program> factory)
+        public AddOrderTests(TestAppFactory factory)
         {
             _rabbitMqFixture = new RabbitMqFixture();
             _mongoDbFixture = new MongoDbFixture<OrderDocument, Guid>("orders");

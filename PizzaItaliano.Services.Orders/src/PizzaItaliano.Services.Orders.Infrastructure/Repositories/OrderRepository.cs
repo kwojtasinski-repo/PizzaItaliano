@@ -4,10 +4,8 @@ using PizzaItaliano.Services.Orders.Core.Entities;
 using PizzaItaliano.Services.Orders.Core.Repositories;
 using PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Orders.Infrastructure.Repositories

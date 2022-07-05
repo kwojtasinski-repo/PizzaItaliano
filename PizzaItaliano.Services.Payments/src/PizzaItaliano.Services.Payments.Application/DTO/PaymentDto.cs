@@ -17,5 +17,6 @@ namespace PizzaItaliano.Services.Payments.Application.DTO
         public DateTime ModifiedDate { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
         public bool Paid => PaymentStatus == PaymentStatus.Paid;
+        public Guid UserId { get; set; }
     }
 }

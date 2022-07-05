@@ -12,7 +12,7 @@ namespace PizzaItaliano.Services.Releases.Tests.Unit.Core.Entities
 {
     public class CreateReleaseTests
     {
-        private Release Act(AggregateId id, Guid orderId, Guid orderProductId, DateTime date) => Release.Create(id, orderId, orderProductId, date);
+        private Release Act(AggregateId id, Guid orderId, Guid orderProductId, DateTime date, Guid userId) => Release.Create(id, orderId, orderProductId, date, userId);
 
         [Fact]
         public void given_valid_parameters_release_should_be_created()
@@ -22,9 +22,10 @@ namespace PizzaItaliano.Services.Releases.Tests.Unit.Core.Entities
             var orderId = Guid.NewGuid();
             var orderProductId = Guid.NewGuid();
             var date = DateTime.Now;
+            var userId = Guid.NewGuid();
 
             // Act
-            var payment = Act(id, orderId, orderProductId, date);
+            var payment = Act(id, orderId, orderProductId, date, userId);
 
             // Assert
             payment.Id.ShouldBe(id);

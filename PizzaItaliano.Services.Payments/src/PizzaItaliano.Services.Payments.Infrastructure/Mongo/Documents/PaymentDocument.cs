@@ -20,5 +20,6 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime ModifiedDate { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
+        public Guid UserId { get; set; }
     }
 }

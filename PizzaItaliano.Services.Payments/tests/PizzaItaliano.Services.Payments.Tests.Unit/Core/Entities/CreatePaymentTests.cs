@@ -13,7 +13,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Core.Entities
 {
     public class CreatePaymentTests
     {
-        private Payment Act(AggregateId id, string number, decimal cost, Guid orderId, PaymentStatus paymentStatus) => Payment.Create(id, number, cost, orderId, paymentStatus);
+        private Payment Act(AggregateId id, string number, decimal cost, Guid orderId, PaymentStatus paymentStatus, Guid userId) => Payment.Create(id, number, cost, orderId, paymentStatus, userId);
 
         [Fact]
         public void given_valid_parameters_payment_should_be_created()
@@ -24,9 +24,10 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Core.Entities
             var cost = decimal.One;
             var orderId = Guid.NewGuid();
             var status = PaymentStatus.Paid;
+            var userId = Guid.NewGuid();
 
             // Act
-            var payment = Act(id, number, cost, orderId, status);
+            var payment = Act(id, number, cost, orderId, status, userId);
 
             // Assert
             payment.Id.ShouldBe(id);
@@ -47,9 +48,10 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Core.Entities
             var cost = new decimal(-20);
             var orderId = Guid.NewGuid();
             var status = PaymentStatus.Paid;
+            var userId = Guid.NewGuid();
 
             // Act
-            var exception = Record.Exception(() => Act(id, number, cost, orderId, status));
+            var exception = Record.Exception(() => Act(id, number, cost, orderId, status, userId));
 
             // Assert
             exception.ShouldNotBeNull();
@@ -65,9 +67,10 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Core.Entities
             var cost = decimal.One;
             var orderId = Guid.NewGuid();
             var status = PaymentStatus.Paid;
+            var userId = Guid.NewGuid();
 
             // Act
-            var exception = Record.Exception(() => Act(id, number, cost, orderId, status));
+            var exception = Record.Exception(() => Act(id, number, cost, orderId, status, userId));
 
             // Assert
             exception.ShouldNotBeNull();

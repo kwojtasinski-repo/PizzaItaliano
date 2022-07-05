@@ -5,7 +5,7 @@ using Xunit;
 
 namespace PizzaItaliano.Services.Identity.Tests.Unit.Core.Entities.ValueObjects
 {
-PizzaItaliano.Services.Orders.Tests.Integration    public class EmailTests
+    public class EmailTests
     {
         private Email Act(string email) => Email.From(email);
 

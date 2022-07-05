@@ -16,13 +16,14 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
         public DateTime CreateDate { get; private set; }
         public DateTime ModifiedDate { get; private set; }
         public PaymentStatus PaymentStatus { get; private set; }
+        public Guid UserId { get; private set; }
 
         public Payment()
         {
 
         }
 
-        public Payment(Guid id, string paymentNumber, decimal cost, Guid orderId, DateTime createDate, DateTime modifiedDate, PaymentStatus paymentStatus)
+        public Payment(Guid id, string paymentNumber, decimal cost, Guid orderId, DateTime createDate, DateTime modifiedDate, PaymentStatus paymentStatus, Guid userId)
         {
             ValidPaymentNumber(id, paymentNumber);
             ValidCost(id, cost);
@@ -33,18 +34,19 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
             CreateDate = createDate;
             ModifiedDate = modifiedDate;
             PaymentStatus = paymentStatus;
+            UserId = userId;
         }
 
-        public static Payment Create(Guid id, string number, decimal cost, Guid orderId, PaymentStatus paymentStatus)
+        public static Payment Create(Guid id, string number, decimal cost, Guid orderId, PaymentStatus paymentStatus, Guid userId)
         {
-            var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, paymentStatus);
+            var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, paymentStatus, userId);
             payment.AddEvent(new CreatePayment(payment));
             return payment;
         }
 
-        public static Payment Create(Guid id, string number, decimal cost, Guid orderId)
+        public static Payment Create(Guid id, string number, decimal cost, Guid orderId, Guid userId)
         {
-            var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, PaymentStatus.Unpaid);
+            var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, PaymentStatus.Unpaid, userId);
             payment.AddEvent(new CreatePayment(payment));
             return payment;
         }

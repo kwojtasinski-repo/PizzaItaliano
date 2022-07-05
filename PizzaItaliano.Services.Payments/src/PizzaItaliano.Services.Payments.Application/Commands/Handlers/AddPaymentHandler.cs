@@ -15,16 +15,23 @@ namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
         private readonly IPaymentRepository _paymentRepository;
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
+        private readonly IAppContext _appContext;
 
-        public AddPaymentHandler(IPaymentRepository paymentRepository, IMessageBroker messageBroker, IEventMapper eventMapper)
+        public AddPaymentHandler(IPaymentRepository paymentRepository, IMessageBroker messageBroker, IEventMapper eventMapper, IAppContext appContext)
         {
             _paymentRepository = paymentRepository;
             _messageBroker = messageBroker;
             _eventMapper = eventMapper;
+            _appContext = appContext;
         }
 
         public async Task HandleAsync(AddPayment command)
         {
+            if (_appContext.Identity.Id == Guid.Empty)
+            {
+                throw new InvalidUserIdException(_appContext.Identity.Id);
+            }
+
             if (command.OrderId == Guid.Empty)
             {
                 throw new InvalidOrderIdException(command.PaymentId);
@@ -56,7 +63,7 @@ namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
                 .Append(currentDate.Year).Append("/").Append(currentDate.Month.ToString("d2"))
                 .Append("/").Append(currentDate.Day.ToString("00")).Append("/").Append(number).ToString();
 
-            var payment = Payment.Create(command.PaymentId, paymentNumber, command.Cost, command.OrderId);
+            var payment = Payment.Create(command.PaymentId, paymentNumber, command.Cost, command.OrderId, _appContext.Identity.Id);
 
             await _paymentRepository.AddAsync(payment);
             var integrationEvents = _eventMapper.MapAll(payment.Events);

@@ -23,7 +23,8 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var number = "ORD/2021/10/31/1";
             var cost = new decimal(12.12);
             var quantity = 1;
-            var order = new Order(orderId, number, decimal.Zero, OrderStatus.New, DateTime.Now, null);
+            var userId = Guid.NewGuid();
+            var order = new Order(orderId, number, decimal.Zero, OrderStatus.New, DateTime.Now, null, userId);
             var productName = "Product #1";
             var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.New);
 

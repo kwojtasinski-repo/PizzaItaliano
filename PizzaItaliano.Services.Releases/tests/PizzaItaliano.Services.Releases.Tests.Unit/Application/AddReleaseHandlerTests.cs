@@ -1,5 +1,6 @@
 ﻿using Convey.CQRS.Events;
 using NSubstitute;
+using PizzaItaliano.Services.Releases.Application;
 using PizzaItaliano.Services.Releases.Application.Commands;
 using PizzaItaliano.Services.Releases.Application.Commands.Handlers;
 using PizzaItaliano.Services.Releases.Application.Exceptions;
@@ -61,13 +62,15 @@ namespace PizzaItaliano.Services.Releases.Tests.Unit.Application
         private readonly IReleaseRepository _releaseRepository;
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
+        private readonly IAppContext _appContext;
 
         public AddReleaseHandlerTests()
         {
             _releaseRepository = Substitute.For<IReleaseRepository>();
             _messageBroker = Substitute.For<IMessageBroker>();
             _eventMapper = Substitute.For<IEventMapper>();
-            _handler = new AddReleaseHandler(_releaseRepository, _messageBroker, _eventMapper);
+            _appContext = Substitute.For<IAppContext>();
+            _handler = new AddReleaseHandler(_releaseRepository, _messageBroker, _eventMapper, _appContext);
         }
 
         #endregion

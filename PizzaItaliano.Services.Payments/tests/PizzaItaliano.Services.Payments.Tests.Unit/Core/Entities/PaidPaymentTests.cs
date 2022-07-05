@@ -22,7 +22,8 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Core.Entities
             var orderId = Guid.NewGuid();
             var status = PaymentStatus.Unpaid;
             var statusExpected = PaymentStatus.Paid;
-            var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, status);
+            var userId = Guid.NewGuid();
+            var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, status, userId);
 
             // Act
             payment.MarkAsPaid();
@@ -43,7 +44,8 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Core.Entities
             var orderId = Guid.NewGuid();
             var status = PaymentStatus.Paid;
             var statusExpected = PaymentStatus.Paid;
-            var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, status);
+            var userId = Guid.NewGuid();
+            var payment = new Payment(id, number, cost, orderId, DateTime.Now, DateTime.Now, status, userId);
 
             // Act
             payment.MarkAsPaid();

@@ -30,7 +30,8 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
             var paymentNumber = "PAY/2021/10/31/1";
             var cost = decimal.One;
             var status = PaymentStatus.Unpaid;
-            var payment = new Payment(paymentId, paymentNumber, cost, orderId, DateTime.Now, DateTime.Now, status);
+            var userId = Guid.NewGuid();
+            var payment = new Payment(paymentId, paymentNumber, cost, orderId, DateTime.Now, DateTime.Now, status, userId);
             _paymentRepository.GetAsync(paymentId).Returns(payment);
 
             // Act
@@ -81,7 +82,8 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
             var paymentNumber = "PAY/2021/10/31/1";
             var cost = decimal.One;
             var status = PaymentStatus.Paid;
-            var payment = new Payment(paymentId, paymentNumber, cost, orderId, DateTime.Now, DateTime.Now, status);
+            var userId = Guid.NewGuid();
+            var payment = new Payment(paymentId, paymentNumber, cost, orderId, DateTime.Now, DateTime.Now, status, userId);
             _paymentRepository.GetAsync(paymentId).Returns(payment);
 
             // Act
