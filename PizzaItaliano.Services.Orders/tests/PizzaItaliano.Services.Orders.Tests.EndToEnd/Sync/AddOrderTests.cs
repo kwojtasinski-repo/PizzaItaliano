@@ -40,6 +40,7 @@ namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
         {
             var orderId = Guid.NewGuid();
             var command = new AddOrder(orderId);
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             var response = await Act(command);
 
@@ -54,6 +55,7 @@ namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
         {
             var orderId = Guid.NewGuid();
             var command = new AddOrder(orderId);
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             await Act(command);
             var document = await _mongoDbFixture.GetAsync(command.OrderId);
@@ -67,6 +69,7 @@ namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
         {
             var orderId = Guid.NewGuid();
             var command = new AddOrder(orderId);
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             await Act(command);
             var response = await Act(command);
