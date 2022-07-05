@@ -1,17 +1,15 @@
-﻿using Convey.Persistence.MongoDB;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Driver;
 using PizzaItaliano.Services.Orders.API;
 using PizzaItaliano.Services.Orders.Application;
 using PizzaItaliano.Services.Orders.Infrastructure.Contexts;
+using PizzaItaliano.Services.Orders.Tests.Shared.Factories;
 using System;
 using System.Collections.Generic;
 
 namespace PizzaItaliano.Services.Orders.Tests.Integration.Helpers
 {
-    public class TestAppFactory : WebApplicationFactory<Program>
+    public class TestAppFactory : PizzaItalianoApplicationFactory<Program>
     {
         protected override IWebHostBuilder CreateWebHostBuilder()
         {
@@ -37,20 +35,7 @@ namespace PizzaItaliano.Services.Orders.Tests.Integration.Helpers
                             }
                         });
                     }));
-            return builder.UseEnvironment("tests");
-        }
-
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                var options = Services.GetRequiredService<MongoDbOptions>();
-                var client = new MongoClient(options.ConnectionString);
-                client.DropDatabase(options.Database);
-            }
-
-            base.Dispose(disposing);
+            return builder;
         }
     }
 }
