@@ -27,8 +27,7 @@ namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
         {
             var orderId = Guid.NewGuid();
             var command = new AddOrder(orderId);
-            // TODO: Create method which serialize user as content below:
-            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", "{\"user\": { \"id\": \"5ade56cd-76d4-48a5-804b-f3ba033e136d\", \"isAuthenticated\": \"true\", \"role\": \"admin\", \"claims\": {} }}");
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             var response = await Act(command);
 
