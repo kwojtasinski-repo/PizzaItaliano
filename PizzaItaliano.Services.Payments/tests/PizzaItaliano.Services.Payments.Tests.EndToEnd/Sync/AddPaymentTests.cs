@@ -5,6 +5,7 @@ using PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Payments.Tests.EndToEnd.Helpers;
 using PizzaItaliano.Services.Payments.Tests.Shared;
 using PizzaItaliano.Services.Payments.Tests.Shared.Factories;
+using PizzaItaliano.Services.Payments.Tests.Shared.Fixtures;
 using Shouldly;
 using System;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd
             var orderId = Guid.NewGuid();
             var cost = decimal.One;
             var command = new AddPayment() { PaymentId = paymentId, Cost = cost, OrderId = orderId };
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             var response = await Act(command);
 
@@ -42,6 +44,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd
             var orderId = Guid.NewGuid();
             var cost = decimal.One;
             var command = new AddPayment() { PaymentId = paymentId, Cost = cost, OrderId = orderId };
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             var response = await Act(command);
 
@@ -58,6 +61,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd
             var orderId = Guid.NewGuid();
             var cost = decimal.One;
             var command = new AddPayment() { PaymentId = paymentId, Cost = cost, OrderId = orderId };
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             await Act(command);
             var document = await _mongoDbFixture.GetAsync(command.PaymentId);
@@ -75,6 +79,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd
             var orderId = Guid.Empty;
             var cost = decimal.One;
             var command = new AddPayment() { PaymentId = paymentId, Cost = cost, OrderId = orderId };
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             await Act(command);
             var response = await Act(command);
@@ -96,6 +101,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd
             var orderId = Guid.NewGuid();
             var cost = new decimal(-2424.21);
             var command = new AddPayment() { PaymentId = paymentId, Cost = cost, OrderId = orderId };
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             await Act(command);
             var response = await Act(command);
@@ -118,6 +124,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd
             var orderId = Guid.NewGuid();
             var cost = new decimal(2424.21);
             var command = new AddPayment() { PaymentId = paymentId, Cost = cost, OrderId = orderId };
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             await Act(command);
             var response = await Act(command);
@@ -128,6 +135,28 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd
             response.ShouldNotBeNull();
             response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
             var exception = new PaymentAlreadyExistsException(paymentId);
+            error.Code.ShouldBe(exception.Code);
+            error.Reason.ShouldBe(exception.Message);
+        }
+
+
+        [Fact]
+        public async Task given_header_without_user_id_when_add_payment_should_return_http_status_code_bad_request()
+        {
+            var paymentId = Guid.NewGuid();
+            var orderId = Guid.NewGuid();
+            var cost = decimal.One;
+            var command = new AddPayment() { PaymentId = paymentId, Cost = cost, OrderId = orderId };
+
+            await Act(command);
+            var response = await Act(command);
+
+            var bodyString = await response.Content.ReadAsStringAsync();
+            var error = TestHelper.MapTo<TestHelper.Error>(bodyString);
+
+            response.ShouldNotBeNull();
+            response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+            var exception = new InvalidUserIdException(Guid.Empty);
             error.Code.ShouldBe(exception.Code);
             error.Reason.ShouldBe(exception.Message);
         }
