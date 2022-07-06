@@ -1,10 +1,8 @@
-using PizzaItaliano.Services.Releases.API;
 using PizzaItaliano.Services.Releases.Application.Commands;
 using PizzaItaliano.Services.Releases.Application.Events;
 using PizzaItaliano.Services.Releases.Application.Events.Rejected;
 using PizzaItaliano.Services.Releases.Application.Exceptions;
 using PizzaItaliano.Services.Releases.Infrastructure.Mongo.Documents;
-using PizzaItaliano.Services.Releases.Tests.Shared.Factories;
 using PizzaItaliano.Services.Releases.Tests.Shared.Fixtures;
 using Shouldly;
 using System;
@@ -69,7 +67,7 @@ namespace PizzaItaliano.Services.Releases.Tests.Intgration
         private readonly MongoDbFixture<ReleaseDocument, Guid> _mongoDbFixture;
         private readonly RabbitMqFixture _rabbitMqFixture;
 
-        public AddReleaseTests(PizzaItalianoApplicationFactory<Program> factory)
+        public AddReleaseTests(TestAppFactory factory)
         {
             _rabbitMqFixture = new RabbitMqFixture();
             _mongoDbFixture = new MongoDbFixture<ReleaseDocument, Guid>("releases");

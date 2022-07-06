@@ -1,4 +1,3 @@
-using PizzaItaliano.Services.Payments.API;
 using PizzaItaliano.Services.Payments.Application.Commands;
 using PizzaItaliano.Services.Payments.Application.Events;
 using PizzaItaliano.Services.Payments.Application.Events.Rejected;
@@ -6,7 +5,6 @@ using PizzaItaliano.Services.Payments.Application.Exceptions;
 using PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Payments.Tests.Intgration.Helpers;
 using PizzaItaliano.Services.Payments.Tests.Shared;
-using PizzaItaliano.Services.Payments.Tests.Shared.Factories;
 using PizzaItaliano.Services.Payments.Tests.Shared.Fixtures;
 using Shouldly;
 using System;
@@ -115,7 +113,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration
         private readonly MongoDbFixture<PaymentDocument, Guid> _mongoDbFixture;
         private readonly RabbitMqFixture _rabbitMqFixture;
 
-        public AddPaymentTests(PizzaItalianoApplicationFactory<Program> factory)
+        public AddPaymentTests(TestAppFactory factory)
         {
             _rabbitMqFixture = new RabbitMqFixture();
             _mongoDbFixture = new MongoDbFixture<PaymentDocument, Guid>("payments");
