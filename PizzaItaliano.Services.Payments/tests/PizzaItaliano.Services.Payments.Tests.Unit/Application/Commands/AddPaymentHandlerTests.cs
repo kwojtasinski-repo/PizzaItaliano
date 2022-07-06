@@ -114,6 +114,24 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
             await _messageBroker.Received(1).PublishAsync(Arg.Any<IEnumerable<IEvent>>());
         }
 
+        [Fact]
+        public async Task given_empty_user_id_should_throw_an_exception()
+        {
+            // Arrange
+            var paymentId = Guid.NewGuid();
+            var cost = new decimal(100);
+            var orderId = Guid.NewGuid();
+            var command = new AddPayment() { PaymentId = paymentId, Cost = cost, OrderId = orderId };
+            _appContext.Identity.Id.Returns(Guid.Empty);
+
+            // Act
+            var exception = await Record.ExceptionAsync(() => Act(command));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<InvalidUserIdException>();
+        }
+
         #region Arrange
 
         private readonly AddPaymentHandler _handler;
@@ -121,6 +139,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
         private readonly IAppContext _appContext;
+        private readonly IIdentityContext _identityContext;
 
         public AddPaymentHandlerTests()
         {
@@ -128,6 +147,14 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
             _messageBroker = Substitute.For<IMessageBroker>();
             _eventMapper = Substitute.For<IEventMapper>();
             _appContext = Substitute.For<IAppContext>();
+            _appContext.RequestId.Returns(Guid.NewGuid().ToString("N"));
+            _identityContext = Substitute.For<IIdentityContext>();
+            _identityContext.Id.Returns(Guid.NewGuid());
+            _identityContext.Role.Returns("admin");
+            _identityContext.IsAuthenticated.Returns(true);
+            _identityContext.IsAdmin.Returns(true);
+            _identityContext.Claims.Returns(new Dictionary<string, string>());
+            _appContext.Identity.Returns(_identityContext);
             _handler = new AddPaymentHandler(_paymentRepository, _messageBroker, _eventMapper, _appContext);
         }
 
