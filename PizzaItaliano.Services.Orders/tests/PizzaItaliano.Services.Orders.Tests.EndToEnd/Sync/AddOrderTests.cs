@@ -84,6 +84,25 @@ namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
             error.Reason.ShouldBe(exception.Message);
         }
 
+        [Fact]
+        public async Task given_header_without_user_id_when_add_order_endpoint_should_return_http_status_code_bad_request()
+        {
+            var orderId = Guid.NewGuid();
+            var command = new AddOrder(orderId);
+
+            await Act(command);
+            var response = await Act(command);
+
+            var bodyString = await response.Content.ReadAsStringAsync();
+            var error = TestHelper.MapTo<TestHelper.Error>(bodyString);
+
+            response.ShouldNotBeNull();
+            response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+            var exception = new InvalidUserIdException(Guid.Empty);
+            error.Code.ShouldBe(exception.Code);
+            error.Reason.ShouldBe(exception.Message);
+        }
+
         #region Arrange
 
         private readonly HttpClient _httpClient;
