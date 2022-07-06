@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PizzaItaliano.Services.Orders.Tests.Shared.Fixtures
+namespace PizzaItaliano.Services.Releases.Tests.Shared.Fixtures
 {
     public class UserFixture
     {
