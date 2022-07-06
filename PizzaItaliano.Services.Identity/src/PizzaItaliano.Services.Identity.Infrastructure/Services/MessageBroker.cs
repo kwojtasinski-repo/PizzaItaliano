@@ -54,13 +54,6 @@ namespace PizzaItaliano.Services.Identity.Infrastructure.Services
             var messageProperties = _messagePropertiesAccessor.MessageProperties;
             var originatedMessageId = messageProperties?.MessageId;
             var correlationId = messageProperties?.CorrelationId;
-            var spanContext = messageProperties?.GetSpanContext(_spanContextHeader);
-            if (string.IsNullOrWhiteSpace(spanContext))
-            {
-                spanContext = _tracer.ActiveSpan is null ? string.Empty : _tracer.ActiveSpan.Context.ToString();
-            }
-
-            var headers = messageProperties.GetHeadersToForward();
             var correlationContext = _contextAccessor.CorrelationContext ??
                                      _httpContextAccessor.GetCorrelationContext();
 
@@ -71,17 +64,18 @@ namespace PizzaItaliano.Services.Identity.Infrastructure.Services
                     continue;
                 }
 
+                var type = @event.GetType();
                 var messageId = Guid.NewGuid().ToString("N");
                 _logger.LogTrace($"Publishing integration event: {@event.GetType().Name} [id: '{messageId}'].");
+                
                 if (_outbox.Enabled)
                 {
-                    await _outbox.SendAsync(@event, originatedMessageId, messageId, correlationId, spanContext,
-                        correlationContext, headers);
+                    await _outbox.SendAsync(Convert.ChangeType(@event, type), originatedMessageId, messageId,
+                        correlationId, messageContext: correlationContext); // nie moze serializowac interfejs dlatego konwersja w runtime na klase implementujaca
                     continue;
                 }
 
-                await _busPublisher.PublishAsync(@event, messageId, correlationId, spanContext, correlationContext,
-                    headers);
+                await _busPublisher.PublishAsync(@event, messageId, correlationId, messageContext: correlationContext);
             }
         }
     }

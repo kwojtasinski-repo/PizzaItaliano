@@ -44,9 +44,11 @@ using PizzaItaliano.Services.Identity.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("PizzaItaliano.Services.Identity.Tests.Integration")]
 namespace PizzaItaliano.Services.Identity.Infrastructure
 {
     public static class Extensions
