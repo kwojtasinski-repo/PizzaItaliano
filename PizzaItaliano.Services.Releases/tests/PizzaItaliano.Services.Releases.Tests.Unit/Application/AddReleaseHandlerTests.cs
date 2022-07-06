@@ -56,6 +56,24 @@ namespace PizzaItaliano.Services.Releases.Tests.Unit.Application
             exception.ShouldBeOfType<ReleaseAlreadyExistsException>();
         }
 
+        [Fact]
+        public async Task given_empty_user_id_should_throw_an_exception()
+        {
+            // Arrange
+            var releaseId = Guid.NewGuid();
+            var orderId = Guid.NewGuid();
+            var orderProductId = Guid.NewGuid();
+            var command = new AddRelease() { OrderId = orderId, OrderProductId = orderProductId, ReleaseId = releaseId };
+            _identityContext.Id.Returns(Guid.Empty);
+
+            // Act
+            var exception = await Record.ExceptionAsync(() => Act(command));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<InvalidUserIdException>();
+        }
+
         #region Arrange
 
         private readonly AddReleaseHandler _handler;
@@ -63,6 +81,7 @@ namespace PizzaItaliano.Services.Releases.Tests.Unit.Application
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
         private readonly IAppContext _appContext;
+        private readonly IIdentityContext _identityContext;
 
         public AddReleaseHandlerTests()
         {
@@ -70,6 +89,14 @@ namespace PizzaItaliano.Services.Releases.Tests.Unit.Application
             _messageBroker = Substitute.For<IMessageBroker>();
             _eventMapper = Substitute.For<IEventMapper>();
             _appContext = Substitute.For<IAppContext>();
+            _appContext.RequestId.Returns(Guid.NewGuid().ToString("N"));
+            _identityContext = Substitute.For<IIdentityContext>();
+            _identityContext.Id.Returns(Guid.NewGuid());
+            _identityContext.Role.Returns("admin");
+            _identityContext.IsAuthenticated.Returns(true);
+            _identityContext.IsAdmin.Returns(true);
+            _identityContext.Claims.Returns(new Dictionary<string, string>());
+            _appContext.Identity.Returns(_identityContext);
             _handler = new AddReleaseHandler(_releaseRepository, _messageBroker, _eventMapper, _appContext);
         }
 

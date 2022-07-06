@@ -73,6 +73,22 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Commands.Orders
             exception.ShouldBeOfType<OrderAlreadyExistsException>();
         }
 
+        [Fact]
+        public async Task given_empty_user_id_should_throw_an_exception()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var command = new AddOrder(id);
+            _identityContext.Id.Returns(Guid.Empty);
+
+            // Act
+            var exception = await Record.ExceptionAsync(() => Act(command));
+
+            // Assert
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<InvalidUserIdException>();
+        }
+
         #region Arrange
 
         private readonly AddOrderHandler _handler;

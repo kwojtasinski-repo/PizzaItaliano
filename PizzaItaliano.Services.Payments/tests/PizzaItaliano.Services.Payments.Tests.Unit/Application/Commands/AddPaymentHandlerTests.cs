@@ -122,7 +122,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
             var cost = new decimal(100);
             var orderId = Guid.NewGuid();
             var command = new AddPayment() { PaymentId = paymentId, Cost = cost, OrderId = orderId };
-            _appContext.Identity.Id.Returns(Guid.Empty);
+            _identityContext.Id.Returns(Guid.Empty);
 
             // Act
             var exception = await Record.ExceptionAsync(() => Act(command));
