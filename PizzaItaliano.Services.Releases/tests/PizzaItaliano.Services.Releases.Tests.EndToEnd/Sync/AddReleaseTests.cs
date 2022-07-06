@@ -29,6 +29,7 @@ namespace PizzaItaliano.Services.Releases.Tests.EndToEnd
             var orderId = Guid.NewGuid();
             var orderProductId = Guid.NewGuid();
             var command = new AddRelease() { ReleaseId = releaseId, OrderId = orderId, OrderProductId = orderProductId };
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             var response = await Act(command);
 
@@ -43,6 +44,7 @@ namespace PizzaItaliano.Services.Releases.Tests.EndToEnd
             var orderId = Guid.NewGuid();
             var orderProductId = Guid.NewGuid();
             var command = new AddRelease() { ReleaseId = releaseId, OrderId = orderId, OrderProductId = orderProductId };
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             var response = await Act(command);
 
@@ -59,6 +61,7 @@ namespace PizzaItaliano.Services.Releases.Tests.EndToEnd
             var orderId = Guid.NewGuid();
             var orderProductId = Guid.NewGuid();
             var command = new AddRelease() { ReleaseId = releaseId, OrderId = orderId, OrderProductId = orderProductId };
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             await Act(command);
             var document = await _mongoDbFixture.GetAsync(command.ReleaseId);
@@ -77,6 +80,7 @@ namespace PizzaItaliano.Services.Releases.Tests.EndToEnd
             var orderProductId = Guid.NewGuid();
             await _mongoDbFixture.InsertAsync(new ReleaseDocument() { Id = releaseId, OrderId = orderId, OrderProductId = orderProductId, Date = DateTime.Now });
             var command = new AddRelease() { ReleaseId = releaseId, OrderId = orderId, OrderProductId = orderProductId };
+            _httpClient.DefaultRequestHeaders.Add("Correlation-Context", CorrelationContextFixture.CreateSimpleContextAndReturnAsJson(UserFixture.CreateSampleUser()));
 
             var response = await Act(command);
 
@@ -86,6 +90,28 @@ namespace PizzaItaliano.Services.Releases.Tests.EndToEnd
             response.ShouldNotBeNull();
             response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
             var exception = new ReleaseAlreadyExistsException(releaseId);
+            error.Code.ShouldBe(exception.Code);
+            error.Reason.ShouldBe(exception.Message);
+        }
+
+
+        [Fact]
+        public async Task given_header_without_user_id_when_add_release_should_return_http_status_code_bad_request()
+        {
+            var releaseId = Guid.NewGuid();
+            var orderId = Guid.NewGuid();
+            var orderProductId = Guid.NewGuid();
+            var command = new AddRelease() { ReleaseId = releaseId, OrderId = orderId, OrderProductId = orderProductId };
+
+            await Act(command);
+            var response = await Act(command);
+
+            var bodyString = await response.Content.ReadAsStringAsync();
+            var error = MapTo<Error>(bodyString);
+
+            response.ShouldNotBeNull();
+            response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+            var exception = new InvalidUserIdException(Guid.Empty);
             error.Code.ShouldBe(exception.Code);
             error.Reason.ShouldBe(exception.Message);
         }
