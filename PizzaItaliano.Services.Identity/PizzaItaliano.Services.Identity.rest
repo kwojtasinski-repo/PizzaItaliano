@@ -1,5 +1,5 @@
 @url = http://localhost:5006
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5YjhlMjZiODg1MzY0MGIwOWU4YWIzOTZiMjVjMzY2NSIsInVuaXF1ZV9uYW1lIjoiOWI4ZTI2Yjg4NTM2NDBiMDllOGFiMzk2YjI1YzM2NjUiLCJqdGkiOiJkMWFhYzFkMC0xY2U4LTQ4MTgtYTU3OC05ZWYzMmIxNzdjODYiLCJpYXQiOiIxNjU2NzA3NTgwIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidXNlciIsIm5iZiI6MTY1NjcwNzU4MCwiZXhwIjoxNjU2NzExMTgwLCJpc3MiOiJwaXp6YS1pdGFsaWFubyJ9.moqjKIrdo1ZsTPgcgMSSJvwsDpshpO23j_pIuzRMskU
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YWRlNTZjZDc2ZDQ0OGE1ODA0YmYzYmEwMzNlMTM2ZCIsInVuaXF1ZV9uYW1lIjoiNWFkZTU2Y2Q3NmQ0NDhhNTgwNGJmM2JhMDMzZTEzNmQiLCJqdGkiOiJlYWI2NjRiZC0wOTk3LTRjYWMtOTQ5Yy1jMDZjZDFlMDg5ODAiLCJpYXQiOiIxNjU3MjI2MjkyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2NTcyMjYyOTIsImV4cCI6MTY1NzIyOTg5MiwiaXNzIjoicGl6emEtaXRhbGlhbm8ifQ.u09JzSosmoBQ0vr1prbDfkAibXMwE2BgcwDA8tEgX98
 @refreshToken = secret
 @userId = 9b8e26b8-8536-40b0-9e8a-b396b25c3665
 
@@ -20,7 +20,7 @@ POST {{url}}/sign-in
 Content-Type: application/json
 
 {
-  "email": "pizza-italiano-user1@mail.com",
+  "email": "pizza-italiano-user3@mail.com",
   "password": "secretAbcas12"
 }
 
@@ -53,5 +53,5 @@ POST {{url}}/access-tokens/revoke
 Content-Type: application/json
 
 {
-  "accessToken": "{{accessToken}}",
+  "accessToken": "{{accessToken}}"
 }

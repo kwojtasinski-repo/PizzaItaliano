@@ -85,7 +85,6 @@ namespace PizzaItaliano.Services.Identity
                             .Post<RevokeAccessToken>("access-tokens/revoke", async (cmd, ctx) =>
                             {
                                 await ctx.RequestServices.GetService<IAccessTokenService>().DeactivateAsync(cmd.AccessToken);
-                                ctx.Response.StatusCode = 204;
                             })
                             .Post<UseRefreshToken>("refresh-tokens/use", afterDispatch: async (cmd, ctx) =>
                             {
@@ -95,7 +94,6 @@ namespace PizzaItaliano.Services.Identity
                             .Post<RevokeRefreshToken>("refresh-tokens/revoke", afterDispatch: async (cmd, ctx) =>
                             {
                                 await ctx.RequestServices.GetService<IRefreshTokenService>().RevokeAsync(cmd.RefreshToken);
-                                ctx.Response.StatusCode = 204;
                             })
                         ))
                     .UseLogging()

@@ -25,7 +25,7 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Sync
         public async Task sign_up_endpoint_should_return_http_status_code_created()
         {
             var userId = Guid.NewGuid();
-            var command = new SignUp(userId, "emailabc@email.com", "PAsW0RDd13!2", "user", Enumerable.Empty<string>());
+            var command = new SignUp(userId, "emailabafbc@email.com", "PAsW0RDd13!2", "user", Enumerable.Empty<string>());
 
             var response = await Act(command);
 
@@ -84,7 +84,7 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Sync
         public async Task sign_up_endpoint_with_invalid_email_should_return_http_status_code_bad_request()
         {
             var userId = Guid.NewGuid();
-            var command = new SignUp(Guid.Empty, "email", "PAsW0RDd13!2", "user", Enumerable.Empty<string>());
+            var command = new SignUp(userId, "email", "PAsW0RDd13!2", "user", Enumerable.Empty<string>());
 
             await Act(command);
             var response = await Act(command);
