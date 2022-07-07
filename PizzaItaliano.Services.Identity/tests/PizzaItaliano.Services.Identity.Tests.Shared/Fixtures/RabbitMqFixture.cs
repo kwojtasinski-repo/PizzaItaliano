@@ -6,6 +6,7 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,8 +23,7 @@ namespace PizzaItaliano.Services.Identity.Tests.Shared.Fixtures
             var options = OptionsHelper.GetOptions<RabbitMqOptions>("rabbitMq");
             var connectionFactory = new ConnectionFactory
             {
-                HostName = options.HostNames?.FirstOrDefault(
-                    ),
+                HostName = options.HostNames?.FirstOrDefault(),
                 VirtualHost = options.VirtualHost,
                 Port = options.Port,
                 UserName = options.Username,

@@ -14,7 +14,6 @@ using Convey.MessageBrokers.Outbox.Mongo;
 using Convey.MessageBrokers.RabbitMQ;
 using Convey.Metrics.AppMetrics;
 using Convey.Persistence.MongoDB;
-using Convey.Persistence.Redis;
 using Convey.Security;
 using Convey.Tracing.Jaeger;
 using Convey.Tracing.Jaeger.RabbitMQ;
@@ -80,7 +79,6 @@ namespace PizzaItaliano.Services.Identity.Infrastructure
             conveyBuilder.AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin());
             conveyBuilder.AddMessageOutbox(o => o.AddMongo());
             conveyBuilder.AddMongo();
-            conveyBuilder.AddRedis();
             conveyBuilder.AddMetrics();
             conveyBuilder.AddJaeger();
             conveyBuilder.AddMongoRepository<RefreshTokenDocument, Guid>("refreshTokens");
@@ -102,7 +100,12 @@ namespace PizzaItaliano.Services.Identity.Infrastructure
             app.UsePublicContracts<ContractAttribute>();
             app.UseMetrics();
             app.UseAuthentication();
-            app.UseRabbitMq().SubscribeCommand<SignUp>();
+            app.UseRabbitMq()
+                .SubscribeCommand<SignUp>()
+                .SubscribeCommand<SignIn>()
+                .SubscribeCommand<RevokeAccessToken>()
+                .SubscribeCommand<UseRefreshToken>()
+                .SubscribeCommand<RevokeRefreshToken>();
 
             return app;
         }

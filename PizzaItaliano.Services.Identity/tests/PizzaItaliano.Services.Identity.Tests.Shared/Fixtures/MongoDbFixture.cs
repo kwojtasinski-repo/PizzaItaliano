@@ -3,6 +3,8 @@ using Convey.Types;
 using MongoDB.Driver;
 using PizzaItaliano.Services.Identity.Tests.Shared.Helpers;
 using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Identity.Tests.Shared.Fixtures
@@ -37,6 +39,21 @@ namespace PizzaItaliano.Services.Identity.Tests.Shared.Fixtures
 
         public Task<TEntity> GetAsync(TKey id)
             => _collection.Find(d => d.Id.Equals(id)).SingleOrDefaultAsync();
+
+        public Task<TEntity> GetByField(string fieldName, object value)
+        {
+            var type = typeof(TEntity);
+            var properties = type.GetProperties();
+            var property = properties.Where(p => p.Name == fieldName).SingleOrDefault();
+            
+            if (property != null)
+            {
+                throw new InvalidOperationException($"Field with name '{fieldName}' doesnt exists");
+            }
+
+            var entity = _collection.Find(e => property.GetValue(e).Equals(value)).SingleOrDefaultAsync();
+            return entity;
+        }
 
         public async Task GetAsync(TKey expectedId, TaskCompletionSource<TEntity> receivedTask)
         {
