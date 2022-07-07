@@ -48,6 +48,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Identity.Tests.Integration")]
+[assembly: InternalsVisibleTo("PizzaItaliano.Services.Identity.Tests.EndToEnd")]
 namespace PizzaItaliano.Services.Identity.Infrastructure
 {
     public static class Extensions
