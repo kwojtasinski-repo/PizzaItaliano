@@ -123,7 +123,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Iden
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Identity.Tests.Integration", "..\PizzaItaliano.Services.Identity\tests\PizzaItaliano.Services.Identity.Tests.Integration\PizzaItaliano.Services.Identity.Tests.Integration.csproj", "{BA8F93D8-70D2-4F6E-BE81-3EA8D14B93D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Identity.Tests.Shared", "..\PizzaItaliano.Services.Identity\tests\PizzaItaliano.Services.Identity.Tests.Shared\PizzaItaliano.Services.Identity.Tests.Shared.csproj", "{706AB343-C56C-40E2-9FFF-DE7DAC27B828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaItaliano.Services.Identity.Tests.Shared", "..\PizzaItaliano.Services.Identity\tests\PizzaItaliano.Services.Identity.Tests.Shared\PizzaItaliano.Services.Identity.Tests.Shared.csproj", "{706AB343-C56C-40E2-9FFF-DE7DAC27B828}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaItaliano.Services.Identity.Tests.EndToEnd", "..\PizzaItaliano.Services.Identity\tests\PizzaItaliano.Services.Identity.Tests.EndToEnd\PizzaItaliano.Services.Identity.Tests.EndToEnd.csproj", "{21E27C2C-65D9-43BB-B36F-D408A445A3A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -299,6 +301,10 @@ Global
 		{706AB343-C56C-40E2-9FFF-DE7DAC27B828}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{706AB343-C56C-40E2-9FFF-DE7DAC27B828}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{706AB343-C56C-40E2-9FFF-DE7DAC27B828}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21E27C2C-65D9-43BB-B36F-D408A445A3A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21E27C2C-65D9-43BB-B36F-D408A445A3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21E27C2C-65D9-43BB-B36F-D408A445A3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21E27C2C-65D9-43BB-B36F-D408A445A3A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -358,6 +364,7 @@ Global
 		{472ADED8-5BF0-4269-AEB8-53C6452EEF58} = {C4481DDB-9081-40BA-887F-1988367E88A5}
 		{BA8F93D8-70D2-4F6E-BE81-3EA8D14B93D1} = {C4481DDB-9081-40BA-887F-1988367E88A5}
 		{706AB343-C56C-40E2-9FFF-DE7DAC27B828} = {C4481DDB-9081-40BA-887F-1988367E88A5}
+		{21E27C2C-65D9-43BB-B36F-D408A445A3A0} = {C4481DDB-9081-40BA-887F-1988367E88A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30FFB666-5D1E-415D-8363-F77C72FCA839}
