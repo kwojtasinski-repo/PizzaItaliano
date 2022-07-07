@@ -40,20 +40,8 @@ namespace PizzaItaliano.Services.Identity.Tests.Shared.Fixtures
         public Task<TEntity> GetAsync(TKey id)
             => _collection.Find(d => d.Id.Equals(id)).SingleOrDefaultAsync();
 
-        public Task<TEntity> GetByField(string fieldName, object value)
-        {
-            var type = typeof(TEntity);
-            var properties = type.GetProperties();
-            var property = properties.Where(p => p.Name == fieldName).SingleOrDefault();
-            
-            if (property != null)
-            {
-                throw new InvalidOperationException($"Field with name '{fieldName}' doesnt exists");
-            }
-
-            var entity = _collection.Find(e => property.GetValue(e).Equals(value)).SingleOrDefaultAsync();
-            return entity;
-        }
+        public Task<TEntity> GetByExpression(Expression<Func<TEntity,bool>> filterDefinition)
+            => _collection.Find(filterDefinition).SingleOrDefaultAsync();
 
         public async Task GetAsync(TKey expectedId, TaskCompletionSource<TEntity> receivedTask)
         {

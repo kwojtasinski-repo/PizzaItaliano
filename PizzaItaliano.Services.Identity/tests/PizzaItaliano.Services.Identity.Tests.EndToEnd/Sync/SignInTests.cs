@@ -3,10 +3,8 @@ using PizzaItaliano.Services.Identity.Application.Commands;
 using PizzaItaliano.Services.Identity.Application.DTO;
 using PizzaItaliano.Services.Identity.Application.Exceptions;
 using PizzaItaliano.Services.Identity.Application.Services;
-using PizzaItaliano.Services.Identity.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Identity.Tests.EndToEnd.Helpers;
 using PizzaItaliano.Services.Identity.Tests.Shared.Factories;
-using PizzaItaliano.Services.Identity.Tests.Shared.Fixtures;
 using Shouldly;
 using System;
 using System.Linq;
@@ -80,12 +78,10 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Sync
         #region Arrange
 
         private readonly HttpClient _httpClient;
-        private readonly MongoDbFixture<UserDocument, Guid> _mongoDbFixture;
         private readonly IIdentityService _identityService;
 
         public SignInTests(PizzaItalianoApplicationFactory<Program> factory)
         {
-            _mongoDbFixture = new MongoDbFixture<UserDocument, Guid>("users");
             _httpClient = factory.CreateClient();
             factory.Server.AllowSynchronousIO = true;
             _identityService = factory.Services.GetRequiredService<IIdentityService>();

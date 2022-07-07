@@ -13,9 +13,9 @@ namespace PizzaItaliano.Services.Identity.Application.Commands
         }
     }
 
-    internal class RevokeRefreshTokenHandler : ICommandHandler<SignIn>
+    internal class RevokeRefreshTokenHandler : ICommandHandler<RevokeRefreshToken>
     {
-        public Task HandleAsync(SignIn command)
+        public Task HandleAsync(RevokeRefreshToken command)
         {
             return Task.CompletedTask;
         }
