@@ -101,11 +101,7 @@ namespace PizzaItaliano.Services.Identity.Infrastructure
             app.UseMetrics();
             app.UseAuthentication();
             app.UseRabbitMq()
-                .SubscribeCommand<SignUp>()
-                .SubscribeCommand<SignIn>()
-                .SubscribeCommand<RevokeAccessToken>()
-                .SubscribeCommand<UseRefreshToken>()
-                .SubscribeCommand<RevokeRefreshToken>();
+                .SubscribeCommand<SignUp>();
 
             return app;
         }
