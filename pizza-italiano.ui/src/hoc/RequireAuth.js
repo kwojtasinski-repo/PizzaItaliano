@@ -12,7 +12,7 @@ const RequireAuth = ({ children }) => {
     const currentDate = new Date();
 
     if (auth) {
-        const tokenExpiresDate = new Date(auth.Expires);
+        const tokenExpiresDate = new Date(auth.expires * 1000); // missing ms in date so multiply by 1000
         
         if (tokenExpiresDate < currentDate) {
             setAuth();
