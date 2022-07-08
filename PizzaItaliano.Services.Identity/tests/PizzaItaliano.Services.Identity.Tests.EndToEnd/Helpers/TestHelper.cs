@@ -45,6 +45,16 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Helpers
             return mongoDbFixture.InsertAsync(document);
         }
 
+        public static async Task<RefreshTokenDocument> AddTestRefreshToken(Guid userId, string token, MongoDbFixture<RefreshTokenDocument, Guid> mongoDbFixture)
+        {
+            var created = DateTime.Now.AddSeconds(-50.5);
+            var document = new RefreshTokenDocument { Id = Guid.NewGuid(), Token = token, UserId = userId, CreatedAt = created, RevokedAt = null };
+
+            await mongoDbFixture.InsertAsync(document);
+
+            return document;
+        }
+
         internal sealed class Error
         {
             public string Code { get; set; }

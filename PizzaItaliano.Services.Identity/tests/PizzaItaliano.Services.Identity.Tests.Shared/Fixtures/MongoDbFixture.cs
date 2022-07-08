@@ -81,5 +81,8 @@ namespace PizzaItaliano.Services.Identity.Tests.Shared.Fixtures
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        public Task UpdateAsync(TEntity entity)
+            => _collection.ReplaceOneAsync(e => e.Id.Equals(entity.Id), entity);
     }
 }
