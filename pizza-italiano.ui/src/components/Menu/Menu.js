@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { getItemsInCartCount } from "../Cart/Cart";
 import Link from "../Link/Link";
+import { info } from "../notifications";
 import style from "./Menu.module.css"
 
 function Menu() {
@@ -13,6 +14,12 @@ function Menu() {
         if (event.detail === 1 && menuOpened > 0) {
             setMenuOpened(false);
         }
+    }
+
+    const logout = (event) => {
+        event.preventDefault();
+        setAuth();
+        info("Logout", true);
     }
 
     useEffect(() => {
@@ -36,7 +43,7 @@ function Menu() {
                 : null}
                 {auth ? 
                     <li className={style.menuItem}>
-                        <Link to='/' className={`${style.menuItem}`} onClick={() => setAuth(null)}>
+                        <Link to='/' className={`${style.menuItem}`} onClick={logout}>
                             Logout
                         </Link>
                     </li>
