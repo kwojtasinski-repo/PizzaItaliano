@@ -2,7 +2,7 @@ import axios from 'axios';
 
 function getToken() {
     const auth = JSON.parse(window.localStorage.getItem('token-data'));
-    return auth ? auth.token : null;
+    return auth ? auth.accessToken : null;
 }
 
 const instance = axios.create({

@@ -5,16 +5,18 @@ import { deleteItemFromCart, showItemsInCart } from "../../components/Cart/Cart"
 import LoadingButton from "../../components/UI/LoadingButton/LoadingButton";
 import styles from "./Cart.module.css";
 import { createGuid } from "../../helpers/createGuid";
+import { warning } from "../../components/notifications";
 
 function Cart(props) {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const disabledButton = items.length > 0 ? false : true;
-    const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const removeItemHandler = (id) => {
-        deleteItemFromCart(id);
+    const removeItemHandler = (item) => {
+        deleteItemFromCart(item.id);
+        warning(`Removed item '${item.name}'`, true);
+        setTimeout({}, 1000);
         navigate(0); // refresh page
     }
 
@@ -24,6 +26,7 @@ function Cart(props) {
 
     const summaryHandler = async () => {
         debugger;
+        setLoading(true);
         const orderId = createGuid();
         await axios.post('/orders', { orderId });
 
@@ -36,6 +39,7 @@ function Cart(props) {
             });
         }
 
+        setLoading(false);
         navigate(`/orders/${orderId}`);
     }
 
@@ -44,9 +48,6 @@ function Cart(props) {
             <div className={styles.title} >
                 Cart
             </div>
-            {error ? (
-                <div className="alert alert-danger">{error}</div>
-            ) : null}
             <table className="table">
                 <thead>
                     <tr>
@@ -65,7 +66,7 @@ function Cart(props) {
                         <td>{i.quantity}</td>
                         <td>
                             <button className="btn btn-danger ms-2"
-                                    onClick={() => removeItemHandler(i.id)} >
+                                    onClick={() => removeItemHandler(i)} >
                                     Usuń
                             </button>
                         </td>

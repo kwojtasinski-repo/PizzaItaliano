@@ -18,6 +18,10 @@ import AuthContext from './context/AuthContext';
 import { initialState, reducer } from './reducer';
 import ReducerContext from './context/ReducerContext';
 import AddOrderProduct from "./pages/Order/AddOrderProduct/AddOrderProduct";
+import RequireAuth from "./hoc/RequireAuth";
+import Register from "./pages/Auth/Register/Register";
+import Login from "./pages/Auth/Login/Login";
+import MyOrders from "./pages/MyOrders/MyOrders";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -33,15 +37,18 @@ function App() {
   const content = (
     <Suspense fallback={<p>Loading...</p>} >
       <Routes>
-          <Route path='/products/details/:id' element = { <ViewProduct /> } />
-          <Route path='/products/edit/:id' element = { <EditProduct /> } />
-          <Route path='/products/add' element = { <AddProduct /> } />
+          <Route path='/products/details/:id' element = { <RequireAuth> <ViewProduct /> </RequireAuth> } />
+          <Route path='/products/edit/:id' element = { <RequireAuth> <EditProduct /> </RequireAuth> } />
+          <Route path='/products/add' element = {<RequireAuth> <AddProduct /> </RequireAuth>} />
           <Route path='/releases/:id' element = { <Releases /> } />
           <Route path='/payments' element = { <Payments /> } />
+          <Route path='/orders/my' element = { <RequireAuth> <MyOrders/> </RequireAuth> } />
           <Route path='/orders/:id' element = { <Order /> } >
             <Route path='add-product' element = { <AddOrderProduct /> }/>
           </Route>
-          <Route path='/cart' element = { <Cart /> } />
+          <Route path='/cart' element = { <RequireAuth> <Cart /> </RequireAuth> } />
+          <Route path='/login' element = {<Login />} />
+          <Route path='/register' element = {<Register />} />
           <Route path="/" end element = {<Home />} />
           <Route path="*" element = {<NotFound/>} />
       </Routes>

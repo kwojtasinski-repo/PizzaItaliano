@@ -27,11 +27,13 @@ function Menu() {
                         Home
                     </Link>
                 </li>
-                <li className={style.menuItem}>
-                    <Link to='/' className={`${style.menuItem}`}>
-                        Profile
-                    </Link>
-                </li>
+                {auth ?
+                    <li className={style.menuItem}>
+                        <Link to='/' className={`${style.menuItem}`}>
+                            Profile
+                        </Link>
+                    </li>
+                : null}
                 {auth ? 
                     <li className={style.menuItem}>
                         <Link to='/' className={`${style.menuItem}`} onClick={() => setAuth(null)}>
@@ -40,28 +42,32 @@ function Menu() {
                     </li>
                     : <>
                         <li className={style.menuItem}>
-                            <Link to='/' className={`${style.menuItem}`}>
+                            <Link to='/register' className={`${style.menuItem}`}>
                                 Register
                             </Link>
                         </li>
                         <li className={style.menuItem}>
-                            <Link to='/' className={`${style.menuItem}`} onClick={() => setAuth({id:1,role:"user"})}>
+                            <Link to='/login' className={`${style.menuItem}`}>
                                 Login
                             </Link>
                         </li>
                     </>
                 }
-                <li className={style.menuItem}>
-                        <span className={`badge badge-light ${style.itemCartCount}`} style={{ color : "#206199"}}>{itemCount}</span>
-                        <Link to='/cart' className={`${style.menuItem} ${style.cartPosition}`}>
-                            Cart
-                        </Link>
-                </li>
-                <li className={style.menuItem}>
-                    <Link to='/' className={`${style.menuItem}`}>
-                        My Orders
-                    </Link>
-                </li>
+                {auth ? 
+                    <>
+                        <li className={style.menuItem}>
+                                <span className={`badge badge-light ${style.itemCartCount}`} style={{ color : "#206199"}}>{itemCount}</span>
+                                <Link to='/cart' className={`${style.menuItem} ${style.cartPosition}`}>
+                                    Cart
+                                </Link>
+                        </li>
+                        <li className={style.menuItem}>
+                            <Link to='/orders/my' className={`${style.menuItem}`}>
+                                My Orders
+                            </Link>
+                        </li>
+                    </> 
+                : null}
                 {auth && auth.role !== "user" ?
                     <>
                         <li className={style.menuItem}>

@@ -1,10 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import { addItemToCart } from '../../Cart/Cart';
+import { warning } from '../../notifications';
 import styles from './Item.module.css'
 
 function Item(props) {
     const onClickHandler = (item) => {
         addItemToCart(item);
+        warning(`Added item '${item.name}'`, true);
+        setTimeout({}, 1000);
         window.location.reload();
     }
 
