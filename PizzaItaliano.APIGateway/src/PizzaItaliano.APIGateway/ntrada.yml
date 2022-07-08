@@ -133,16 +133,22 @@ modules:
         method: POST
         use: downstream
         downstream: products-service/products
+        auth: true
+        role: admin
 
       - upstream: /
         method: PUT
         use: downstream
         downstream: products-service/products
+        auth: true
+        role: admin
 
       - upstream: /{productId}
         method: DELETE
         use: downstream
         downstream: products-service/products/{productId}
+        auth: true
+        role: admin
 
     services:
       products-service:
@@ -161,36 +167,44 @@ modules:
         method: GET
         use: downstream
         downstream: orders-service/orders
+        auth: true
+        role: admin
 
       - upstream: /{orderId}
         method: GET
         use: downstream
         downstream: orders-service/orders/{orderId}
+        auth: true
 
       - upstream: /my
         method: GET
         use: downstream
         downstream: orders-service/orders/my
+        auth: true
 
       - upstream: /
         method: POST
         use: downstream
         downstream: orders-service/orders
+        auth: true
 
       - upstream: /order-product
         method: POST
         use: downstream
         downstream: orders-service/orders/order-product
+        auth: true
 
       - upstream: /
         method: PUT
         use: downstream
         downstream: orders-service/orders
+        auth: true
 
       - upstream: /order-product
         method: DELETE
         use: downstream
         downstream: orders-service/orders/order-product
+        auth: true
 
     services:
       orders-service:
@@ -209,16 +223,20 @@ modules:
         method: GET
         use: downstream
         downstream: releases-service/releases
+        auth: true
+        role: admin
 
       - upstream: /{releaseId}
         method: GET
         use: downstream
         downstream: releases-service/releases/{releaseId}
+        auth: true
 
       - upstream: /
         method: POST
         use: downstream
         downstream: releases-service/releases
+        auth: true
 
     services:
       releases-service:
@@ -237,11 +255,14 @@ modules:
         method: GET
         use: downstream
         downstream: payments-service/payments
+        auth: true
+        role: admin
 
       - upstream: /{paymentId}
         method: GET
         use: downstream
         downstream: payments-service/payments/{paymentId}
+        auth: true
         
       - upstream: /{paymentStatus}
         method: GET
@@ -249,6 +270,8 @@ modules:
         downstream: payments-service/payments
         bind:
           - paymentStatus: {paymentStatus}
+        auth: true
+        role: admin
       
       - upstream: /from/{dateFrom}/to/{dateTo}
         method: GET
@@ -257,6 +280,8 @@ modules:
         bind:
           - dateFrom: {dateFrom}
           - dateTo: {dateTo}
+        auth: true
+        role: admin
           
       - upstream: /from/{dateFrom}/to/{dateTo}/{paymentStatus}
         method: GET
@@ -266,16 +291,20 @@ modules:
           - dateFrom: {dateFrom}
           - dateTo: {dateTo}    
           - paymentStatus: {paymentStatus}
+        auth: true
+        role: admin
 
       - upstream: /
         method: POST
         use: downstream
         downstream: payments-service/payments
+        auth: true
 
       - upstream: /
         method: PUT
         use: downstream
         downstream: payments-service/payments
+        auth: true
 
     services:
       payments-service:
