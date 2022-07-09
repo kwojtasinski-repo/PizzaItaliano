@@ -165,6 +165,8 @@ modules:
         config:
           exchange: product
           routing_key: add_product
+        auth: true
+        role: admin
 
       - upstream: /
         method: PUT
@@ -172,6 +174,8 @@ modules:
         config:
           exchange: product
           routing_key: modify_product
+        auth: true
+        role: admin
 
       - upstream: /{productId}
         method: DELETE
@@ -181,6 +185,8 @@ modules:
           routing_key: delete_product
         bind:
           - productId: {productId}
+        auth: true
+        role: admin
 
     services:
       products-service:
@@ -199,6 +205,8 @@ modules:
         method: GET
         use: downstream
         downstream: orders-service/orders
+        auth: true
+        role: admin
 
       - upstream: /{orderId}
         method: GET
@@ -206,6 +214,12 @@ modules:
         downstream: orders-service/orders/{orderId}
         bind:
           - orderId: {orderId}
+        auth: true             
+      - upstream: /my
+        method: GET
+        use: downstream
+        downstream: orders-service/orders/my
+        auth: true                                    
 
       - upstream: /
         method: POST
@@ -213,6 +227,7 @@ modules:
         config:
           exchange: order
           routing_key: add_order
+        auth: true
 
       - upstream: /order-product
         method: POST
@@ -220,6 +235,7 @@ modules:
         config:
           exchange: order
           routing_key: add_order_product
+        auth: true
 
       - upstream: /
         method: PUT
@@ -227,6 +243,7 @@ modules:
         config:
           exchange: order
           routing_key: set_order_status_ready
+        auth: true
 
       - upstream: /{orderId}/order-product/{orderProductId}/quantity/{quantity}
         method: DELETE
@@ -238,6 +255,7 @@ modules:
           - orderId: {orderId}
           - orderProductId: {orderProductId}
           - quantity: {quantity}
+        auth: true
 
     services:
       orders-service:
@@ -256,6 +274,8 @@ modules:
         method: GET
         use: downstream
         downstream: releases-service/releases
+        auth: true
+        role: admin
 
       - upstream: /{releaseId}
         method: GET
@@ -263,6 +283,7 @@ modules:
         downstream: releases-service/releases/{releaseId}
         bind:
           - releaseId: {releaseId}
+        auth: true
 
       - upstream: /
         method: POST
@@ -270,6 +291,15 @@ modules:
         config:
           exchange: release
           routing_key: add_release
+        auth: true
+        
+      - upstream: /by-order/{orderId}
+        method: GET
+        use: downstream
+        downstream: releases-service/releases/by-order/{orderId}
+        bind:
+          - orderId: {orderId}
+        auth: true
 
     services:
       releases-service:
@@ -288,6 +318,8 @@ modules:
         method: GET
         use: downstream
         downstream: payments-service/payments
+        auth: true
+        role: admin
 
       - upstream: /{paymentId}
         method: GET
@@ -295,6 +327,7 @@ modules:
         downstream: payments-service/payments/{paymentId}
         bind:
           - paymentId: {paymentId}
+        auth: true
           
       - upstream: /{paymentStatus}
         method: GET
@@ -302,6 +335,8 @@ modules:
         downstream: payments-service/payments
         bind:
           - paymentStatus: {paymentStatus}
+        auth: true
+        role: admin
       
       - upstream: /from/{dateFrom}/to/{dateTo}
         method: GET
@@ -310,6 +345,8 @@ modules:
         bind:
           - dateFrom: {dateFrom}
           - dateTo: {dateTo}
+        auth: true
+        role: admin
           
       - upstream: /from/{dateFrom}/to/{dateTo}/{paymentStatus}
         method: GET
@@ -319,6 +356,8 @@ modules:
           - dateFrom: {dateFrom}
           - dateTo: {dateTo}    
           - paymentStatus: {paymentStatus}
+        auth: true
+        role: admin
 
       - upstream: /
         method: POST
@@ -326,6 +365,7 @@ modules:
         config:
           exchange: payment
           routing_key: add_payment
+        auth: true
 
       - upstream: /
         method: PUT
@@ -333,6 +373,15 @@ modules:
         config:
           exchange: payment
           routing_key: update_payment
+        auth: true
+
+      - upstream: /by-order/{orderId}
+        method: GET
+        use: downstream
+        downstream: payments-service/payments/by-order/{orderId}
+        bind:
+          - orderId: {orderId}
+        auth: true
 
     services:
       payments-service:
