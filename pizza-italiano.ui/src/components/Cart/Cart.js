@@ -1,42 +1,44 @@
 const key = 'cart';
-let cart = JSON.parse(window.localStorage.getItem(key)) ?? [];
+const cart = () => JSON.parse(window.localStorage.getItem(key)) ?? [];
 
 export function showItemsInCart() {
-    return cart;
+    return cart();
 }
 
 export function getItemsInCartCount() {
-    return cart.length;
+    return cart().length;
 }
 
 export function addItemToCart(item) {
-    const itemExists = cart.find(i => i.id === item.id);
+    const items = cart();
+    const itemExists = items.find(i => i.id === item.id);
     let newItem = {...item, quantity: 1 };
     let newCart = [];
     
     if (itemExists) {
         newItem.quantity = itemExists.quantity + 1;
-        newCart = cart.filter(c => c.id !== newItem.id);
+        newCart = items.filter(c => c.id !== newItem.id);
         newCart = [...newCart, newItem];
     } else {
-        newCart = [...cart, newItem];
+        newCart = [...items, newItem];
     }
 
     window.localStorage.setItem(key, JSON.stringify(newCart));
 }
 
 export function deleteItemFromCart(id) {
-    const itemExists = cart.find(i => i.id === id);
+    const items = cart();
+    const itemExists = items.find(i => i.id === id);
         
     if (itemExists) {
-        let newCart = [...cart];
+        let newCart = [...items];
         itemExists.quantity = itemExists.quantity - 1;
         
         if (itemExists.quantity > 0) {
-            newCart = cart.filter(c => c.id !== id);
+            newCart = items.filter(c => c.id !== id);
             newCart = [...newCart, itemExists];
         } else {
-            newCart = cart.filter(c => c.id !== id);
+            newCart = items.filter(c => c.id !== id);
         }
 
         window.localStorage.setItem(key, JSON.stringify(newCart));

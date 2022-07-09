@@ -5,7 +5,8 @@ export const reducer = (state, action) => {
         case 'logout' : 
             return { ...state, user: null }
         case 'clear-cart':
-            return { ...state, clearedCart: new Date() }
+            debugger;
+            return { ...state, clearedCart: action.clearedCart }
         default :
             throw new Error(`Action ${action.type} doesnt exists.`);
     }

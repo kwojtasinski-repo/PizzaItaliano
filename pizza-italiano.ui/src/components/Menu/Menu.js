@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import ReducerContext from "../../context/ReducerContext";
 import useAuth from "../../hooks/useAuth";
 import { getItemsInCartCount } from "../Cart/Cart";
 import Link from "../Link/Link";
@@ -9,6 +10,7 @@ function Menu() {
     const [menuOpened, setMenuOpened] = useState(false);
     const [auth, setAuth] = useAuth();
     const [itemCount, setItemCount] = useState(0);
+    const context = useContext(ReducerContext);
     
     const onClick = (event) => {
         if (event.detail === 1 && menuOpened > 0) {
@@ -24,7 +26,7 @@ function Menu() {
 
     useEffect(() => {
         setItemCount(getItemsInCartCount());
-    }, [])
+    }, [context.state.clearedCart])
 
     return (
         <nav className={`${style.menuContainer} navbar navbar-expand-lg navbar-light bg-light`} onClick={onClick} >

@@ -22,7 +22,6 @@ function Login() {
                 email,
                 password
             });
-            debugger;
             setAuth({
                 accessToken: response.data.accessToken,
                 refreshToken: response.data.refreshToken,
