@@ -53,7 +53,7 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Mongo.Documents
                 UserId = orderDocument.UserId,
                 OrderStatus = orderDocument.OrderStatus,
                 
-                OrderProducts = orderDocument.OrderProductDocuments.Select(op => op.AsDto())
+                OrderProducts = orderDocument.OrderProductDocuments is not null ? orderDocument.OrderProductDocuments.Select(op => op.AsDto()) : new List<OrderProductDto>()
             };
 
             return orderDto;
