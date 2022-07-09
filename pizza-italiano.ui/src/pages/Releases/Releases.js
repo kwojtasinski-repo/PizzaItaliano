@@ -1,6 +1,7 @@
+import axios from "../../axios-setup";
 import { useEffect, useState } from "react";
 import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
-import { createGuid } from "../../helpers/createGuid";
+import { mapToReleases } from "../../helpers/mapper";
 
 export function Releases() {
     const [loading, setLoading] = useState(true);
@@ -8,21 +9,18 @@ export function Releases() {
     const [error, setError] = useState('');
     
     const fetchReleases = async () => {
-        return await new Promise(function (resolve) {
-            setTimeout(function () {
-                setReleases([
-                    {
-                        id: createGuid(),
-                        orderId: createGuid(),
-                        orderProductId: createGuid(),
-                        date: new Date().toLocaleString()
-                    }
-                ])
-                setLoading(false);
-                setError('');
-            }, 500);
-        });
+        try {
+            const response = await axios.get(`/releases`);
+            setReleases(mapToReleases(response.data));
+        } catch(exception) {
+            console.log(exception);
+            setError(exception.response?.data?.reason)
+        }
+        
+        setLoading(false);
     }
+    
+    //TODO: Delete release
 
     useEffect(() => {
         fetchReleases();
@@ -55,7 +53,6 @@ export function Releases() {
                             ))}
                         </tbody>
                     </table>
-                    
                 </div>
             )}
         </>

@@ -24,6 +24,7 @@ import Login from "./pages/Auth/Login/Login";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import { PaymentByOrderId } from "./pages/Payments/Payment/PaymentByOrderId";
 import { ReleasesByOrderId } from "./pages/Releases/ReleasesByOrderId";
+import Orders from "./pages/Orders/Orders";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -36,6 +37,7 @@ function App() {
     <Menu />
   )
 
+  // TODO: Profile for user and management users
   const content = (
     <Suspense fallback={<p>Loading...</p>} >
       <Routes>
@@ -47,8 +49,9 @@ function App() {
           <Route path='/payments/by-order/:id' element = { <RequireAuth> <PaymentByOrderId /> </RequireAuth> } />
           <Route path='/payments' element = { <RequireAuth> <Payments /> </RequireAuth> } />
           <Route path='/orders/my' element = { <RequireAuth> <MyOrders/> </RequireAuth> } />
-          <Route path='/orders/:id' element = { <Order /> } >
-            <Route path='add-product' element = { <AddOrderProduct /> }/>
+          <Route path='/orders' element = { <RequireAuth> <Orders /> </RequireAuth> } />
+          <Route path='/orders/:id' element = { <RequireAuth> <Order /> </RequireAuth> } >
+            <Route path='add-product' element = { <RequireAuth> <AddOrderProduct /> </RequireAuth> }/>
           </Route>
           <Route path='/cart' element = { <RequireAuth> <Cart /> </RequireAuth> } />
           <Route path='/login' element = {<Login />} />

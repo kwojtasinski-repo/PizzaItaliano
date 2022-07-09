@@ -80,17 +80,17 @@ function Menu() {
                 {auth && auth.role !== "user" ?
                     <>
                         <li className={style.menuItem}>
-                            <Link to='/' className={`${style.menuItem}`}>
+                            <Link to='/orders' className={`${style.menuItem}`}>
                                 Orders
                             </Link>
                         </li>
                         <li className={style.menuItem}>
-                            <Link to='/' className={`${style.menuItem}`}>
+                            <Link to='/payments' className={`${style.menuItem}`}>
                                 Payments
                             </Link>
                         </li>
                         <li className={style.menuItem}>
-                            <Link to='/' className={`${style.menuItem}`}>
+                            <Link to='/releases' className={`${style.menuItem}`}>
                                 Releases
                             </Link>
                         </li>
