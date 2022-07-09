@@ -5,6 +5,7 @@ import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
 import styles from './Order.module.css'
 import { mapToOrder } from "../../helpers/mapper";
 import { createGuid } from "../../helpers/createGuid";
+import useAuth from "../../hooks/useAuth";
 
 function Order(props) {
     const { id } = useParams();
@@ -13,8 +14,9 @@ function Order(props) {
     const [error, setError] = useState('');
     const [actions, setActions] = useState([]);
     const navigate = useNavigate();
+    const [auth] = useAuth();
 
-    const fetchCart = async () => {
+    const fetchOrder = async () => {
         try {
             const response = await axios.get(`/orders/${id}`);
             setOrder(mapToOrder(response.data));
@@ -27,11 +29,17 @@ function Order(props) {
     }
 
     useEffect(() => {
-        fetchCart();
+        fetchOrder();
     }, [])
 
-    const removeOrderProductHandler = async (id) => {
-        
+    const removeOrderProductHandler = async (orderItemId) => {
+        try {
+            await axios.delete(`/orders/${id}/order-product/${orderItemId}/quantity/1`);
+            navigate(0);
+        } catch(exception) {
+            console.log(exception);
+            setError(exception.response?.data?.reason)
+        }
     }
 
     const setOrderAsReady = async () => {
@@ -153,9 +161,11 @@ function Order(props) {
                                 <td>{oi.cost} USD</td>
                                 <td>{oi.orderProductStatus}</td>
                                 <td>
-                                    <NavLink to = {`/${oi.productId}`}>
-                                        <button className="btn btn-primary">Show item</button>
-                                    </NavLink>
+                                    {auth.role === "admin" ?
+                                        <NavLink to = {`/${oi.productId}`}>
+                                            <button className="btn btn-primary">Show item</button>
+                                        </NavLink>
+                                    : null}
                                     {order.orderStatus === 'new' ?
                                         <button className="btn btn-danger ms-2"
                                                 onClick={() => removeOrderProductHandler(oi.id)} >
@@ -198,18 +208,18 @@ function Order(props) {
                                 'paid': (
                                             <>
                                                 <NavLink className={"btn btn-primary me-2"}
-                                                        to={`/`} >
+                                                        to={`/payments/by-order/${id}`} >
                                                             Show payment
                                                 </NavLink>
                                             </>
                                         ),
                                 'released': <>
                                                 <NavLink className={"btn btn-primary me-2"}
-                                                        to={`/`} >
+                                                        to={`/payments/by-order/${id}`} >
                                                             Show payment
                                                 </NavLink>
                                                 <NavLink className={"btn btn-primary me-2"}
-                                                        to={`/`} >
+                                                        to={`/releases/by-order/${id}`} >
                                                             Show releases
                                                 </NavLink>
                                             </>

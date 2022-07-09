@@ -1,9 +1,12 @@
 import { NavLink } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 import { addItemToCart } from '../../Cart/Cart';
 import { warning } from '../../notifications';
 import styles from './Item.module.css'
 
 function Item(props) {
+    const [auth] = useAuth();
+
     const onClickHandler = (item) => {
         addItemToCart(item);
         warning(`Added item '${item.name}'`, true);
@@ -28,18 +31,22 @@ function Item(props) {
                             </div>
                         </div>
                     </div>
-                    <div className='text-end'>
-                        <div>
-                            <button className={`btn btn-primary mt-2 px-5`} style={{width: '14rem'}} onClick={onClickHandler.bind(this, props)} >
-                                Add to cart
-                            </button>
+                    {auth ? 
+                        <div className='text-end'>
+                            <div>
+                                <button className={`btn btn-primary mt-2 px-5`} style={{width: '14rem'}} onClick={onClickHandler.bind(this, props)} >
+                                    Add to cart
+                                </button>
+                            </div>
+                            {auth.role === 'admin' ?
+                                <div>
+                                    <NavLink to={`/products/details/${props.id}`} className={"btn btn-warning mt-2 px-5"}>
+                                        Details
+                                    </NavLink>
+                                </div>
+                            : null}
                         </div>
-                        <div>
-                            <NavLink to={`/products/details/${props.id}`} className={"btn btn-warning mt-2 px-5"}>
-                                Details
-                            </NavLink>
-                        </div>
-                    </div>
+                    : null}
                 </div>
             </div>
         </div>

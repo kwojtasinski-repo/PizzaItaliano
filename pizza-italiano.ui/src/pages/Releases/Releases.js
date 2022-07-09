@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
 import { createGuid } from "../../helpers/createGuid";
 
 export function Releases() {
-    const { id } = useParams();
     const [loading, setLoading] = useState(true);
     const [releases, setReleases] = useState([]);
     const [error, setError] = useState('');
@@ -37,7 +35,6 @@ export function Releases() {
                     {error ? (
                         <div className="alert alert-danger">{error}</div>
                     ) : null}
-                    <h2>Releases for order with id: {id}</h2>
                     <table className="table table-striped">
                         <thead>
                             <tr>

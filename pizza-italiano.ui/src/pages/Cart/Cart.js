@@ -1,7 +1,7 @@
 import axios from "../../axios-setup";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteItemFromCart, showItemsInCart } from "../../components/Cart/Cart";
+import { clearCart, deleteItemFromCart, showItemsInCart } from "../../components/Cart/Cart";
 import LoadingButton from "../../components/UI/LoadingButton/LoadingButton";
 import styles from "./Cart.module.css";
 import { createGuid } from "../../helpers/createGuid";
@@ -25,7 +25,6 @@ function Cart(props) {
     }, [])
 
     const summaryHandler = async () => {
-        debugger;
         setLoading(true);
         const orderId = createGuid();
         await axios.post('/orders', { orderId });
@@ -40,6 +39,7 @@ function Cart(props) {
         }
 
         setLoading(false);
+        clearCart();
         navigate(`/orders/${orderId}`);
     }
 

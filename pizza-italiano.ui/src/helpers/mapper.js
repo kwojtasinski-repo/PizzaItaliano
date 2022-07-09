@@ -38,7 +38,8 @@ export const mapToOrder = (obj) => {
         orderDate: new Date(obj.orderDate).toLocaleString(),
         cost: Number(obj.cost).toFixed(2),
         releaseDate: obj.releaseDate ? new Date(obj.releaseDate).toLocaleString() : null,
-        orderProducts: obj.orderProducts ? mapToOrderProducts(obj.orderProducts) : []
+        orderProducts: obj.orderProducts ? mapToOrderProducts(obj.orderProducts) : [],
+        userId: obj.userId
     };
 
     return order;
@@ -67,4 +68,54 @@ export const mapToOrderProduct = (obj) => {
     }
 
     return orderProduct;
+}
+
+export const mapToPayment = (obj) => {
+    const payment = {
+        id: obj.id,
+        paymentNumber: obj.paymentNumber,
+        orderId: obj.orderId,
+        cost: Number(obj.cost).toFixed(2),
+        paymentStatus: obj.paymentStatus,
+        createDate: new Date(obj.createDate).toLocaleString(),
+        modifiedDate: new Date(obj.modifiedDate).toLocaleString(),
+        paid: obj.paid,
+        userId: obj.userId
+    }
+
+    return payment;
+}
+
+export const mapToPayments = (objects) => {
+    const payments = [];
+
+    for (const obj of objects) {
+        const payment = mapToPayment(obj);
+        payments.push(payment);
+    }
+
+    return payments;
+}
+
+export const mapToRelease = (obj) => {
+    const release = {
+        id: obj.id,
+        orderId: obj.orderId,
+        orderProductId: obj.orderProductId,
+        date: new Date(obj.date).toLocaleString(),
+        userId: obj.userId
+    }
+
+    return release;
+}
+
+export const mapToReleases = (objects) => {
+    const releases = [];
+
+    for (const obj of objects) {
+        const release = mapToRelease(obj);
+        releases.push(release);
+    }
+
+    return releases;
 }
