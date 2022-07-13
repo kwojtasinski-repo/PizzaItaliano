@@ -35,7 +35,7 @@ namespace PizzaItaliano.Services.Releases.API
                 .Configure(app => app
                     .UseInfrastructure()
                     .UseDispatcherEndpoints(endpoints => endpoints
-                        .Get("", ctx => ctx.Response.WriteAsync(ctx.RequestServices.GetService<AppOptions>().Name))
+                        .Get("", ctx => ctx.Response.WriteAsJsonAsync(ctx.RequestServices.GetService<AppOptions>().Name))
                         .Get<GetReleases, IEnumerable<ReleaseDto>>("releases")
                         .Get<GetRelease, ReleaseDto>("releases/{releaseId}", afterDispatch: (cmd, result, ctx) =>
                         {

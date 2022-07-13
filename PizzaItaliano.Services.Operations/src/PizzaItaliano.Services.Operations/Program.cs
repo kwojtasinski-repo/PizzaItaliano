@@ -33,7 +33,7 @@ namespace PizzaItaliano.Services.Operations
                     .Configure(app => app
                         .UseInfrastructure()
                         .UseEndpoints(endpoints => endpoints
-                            .Get("", ctx => ctx.Response.WriteAsync(ctx.RequestServices.GetService<AppOptions>().Name))
+                            .Get("", ctx => ctx.Response.WriteAsJsonAsync(ctx.RequestServices.GetService<AppOptions>().Name))
                             .Get<GetOperation>("operations/{operationId}", async (query, ctx) =>
                             {
                                 var operation = await ctx.RequestServices.GetService<IOperationsService>()
