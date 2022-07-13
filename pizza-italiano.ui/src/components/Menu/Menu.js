@@ -38,7 +38,7 @@ function Menu() {
                 </li>
                 {auth ?
                     <li className={style.menuItem}>
-                        <Link to='/' className={`${style.menuItem}`}>
+                        <Link to='/profile' className={`${style.menuItem}`}>
                             Profile
                         </Link>
                     </li>
