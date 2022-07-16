@@ -57,7 +57,7 @@ namespace PizzaItaliano.Services.Identity.Tests.Unit.Application.Services
             _passwordService.IsValid(Arg.Any<string>(), Arg.Any<string>()).Returns(false);
             _userRepository.GetAsync(command.Email).Returns(user);
             var expectedException = new InvalidCredentialsException(command.Email);
-            
+
             var exception = await Record.ExceptionAsync(() => _identityService.SignInAsync(command));
 
             exception.ShouldNotBeNull();
@@ -70,7 +70,7 @@ namespace PizzaItaliano.Services.Identity.Tests.Unit.Application.Services
         {
             var command = new SignIn("test@test.abc", "PasW0Rd12!");
             var expectedException = new InvalidCredentialsException(command.Email);
-            
+
             var exception = await Record.ExceptionAsync(() => _identityService.SignInAsync(command));
 
             exception.ShouldNotBeNull();
@@ -125,6 +125,89 @@ namespace PizzaItaliano.Services.Identity.Tests.Unit.Application.Services
             var expectedException = new InvalidPasswordException();
 
             var exception = await Record.ExceptionAsync(() => _identityService.SignUpAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task should_change_password()
+        {
+            var email = "eamil@abc.com";
+            var oldPassword = "test1234";
+            var newPassword = "abc!231Agbsaf1234";
+            var command = new ChangePassword(email, oldPassword, newPassword, newPassword);
+            var user = CreateUser(command.Email, command.OldPassword, "user");
+            _passwordService.IsValid(Arg.Any<string>(), Arg.Any<string>()).Returns(true);
+            _userRepository.GetAsync(command.Email).Returns(user);
+
+            await _identityService.ChangePasswordAsync(command);
+
+            await _userRepository.Received(1).UpdateAsync(user);
+        }
+
+        [Fact]
+        public async Task given_invalid_email_when_change_password_should_throw_an_exception()
+        {
+            var command = new ChangePassword("email", "oldPassword", "newPassword1245!!", "newPassword1245!!");
+            var expectedException = new InvalidEmailException(command.Email);
+
+            var exception = await Record.ExceptionAsync(() => _identityService.ChangePasswordAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task given_invalid_password_when_change_password_should_throw_an_exception()
+        {
+            var command = new ChangePassword("email@email.com", "oldPassword", "newPassword12455!2", "newPassword12455!2");
+            var expectedException = new InvalidCredentialsException(command.Email);
+            var user = CreateUser(command.Email, command.OldPassword, "user");
+            _userRepository.GetAsync(command.Email).Returns(user);
+
+            var exception = await Record.ExceptionAsync(() => _identityService.ChangePasswordAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task given_not_existing_user_when_change_password_should_throw_an_exception()
+        {
+            var command = new ChangePassword("email@email.com", "oldPassword", "newPassword1245!!", "newPassword1245!!");
+            var expectedException = new InvalidCredentialsException(command.Email);
+
+            var exception = await Record.ExceptionAsync(() => _identityService.ChangePasswordAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task given_invalid_new_password_when_change_password_should_throw_an_exception()
+        {
+            var command = new ChangePassword("email@email.com", "oldPassword", "newPassword", "newPassword");
+            var expectedException = new InvalidPasswordException();
+
+            var exception = await Record.ExceptionAsync(() => _identityService.ChangePasswordAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
+        public async Task given_invalid_new_passwords_when_change_password_should_throw_an_exception()
+        {
+            var command = new ChangePassword("email@email.com", "oldPassword", "newPassword", "newPasswordConfirm");
+            var expectedException = new PasswordsAreNotSameException();
+
+            var exception = await Record.ExceptionAsync(() => _identityService.ChangePasswordAsync(command));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType(expectedException.GetType());

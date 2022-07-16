@@ -30,5 +30,12 @@ namespace PizzaItaliano.Services.Identity.Infrastructure.Mongo.Repositories
         }
 
         public Task AddAsync(User user) => _repository.AddAsync(user.AsDocument());
+
+        public async Task<User> UpdateAsync(User user)
+        {
+            var userDocument = user.AsDocument();
+            await _repository.UpdateAsync(userDocument);
+            return userDocument.AsEntity();
+        }
     }
 }
