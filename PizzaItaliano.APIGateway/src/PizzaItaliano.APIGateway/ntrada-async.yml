@@ -212,7 +212,7 @@ modules:
         downstream: orders-service/orders/{orderId}
         auth: true
 
-     - upstream: /my
+      - upstream: /my
         method: GET
         use: downstream
         downstream: orders-service/orders/my
