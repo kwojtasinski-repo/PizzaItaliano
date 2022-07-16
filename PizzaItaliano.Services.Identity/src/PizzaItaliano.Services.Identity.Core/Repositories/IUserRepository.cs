@@ -9,5 +9,6 @@ namespace PizzaItaliano.Services.Identity.Core.Repositories
         Task<User> GetAsync(Guid id);
         Task<User> GetAsync(string email);
         Task AddAsync(User user);
+        Task<User> UpdateAsync(User user);
     }
 }

@@ -41,21 +41,8 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
 
         public async Task<AuthDto> SignInAsync(SignIn command)
         {
-            var email = Email.From(command.Email);
-            var user = await _userRepository.GetAsync(email.Value);
-
-            if (user is null)
-            {
-                _logger.LogError($"User with email: {email.Value} was not found");
-                throw new InvalidCredentialsException(command.Email);
-            }
-
-            if (!_passwordService.IsValid(user.Password, command.Password))
-            {
-                _logger.LogError($"Invalid password for user with id: {user.Id.Value}");
-                throw new InvalidCredentialsException(command.Email);
-            }
-
+            var user = await AuthenticateAsync(Email.From(command.Email), command.Password);
+            
             var claims = user.Permissions.Any() ? new Dictionary<string, IEnumerable<string>>
             {
                 ["permissions"] = user.Permissions
@@ -89,6 +76,38 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
 
             _logger.LogInformation($"Created an account for the user with id: {user.Id}.");
             await _messageBroker.PublishAsync(new SignedUp(user.Id, user.Email.Value, user.Role));
+        }
+
+        public async Task ChangePasswordAsync(ChangePassword changePassword)
+        {
+            if (changePassword.NewPassword != changePassword.NewPasswordConfirm)
+            {
+                throw new PasswordsAreNotSameException();
+            }
+
+            var newPassword = Password.From(changePassword.NewPasswordConfirm);
+            var user = await AuthenticateAsync(Email.From(changePassword.Email), changePassword.OldPassword);
+            user.ChangePassword(newPassword);
+            await _userRepository.UpdateAsync(user);
+        }
+
+        private async Task<User> AuthenticateAsync(Email email, string password)
+        {
+            var user = await _userRepository.GetAsync(email.Value);
+
+            if (user is null)
+            {
+                _logger.LogError($"User with email: {email.Value} was not found");
+                throw new InvalidCredentialsException(email.Value);
+            }
+
+            if (!_passwordService.IsValid(user.Password, password))
+            {
+                _logger.LogError($"Invalid password for user with id: {user.Id.Value}");
+                throw new InvalidCredentialsException(email.Value);
+            }
+
+            return user;
         }
     }
 }

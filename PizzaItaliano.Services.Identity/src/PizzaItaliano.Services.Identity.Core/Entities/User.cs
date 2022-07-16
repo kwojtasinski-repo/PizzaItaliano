@@ -29,5 +29,10 @@ namespace PizzaItaliano.Services.Identity.Core.Entities
             CreatedAt = createdAt;
             Permissions = permissions ?? Enumerable.Empty<string>();
         }
+
+        public void ChangePassword(Password password)
+        {
+            Password = password.Value;
+        }
     }
 }
