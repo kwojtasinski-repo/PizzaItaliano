@@ -25,6 +25,17 @@ Content-Type: application/json
 }
 
 ###
+POST {{url}}/change-password
+Content-Type: application/json
+
+{
+  "email": "pizza-italiano-user3@mail.com",
+  "oldPassword": "secretAbcas12",
+  "newPassword": "secretAbcas12",
+  "newPasswordConfirm": "secretAbcas12"
+}
+
+###
 GET {{url}}/me
 Authorization: Bearer {{accessToken}}
 
