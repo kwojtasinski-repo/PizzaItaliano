@@ -95,6 +95,7 @@ namespace PizzaItaliano.Services.Identity
                             {
                                 await ctx.RequestServices.GetService<IRefreshTokenService>().RevokeAsync(cmd.RefreshToken);
                             })
+                            .Post<ChangePassword>("change-password")
                         ))
                     .UseLogging()
                     .UseVault();

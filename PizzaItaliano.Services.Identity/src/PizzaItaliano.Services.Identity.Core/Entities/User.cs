@@ -30,9 +30,9 @@ namespace PizzaItaliano.Services.Identity.Core.Entities
             Permissions = permissions ?? Enumerable.Empty<string>();
         }
 
-        public void ChangePassword(Password password)
+        public void ChangePassword(string password)
         {
-            Password = password.Value;
+            Password = password;
         }
     }
 }

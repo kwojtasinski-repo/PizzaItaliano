@@ -87,7 +87,8 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
 
             var newPassword = Password.From(changePassword.NewPasswordConfirm);
             var user = await AuthenticateAsync(Email.From(changePassword.Email), changePassword.OldPassword);
-            user.ChangePassword(newPassword);
+            var passwordHash = _passwordService.Hash(newPassword.Value);
+            user.ChangePassword(passwordHash);
             await _userRepository.UpdateAsync(user);
         }
 
