@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pizzaitaliano-frontend
+spec:
+  selector:
+    matchLabels:
+      name: pizzaitaliano-frontend
+  template:
+    metadata:
+      labels:
+        name: pizzaitaliano-frontend
+    spec:
+      securityContext:
+        runAsUser: 10000
+        runAsNonRoot: true
+        runAsGroup: 10001
+      containers:
+      - name: frontend
+        image: dockerregistry/pizzaitaliano-frontend:2.0
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+        ports:
+        - containerPort: 8080
+        env:
+        - name: API_URL
+          value: "/api"
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d # mount nginx-conf volume to /etc/nginx/conf.d
+          readOnly: true
+          name: pizzaitaliano-frontend-nginx-conf
+      volumes:
+      - name: pizzaitaliano-frontend-nginx-conf
+        configMap:
+          name: pizzaitaliano-frontend-nginx-conf # place ConfigMap `nginx-conf` on /etc/nginx/conf.d/default.conf file
+          items:
+            - key: nginx.conf
+              path: default.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-pizzaitaliano-frontend
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  type: ClusterIP
+  selector:
+    name: pizzaitaliano-frontend
