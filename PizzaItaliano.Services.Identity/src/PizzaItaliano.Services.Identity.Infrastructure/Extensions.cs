@@ -108,10 +108,21 @@ namespace PizzaItaliano.Services.Identity.Infrastructure
         }
 
         internal static CorrelationContext GetCorrelationContext(this IHttpContextAccessor accessor)
-            => accessor.HttpContext?.Request.Headers.TryGetValue("Correlation-Context", out var json) is true
-                ? JsonConvert.DeserializeObject<CorrelationContext>(json.FirstOrDefault())
-                : null;
+        {
+            if (accessor.HttpContext is null)
+            {
+                return null;
+            }
 
+            var parsed = accessor.HttpContext.Request.Headers.TryGetValue("Correlation-Context", out var json);
+
+            if (!parsed)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<CorrelationContext>(json.FirstOrDefault());
+        }
         internal static IDictionary<string, object> GetHeadersToForward(this IMessageProperties messageProperties)
         {
             const string sagaHeader = "Saga";
