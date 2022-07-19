@@ -3,7 +3,8 @@ kind: Deployment
 metadata:
   name: pizzaitaliano-backend
 spec:
-  selector:
+  replicas: 3
+  selector: 
     matchLabels:
       name: pizzaitaliano-backend
   template:
@@ -20,7 +21,6 @@ spec:
         image: dockerregistry/pizzaitaliano-backend:2.0
         securityContext:
           allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
           privileged: false
         ports:
         - containerPort: 8080
