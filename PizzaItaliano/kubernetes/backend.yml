@@ -24,6 +24,13 @@ spec:
           privileged: false
         ports:
         - containerPort: 8080
+        resources:
+          requests:
+            cpu: 100m
+            memory: 150Mi
+          limits:
+            cpu: 800m
+            memory: 1Gi
 ---
 apiVersion: v1
 kind: Service
