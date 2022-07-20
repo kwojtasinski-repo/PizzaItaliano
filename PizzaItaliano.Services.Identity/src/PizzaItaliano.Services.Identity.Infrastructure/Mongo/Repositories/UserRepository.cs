@@ -1,8 +1,11 @@
 ﻿using Convey.Persistence.MongoDB;
+using MongoDB.Driver;
 using PizzaItaliano.Services.Identity.Core.Entities;
 using PizzaItaliano.Services.Identity.Core.Repositories;
 using PizzaItaliano.Services.Identity.Infrastructure.Mongo.Documents;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Identity.Infrastructure.Mongo.Repositories
@@ -27,6 +30,12 @@ namespace PizzaItaliano.Services.Identity.Infrastructure.Mongo.Repositories
         {
             var user = await _repository.GetAsync(x => x.Email == email.ToLowerInvariant());
             return user?.AsEntity();
+        }
+
+        public async Task<IList<User>> GetAllAsync()
+        {
+            var users = await _repository.Collection.AsQueryable().ToListAsync();
+            return users.Select(u => u.AsEntity()).ToList();
         }
 
         public Task AddAsync(User user) => _repository.AddAsync(user.AsDocument());

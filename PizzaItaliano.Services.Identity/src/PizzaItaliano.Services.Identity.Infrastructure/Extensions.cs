@@ -44,6 +44,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -158,6 +159,12 @@ namespace PizzaItaliano.Services.Identity.Infrastructure
         {
             var authentication = await context.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
             return authentication.Succeeded ? Guid.Parse(authentication.Principal.Identity.Name) : Guid.Empty;
+        }
+
+        public static async Task<ClaimsPrincipal> AuthenticateUsingJwtAndReturnClaimsAsync(this HttpContext context)
+        {
+            var authentication = await context.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
+            return authentication.Succeeded ? authentication.Principal : null;
         }
     }
 }

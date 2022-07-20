@@ -39,6 +39,12 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
             return user is null ? null : new UserDto(user);
         }
 
+        public async Task<IList<UserDto>> GetAllAsync()
+        {
+            var users = await _userRepository.GetAllAsync();
+            return users.Select(u => new UserDto(u)).ToList();
+        }
+
         public async Task<AuthDto> SignInAsync(SignIn command)
         {
             var user = await AuthenticateAsync(Email.From(command.Email), command.Password);

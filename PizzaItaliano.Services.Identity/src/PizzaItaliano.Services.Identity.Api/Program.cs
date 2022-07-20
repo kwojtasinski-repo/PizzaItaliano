@@ -17,6 +17,7 @@ using PizzaItaliano.Services.Identity.Application.DTO;
 using PizzaItaliano.Services.Identity.Application.Exceptions;
 using PizzaItaliano.Services.Identity.Application.Queries;
 using PizzaItaliano.Services.Identity.Application.Services;
+using PizzaItaliano.Services.Identity.Core.Entities;
 using PizzaItaliano.Services.Identity.Infrastructure;
 using System;
 using System.Net;
@@ -96,6 +97,22 @@ namespace PizzaItaliano.Services.Identity
                                 await ctx.RequestServices.GetService<IRefreshTokenService>().RevokeAsync(cmd.RefreshToken);
                             })
                             .Post<ChangePassword>("change-password")
+                            .Get("users", async ctx =>
+                            {
+                                var claims = await ctx.AuthenticateUsingJwtAndReturnClaimsAsync();
+                                if (claims is null)
+                                {
+                                    throw new UnauthorizedException();
+                                }
+
+                                if (!claims.IsInRole(Role.Admin))
+                                {
+                                    throw new UnauthorizedException();
+                                }
+
+                                var users = await ctx.RequestServices.GetService<IIdentityService>().GetAllAsync();
+                                await ctx.Response.WriteJsonAsync(users);
+                            })
                         ))
                     .UseLogging()
                     .UseVault();
