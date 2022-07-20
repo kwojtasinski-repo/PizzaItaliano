@@ -13,5 +13,6 @@ namespace PizzaItaliano.Services.Identity.Application.Services
         Task<AuthDto> SignInAsync(SignIn command);
         Task SignUpAsync(SignUp command);
         Task ChangePasswordAsync(ChangePassword changePassword);
+        Task ChangeRoleAsync(ChangeUserRole command);
     }
 }

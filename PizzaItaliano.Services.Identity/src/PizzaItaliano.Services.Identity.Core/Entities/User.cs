@@ -34,5 +34,15 @@ namespace PizzaItaliano.Services.Identity.Core.Entities
         {
             Password = password;
         }
+
+        public void ChangeRole(string role)
+        {
+            if (!Entities.Role.IsValid(role))
+            {
+                throw new InvalidRoleException(role);
+            }
+
+            Role = role;
+        }
     }
 }

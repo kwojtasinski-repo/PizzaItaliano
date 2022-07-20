@@ -1,5 +1,5 @@
 @url = http://localhost:5006
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YWRlNTZjZDc2ZDQ0OGE1ODA0YmYzYmEwMzNlMTM2ZCIsInVuaXF1ZV9uYW1lIjoiNWFkZTU2Y2Q3NmQ0NDhhNTgwNGJmM2JhMDMzZTEzNmQiLCJqdGkiOiI0OTUzYmZmYy1iNTQyLTQwYjYtOWQwZS1mYTZhMmViZDU2NGUiLCJpYXQiOiIxNjU4MzM4MjQ5IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2NTgzMzgyNDksImV4cCI6MTY1ODM0MTg0OSwiaXNzIjoicGl6emEtaXRhbGlhbm8ifQ.f8IUZlVSZA4wu3xDcUt1ZavKkI5yw7lwEnRfi8LvHg0
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YWRlNTZjZDc2ZDQ0OGE1ODA0YmYzYmEwMzNlMTM2ZCIsInVuaXF1ZV9uYW1lIjoiNWFkZTU2Y2Q3NmQ0NDhhNTgwNGJmM2JhMDMzZTEzNmQiLCJqdGkiOiI2NDU1MDkxZS04ZmIyLTQ3MDEtOTk3ZC02YTM4YzBkODc4NzQiLCJpYXQiOiIxNjU4MzQ4MjM5IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW4iLCJuYmYiOjE2NTgzNDgyMzksImV4cCI6MTY1ODM1MTgzOSwiaXNzIjoicGl6emEtaXRhbGlhbm8ifQ.PXPTeCdhxnMkeKrTuGHX5oZKZmVe4-iQHUQKWqPISnQ
 @refreshToken = secret
 @userId = 9b8e26b8-8536-40b0-9e8a-b396b25c3665
 
@@ -70,3 +70,11 @@ Content-Type: application/json
 ###
 GET {{url}}/users
 Authorization: Bearer {{accessToken}}
+
+###
+PUT {{url}}/users/{{userId}}/change-role
+Authorization: Bearer {{accessToken}}
+
+{
+  "role": "admin"
+}

@@ -44,8 +44,13 @@ namespace PizzaItaliano.Services.Identity
                             .Get("", ctx => ctx.Response.WriteAsJsonAsync(ctx.RequestServices.GetService<AppOptions>().Name))
                             .Get<GetUser, UserDto>("users/{userId}", beforeDispatch: async (cmd, ctx) =>
                             {
-                                var userId = await ctx.AuthenticateUsingJwtAsync();
-                                if (userId == Guid.Empty)
+                                var claims = await ctx.AuthenticateUsingJwtAndReturnClaimsAsync();
+                                if (claims is null)
+                                {
+                                    throw new UnauthorizedException();
+                                }
+
+                                if (!claims.IsInRole(Role.Admin))
                                 {
                                     throw new UnauthorizedException();
                                 }
@@ -112,6 +117,28 @@ namespace PizzaItaliano.Services.Identity
 
                                 var users = await ctx.RequestServices.GetService<IIdentityService>().GetAllAsync();
                                 await ctx.Response.WriteJsonAsync(users);
+                            })
+                            .Put<ChangeUserRole>("users/{userId}/change-role", beforeDispatch: async (cmd, ctx) =>
+                            {
+                                var claims = await ctx.AuthenticateUsingJwtAndReturnClaimsAsync();
+                                if (claims is null)
+                                {
+                                    throw new UnauthorizedException();
+                                }
+
+                                if (!claims.IsInRole(Role.Admin))
+                                {
+                                    throw new UnauthorizedException();
+                                }
+
+                                var isValid = Guid.TryParse(ctx.Request.RouteValues["userId"] as string, out var userId);
+
+                                if (!isValid)
+                                {
+                                    throw new InvalidUserIdException();
+                                }
+
+                                cmd.Id = userId;
                             })
                         ))
                     .UseLogging()

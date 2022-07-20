@@ -116,5 +116,19 @@ namespace PizzaItaliano.Services.Identity.Application.Services.Identity
 
             return user;
         }
+
+        public async Task ChangeRoleAsync(ChangeUserRole command)
+        {
+            var user = await _userRepository.GetAsync(command.Id);
+
+            if (user is null)
+            {
+                _logger.LogError($"User with id: {command.Id} was not found");
+                throw new UserNotFoundException(command.Id);
+            }
+
+            user.ChangeRole(command.Role);
+            await _userRepository.UpdateAsync(user);
+        }
     }
 }
