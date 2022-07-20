@@ -2,6 +2,7 @@ import axios from "../../axios-setup";
 import { useEffect, useState } from "react";
 import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
 import { NavLink } from "react-router-dom";
+import { mapToUsers } from "../../helpers/mapper";
 
 function Users(props) {
     const [loading, setLoading] = useState(true);
@@ -10,8 +11,8 @@ function Users(props) {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('/users-module/accounts');
-            setUsers([])//mapToUsers(response.data));
+            const response = await axios.get('/users');
+            setUsers(mapToUsers(response.data));
         } catch (exception) {
             console.log(exception);
             setError(exception.response.data.reason);

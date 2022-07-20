@@ -119,3 +119,26 @@ export const mapToReleases = (objects) => {
 
     return releases;
 }
+
+export const mapToUser = (obj) => {
+    const user = {
+        id: obj.id,
+        email: obj.email,
+        role: obj.role,
+        createdAt: obj.createdAt,
+        permissions: obj.permissions
+    }
+
+    return user;
+}
+
+export const mapToUsers = (objects) => {
+    const users = [];
+
+    for (const obj of objects) {
+        const user = mapToUser(obj);
+        users.push(user);
+    }
+
+    return users;
+}
