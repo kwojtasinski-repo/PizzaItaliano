@@ -109,6 +109,26 @@ modules:
         responseHeaders:
           content-type: application/json
 
+      - upstream: /change-password
+        method: POST
+        use: downstream
+        downstream: identity-service/change-password
+        auth: true
+    
+      - upstream: /users
+        method: GET
+        use: downstream
+        downstream: identity-service/users
+        auth: true
+        role: admin
+
+      - upstream: /users/{userId}/change-role
+        method: PUT
+        use: downstream
+        downstream: identity-service/users/{userId}/change-role
+        auth: true
+        role: admin
+
     services:
       identity-service:
         localUrl: localhost:5006
