@@ -103,7 +103,9 @@ namespace PizzaItaliano.Services.Identity.Infrastructure
             app.UseMetrics();
             app.UseAuthentication();
             app.UseRabbitMq()
-                .SubscribeCommand<SignUp>();
+                .SubscribeCommand<SignUp>()
+                .SubscribeCommand<ChangePassword>()
+                .SubscribeCommand<ChangeUserRole>();
 
             return app;
         }
