@@ -27,6 +27,7 @@ import { ReleasesByOrderId } from "./pages/Releases/ReleasesByOrderId";
 import Orders from "./pages/Orders/Orders";
 import Profile from "./pages/Profile/Profile";
 import ProfileDetails from "./pages/Profile/ProfileDetails";
+import Users from "./pages/Users/Users";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -55,6 +56,7 @@ function App() {
           <Route path='/orders/:id' element = { <RequireAuth> <Order /> </RequireAuth> } >
             <Route path='add-product' element = { <RequireAuth> <AddOrderProduct /> </RequireAuth> }/>
           </Route>
+          <Route path="user-management" element = { <RequireAuth> <Users/> </RequireAuth> }  />
           <Route path="profile" element = { <RequireAuth> <Profile/> </RequireAuth> }  >
             <Route path="" element = { <RequireAuth> <ProfileDetails/> </RequireAuth> } />
           </Route>

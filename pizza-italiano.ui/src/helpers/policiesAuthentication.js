@@ -5,6 +5,7 @@ import AddProduct from "../pages/Product/AddProduct";
 import EditProduct from "../pages/Product/EditProduct";
 import ViewProduct from "../pages/Product/ViewProduct";
 import { Releases } from "../pages/Releases/Releases";
+import Users from "../pages/Users/Users";
 
 export function policiesAuthentication(props) {
     let role = '';
@@ -27,6 +28,9 @@ export function policiesAuthentication(props) {
                 role = 'admin';
                 break;
             case Orders :
+                role = 'admin';
+                break;
+            case Users :
                 role = 'admin';
                 break;
             default:

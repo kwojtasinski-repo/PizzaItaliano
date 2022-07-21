@@ -11,7 +11,7 @@ function Users(props) {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('/users');
+            const response = await axios.get('/identity/users');
             setUsers(mapToUsers(response.data));
         } catch (exception) {
             console.log(exception);
@@ -44,7 +44,6 @@ function Users(props) {
                                     <th scope="col">Email</th>
                                     <th scope="col">Role</th>
                                     <th scope="col">Created</th>
-                                    <th scope="col">Active</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -54,7 +53,6 @@ function Users(props) {
                                         <td>{u.email}</td>
                                         <td>{u.role}</td>
                                         <td>{u.createdAt}</td>
-                                        <td>{u.isActive ? "Tak" : "Nie"}</td>
                                         <td>
                                             <NavLink to={`edit/${u.id}`} className="btn btn-warning me-2">Edit</NavLink>
                                         </td>
