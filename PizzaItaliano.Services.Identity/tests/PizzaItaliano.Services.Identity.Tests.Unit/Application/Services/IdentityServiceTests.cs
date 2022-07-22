@@ -202,6 +202,31 @@ namespace PizzaItaliano.Services.Identity.Tests.Unit.Application.Services
         }
 
         [Fact]
+        public async Task should_change_role()
+        {
+            var user = CreateUser("email@email.com", "test123", "user");
+            var command = new ChangeUserRole(user.Id, "admin");
+            _userRepository.GetAsync(user.Id).Returns(user);
+
+            await _identityService.ChangeRoleAsync(command);
+
+            await _userRepository.Received(1).UpdateAsync(user);
+        }
+
+        [Fact]
+        public async Task given_invalid_user_should_throw_an_exception()
+        {
+            var command = new ChangeUserRole(Guid.NewGuid(), "user");
+            var expectedException = new UserNotFoundException(command.Id);
+
+            var exception = await Record.ExceptionAsync(() => _identityService.ChangeRoleAsync(command));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType(expectedException.GetType());
+            exception.Message.ShouldBe(expectedException.Message);
+        }
+
+        [Fact]
         public async Task given_invalid_new_passwords_when_change_password_should_throw_an_exception()
         {
             var command = new ChangePassword("email@email.com", "oldPassword", "newPassword", "newPasswordConfirm");
