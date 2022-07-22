@@ -9,7 +9,6 @@ using PizzaItaliano.Services.Identity.Tests.Shared.Fixtures;
 using Shouldly;
 using System;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 

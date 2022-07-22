@@ -3,13 +3,21 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
+using PizzaItaliano.Services.Identity.Tests.Shared.Initializer;
 
 namespace PizzaItaliano.Services.Identity.Tests.Shared.Factories
 {
     public class PizzaItalianoApplicationFactory<TEntryPoint> : WebApplicationFactory<TEntryPoint> where TEntryPoint : class
     {
         protected override IWebHostBuilder CreateWebHostBuilder()
-            => base.CreateWebHostBuilder().UseEnvironment("tests");
+        {
+            var builder = base.CreateWebHostBuilder().UseEnvironment("tests");
+            builder.ConfigureServices(services =>
+            {
+                services.AddHostedService<UserInitializer>();
+            });
+            return builder;
+        }
 
         protected override void Dispose(bool disposing)
         {
