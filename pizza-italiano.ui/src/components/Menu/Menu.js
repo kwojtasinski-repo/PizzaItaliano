@@ -94,6 +94,11 @@ function Menu() {
                                 Releases
                             </Link>
                         </li>
+                        <li className={style.menuItem}>
+                            <Link to='/user-management' className={`${style.menuItem}`}>
+                                User Management
+                            </Link> 
+                        </li>
                     </>
                 : null}
             </ul>
