@@ -28,7 +28,7 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Sync
             var command = new ChangePassword(signUp.Email, signUp.Password, signUp.Password + "a1234ba", signUp.Password + "a1234ba");
             await _identityService.SignUpAsync(signUp);
             var user = await _identityService.SignInAsync(new SignIn(signUp.Email, signUp.Password));
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", user.AccessToken);
+            _httpClient.AddBearerTokenToHeader(user.AccessToken);
 
             var response = await Act(command);
 
@@ -47,7 +47,7 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Sync
             var command = new ChangePassword("email@emil.1234521.afasf", signUp.Password, signUp.Password + "a1234ba", signUp.Password + "a1234ba");
             await _identityService.SignUpAsync(signUp);
             var user = await _identityService.SignInAsync(new SignIn(signUp.Email, signUp.Password));
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", user.AccessToken);
+            _httpClient.AddBearerTokenToHeader(user.AccessToken);
 
             var response = await Act(command);
 
@@ -68,7 +68,7 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Sync
             var command = new ChangePassword("email", signUp.Password, signUp.Password + "a1234ba", signUp.Password + "a1234ba");
             await _identityService.SignUpAsync(signUp);
             var user = await _identityService.SignInAsync(new SignIn(signUp.Email, signUp.Password));
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", user.AccessToken);
+            _httpClient.AddBearerTokenToHeader(user.AccessToken);
 
             var response = await Act(command);
 
@@ -88,8 +88,8 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Sync
             var signUp = new SignUp(Guid.NewGuid(), "as1441fgs15afrsaf@email.com", "PAsW0RDd13!2", "admin", Enumerable.Empty<string>());
             var command = new ChangePassword("email", signUp.Password, signUp.Password + "a1234ba", signUp.Password + "a1234ba124");
             await _identityService.SignUpAsync(signUp);
-            var user = await _identityService.SignInAsync(new SignIn(signUp.Email, signUp.Password));
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", user.AccessToken);
+            var admin = await _identityService.SignInAsync(new SignIn(signUp.Email, signUp.Password));
+            _httpClient.AddBearerTokenToHeader(admin.AccessToken);
 
             var response = await Act(command);
 
@@ -110,7 +110,7 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Sync
             var command = new ChangePassword("email", signUp.Password, "asd12", "asd12");
             await _identityService.SignUpAsync(signUp);
             var user = await _identityService.SignInAsync(new SignIn(signUp.Email, signUp.Password));
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", user.AccessToken);
+            _httpClient.AddBearerTokenToHeader(user.AccessToken);
 
             var response = await Act(command);
 

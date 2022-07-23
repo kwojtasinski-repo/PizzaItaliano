@@ -6,6 +6,7 @@ using PizzaItaliano.Services.Identity.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Identity.Tests.EndToEnd.Helpers;
 using PizzaItaliano.Services.Identity.Tests.Shared.Factories;
 using PizzaItaliano.Services.Identity.Tests.Shared.Fixtures;
+using PizzaItaliano.Services.Identity.Tests.Shared.Helpers;
 using Shouldly;
 using System;
 using System.Linq;
@@ -25,9 +26,8 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Sync
         [Fact]
         public async Task should_revoke_refresh_token()
         {
-            var signUp = new SignUp(Guid.Empty, "emailabc123b83a2@email.com", "PAsW0RDd13!2", "admin", Enumerable.Empty<string>());
-            await _identityService.SignUpAsync(signUp);
-            var auth = await _identityService.SignInAsync(new SignIn(signUp.Email, signUp.Password));
+            var user = TestUsers.GetTestUsers().FirstOrDefault();
+            var auth = await _identityService.SignInAsync(new SignIn(user.Email, user.Password));
             var command = new RevokeRefreshToken(auth.RefreshToken);
 
             var response = await Act(command);

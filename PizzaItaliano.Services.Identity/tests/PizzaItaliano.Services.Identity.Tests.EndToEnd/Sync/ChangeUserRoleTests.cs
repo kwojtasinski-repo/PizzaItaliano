@@ -28,10 +28,9 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Sync
         {
             var user = _testUsers.FirstOrDefault();
             var command = new ChangeUserRole(user.Id, Role.User);
-            var signUp = new SignUp(Guid.NewGuid(), "emailabafbcASD1243@email.com", "PAsW0RDd13!2", "admin", Enumerable.Empty<string>());
-            await _identityService.SignUpAsync(signUp);
-            var admin = await _identityService.SignInAsync(new SignIn(signUp.Email, signUp.Password));
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", admin.AccessToken);
+            var adminTestUser = TestUsers.GetAdmin();
+            var admin = await _identityService.SignInAsync(new SignIn(adminTestUser.Email, adminTestUser.Password));
+            _httpClient.AddBearerTokenToHeader(admin.AccessToken);
 
             var response = await Act(command);
 
@@ -45,10 +44,9 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Sync
         public async Task change_user_role_endpoint_with_invalid_user_should_return_http_status_code_bad_request()
         {
             var command = new ChangeUserRole(Guid.NewGuid(), Role.User);
-            var signUp = new SignUp(Guid.NewGuid(), "emailabafbcASasd12D1243@email.com", "PAsW0RDd13!2", "admin", Enumerable.Empty<string>());
-            await _identityService.SignUpAsync(signUp);
-            var admin = await _identityService.SignInAsync(new SignIn(signUp.Email, signUp.Password));
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", admin.AccessToken);
+            var adminTestUser = TestUsers.GetAdmin();
+            var admin = await _identityService.SignInAsync(new SignIn(adminTestUser.Email, adminTestUser.Password));
+            _httpClient.AddBearerTokenToHeader(admin.AccessToken);
 
             var response = await Act(command);
 

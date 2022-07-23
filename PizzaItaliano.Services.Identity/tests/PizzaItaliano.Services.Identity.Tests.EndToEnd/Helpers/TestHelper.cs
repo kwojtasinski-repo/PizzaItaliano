@@ -55,6 +55,11 @@ namespace PizzaItaliano.Services.Identity.Tests.EndToEnd.Helpers
             return document;
         }
 
+        public static void AddBearerTokenToHeader(this HttpClient httpClient, string token)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        }
+
         internal sealed class Error
         {
             public string Code { get; set; }
