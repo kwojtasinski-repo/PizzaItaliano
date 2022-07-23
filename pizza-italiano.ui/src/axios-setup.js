@@ -6,7 +6,8 @@ function getToken() {
 }
 
 const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_BACKEND_URL}`
+    //baseURL: `${process.env.REACT_APP_BACKEND_URL}`
+    baseURL: window._env_?.REACT_APP_BACKEND_URL ? window._env_.REACT_APP_BACKEND_URL : process.env.REACT_APP_BACKEND_URL
 });
 
 instance.interceptors.request.use((req) => {

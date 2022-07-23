@@ -29,6 +29,7 @@ function Home(props) {
             {error ? (
                 <div className="alert alert-danger">{error}</div>
             ) : null}
+            
             <Items items={items} />
         </>
     )

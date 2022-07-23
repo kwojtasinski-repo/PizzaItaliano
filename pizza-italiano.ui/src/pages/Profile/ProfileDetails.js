@@ -1,13 +1,11 @@
 import axios from "../../axios-setup";
 import { useEffect, useState } from "react";
 import LoadingButton from "../../components/UI/LoadingButton/LoadingButton";
-import useAuth from "../../hooks/useAuth";
 import { success as successNotification } from "../../components/notifications/index"
 import { mapToUser } from "../../helpers/mapper";
 import LoadingIcon from "../../components/UI/LoadingIcon/LoadingIcon";
 
 function ProfileDetails(props) {
-    const [auth, setAuth] = useAuth();
     const [user, setUser] = useState();
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
