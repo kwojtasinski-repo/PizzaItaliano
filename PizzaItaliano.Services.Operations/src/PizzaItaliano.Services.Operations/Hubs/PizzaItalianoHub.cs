@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Convey.Auth;
+using Microsoft.AspNetCore.SignalR;
 using PizzaItaliano.Services.Operations.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -9,12 +10,18 @@ namespace PizzaItaliano.Services.Operations.Hubs
 {
     public class PizzaItalianoHub : Hub
     {
-        public async Task InitializeAsync()
+        private readonly IJwtHandler _jwtHandler;
+
+        public PizzaItalianoHub(IJwtHandler jwtHandler)
+        {
+            _jwtHandler = jwtHandler;
+        }
+
+        public async Task InitializeAsync(string token)
         {
             try
             {
-                // version with users
-                /*var payload = _jwtHandler.GetTokenPayload(token);
+                var payload = _jwtHandler.GetTokenPayload(token);
                 if (payload is null)
                 {
                     await DisconnectAsync();
@@ -22,8 +29,7 @@ namespace PizzaItaliano.Services.Operations.Hubs
                     return;
                 }
 
-                var group = Guid.Parse(payload.Subject).ToUserGroup();*/
-                var group = "".ToUserGroup();
+                var group = Guid.Parse(payload.Subject).ToUserGroup();
                 await Groups.AddToGroupAsync(Context.ConnectionId, group);
                 await ConnectAsync();
             }

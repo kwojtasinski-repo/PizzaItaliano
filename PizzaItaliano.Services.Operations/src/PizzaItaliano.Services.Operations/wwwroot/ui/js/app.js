@@ -9,10 +9,16 @@
         .build();
 
     $connect.onclick = function () {
+        const jwt = $jwt.value;
+        if (!jwt || /\s/g.test(jwt)) {
+            alert('Invalid JWT.');
+            return;
+        }
+
         appendMessage("Connecting to PizzaItaliano Hub...");
         connection.start()
             .then(() => {
-                connection.invoke('initializeAsync');
+                connection.invoke('initializeAsync', $jwt.value);
             })
             .catch(err => appendMessage(err));
     }

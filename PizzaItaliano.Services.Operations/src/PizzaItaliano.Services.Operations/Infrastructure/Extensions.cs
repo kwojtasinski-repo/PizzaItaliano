@@ -60,7 +60,7 @@ namespace PizzaItaliano.Services.Operations.Infrastructure
 
             return builder
                 .AddErrorHandler<ExceptionToResponseMapper>()
-                //.AddJwt()
+                .AddJwt()
                 .AddCommandHandlers()
                 .AddEventHandlers()
                 .AddQueryHandlers()
