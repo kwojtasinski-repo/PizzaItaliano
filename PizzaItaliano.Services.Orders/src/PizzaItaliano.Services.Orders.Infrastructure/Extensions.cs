@@ -126,8 +126,20 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
         }
 
         internal static CorrelationContext GetCorrelationContext(this IHttpContextAccessor accessor)
-            => accessor.HttpContext?.Request.Headers.TryGetValue("Correlation-Context", out var json) is true
-                ? JsonConvert.DeserializeObject<CorrelationContext>(json.FirstOrDefault())
-                : null;
+        {
+            if (accessor.HttpContext is null)
+            {
+                return null;
+            }
+
+            var parsed = accessor.HttpContext.Request.Headers.TryGetValue("Correlation-Context", out var json);
+
+            if (!parsed)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<CorrelationContext>(json.FirstOrDefault());
+        }
     }
 }
