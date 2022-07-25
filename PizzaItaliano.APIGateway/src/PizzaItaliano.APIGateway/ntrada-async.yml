@@ -237,37 +237,38 @@ modules:
         use: downstream
         downstream: orders-service/orders/my
         auth: true
+
       - upstream: /
         method: POST
+        auth: true
         use: rabbitmq
         config:
           exchange: order
           routing_key: add_order
-        auth: true  
 
       - upstream: /order-product
         method: POST
+        auth: true
         use: rabbitmq
         config:
           exchange: order
           routing_key: add_order_product
-        auth: true
 
       - upstream: /
         method: PUT
+        auth: true
         use: rabbitmq
         config:
           exchange: order
           routing_key: set_order_status_ready
-        auth: true
 
       - upstream: /order-product
         method: DELETE
+        auth: true
         use: rabbitmq
         config:
           exchange: order
           routing_key: delete_order_product
-        auth: true
 
     services:
       orders-service:

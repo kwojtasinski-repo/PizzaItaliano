@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using Convey;
 using Convey.Auth;
 using Convey.CQRS.Commands;
@@ -39,7 +40,15 @@ namespace PizzaItaliano.Services.Operations.Infrastructure
                 return null;
             }
 
-            var payload = JsonConvert.SerializeObject(accessor.CorrelationContext);
+            string payload;
+            if (typeof(JsonElement).IsAssignableFrom(accessor.CorrelationContext.GetType()))
+            {
+                payload = accessor.CorrelationContext.ToString();
+            }
+            else
+            {
+                payload = JsonConvert.SerializeObject(accessor.CorrelationContext);
+            }
 
             return string.IsNullOrWhiteSpace(payload)
                 ? null

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using PizzaItaliano.Services.Orders.Application;
+using System.Text.Json;
 
 namespace PizzaItaliano.Services.Orders.Infrastructure.Contexts
 {
@@ -20,7 +21,15 @@ namespace PizzaItaliano.Services.Orders.Infrastructure.Contexts
         {
             if (_contextAccessor.CorrelationContext is not null)
             {
-                var payload = JsonConvert.SerializeObject(_contextAccessor.CorrelationContext);
+                string payload;
+                if (typeof(JsonElement).IsAssignableFrom(_contextAccessor.CorrelationContext.GetType()))
+                {
+                    payload = _contextAccessor.CorrelationContext.ToString();
+                }
+                else
+                {
+                    payload = JsonConvert.SerializeObject(_contextAccessor.CorrelationContext);
+                }
 
                 return string.IsNullOrWhiteSpace(payload)
                     ? AppContext.Empty
