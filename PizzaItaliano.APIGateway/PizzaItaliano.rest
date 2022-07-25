@@ -34,7 +34,7 @@ GET {{api}}/products/health-check
 GET {{api}}/products
 
 ###
-GET {{api}}/products/{{name}}
+GET {{api}}/products/name/{{name}}
 
 ###
 GET {{api}}/products/{{productId}}

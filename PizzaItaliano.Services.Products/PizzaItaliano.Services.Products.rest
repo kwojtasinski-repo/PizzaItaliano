@@ -7,7 +7,7 @@
 GET {{url}}/products
 
 ###
-GET {{url}}/products/{{name}}
+GET {{url}}/products/name/{{name}}
 
 ###
 GET {{url}}/products/{{productId}}

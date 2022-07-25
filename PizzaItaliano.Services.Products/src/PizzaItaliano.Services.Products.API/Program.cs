@@ -37,6 +37,7 @@ namespace PizzaItaliano.Services.Products.API
                     .UseDispatcherEndpoints(endpoints => endpoints
                         .Get("", ctx => ctx.Response.WriteAsJsonAsync(ctx.RequestServices.GetService<AppOptions>().Name))
                         .Get<GetProducts, IEnumerable<ProductDto>>("products")
+                        .Get<GetProducts, IEnumerable<ProductDto>>("products/name/{name}")
                         .Get<GetProduct, ProductDto>("products/{productId}", afterDispatch: (cmd, result, ctx) =>
                         {
                             if (result is null)
