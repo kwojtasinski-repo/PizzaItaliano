@@ -24,17 +24,22 @@ function EditUser(props) {
     const [error, setError] = useState('');
     
     const fetchUser = async() => {
-        const response = await axios.get(`/identity/users/${id}`);
-        const userFromApi = mapToUser(response.data);
-        setUser(userFromApi);
-        setForm({
-            ...form,
-            role: {
-                ...form.role,
-                value: userFromApi.role
-            }
-        });
-        setLoading(false);
+        try {
+            const response = await axios.get(`/identity/users/${id}`);
+            const userFromApi = mapToUser(response.data);
+            setUser(userFromApi);
+            setForm({
+                ...form,
+                role: {
+                    ...form.role,
+                    value: userFromApi.role
+                }
+            });
+            setLoading(false);
+        } catch(exception) {
+            console.log(exception);
+            setError(exception);
+        }
     }
 
     const buttonDisabled = Object.values(form.role.error).filter(x => x).length;
@@ -53,7 +58,7 @@ function EditUser(props) {
             await axios.put(`identity/users/${id}/change-role`, data);
             navigate(`/user-management`);
         } catch (exception) {            
-            setError(exception.response.data.reason);
+            setError(exception);
             setLoadingData(false);
         }
     };
@@ -78,7 +83,13 @@ function EditUser(props) {
 
     return (
         <>
-        {loading ? <LoadingIcon /> :
+        {loading ? 
+            <>
+                <LoadingIcon />
+                {error ? (
+                        <div className="alert alert-danger">{error}</div>
+                    ) : null}
+            </> :
         <form onSubmit={submit}>
 
                 <div className="form-group">

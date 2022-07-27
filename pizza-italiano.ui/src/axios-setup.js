@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { mapExceptionToResponse } from './helpers/mapExceptionToResponse';
 
 function getToken() {
     const auth = JSON.parse(window.localStorage.getItem('token-data'));
@@ -19,14 +20,12 @@ instance.interceptors.request.use((req) => {
     return req;
 })
 
-axios.interceptors.response.use(function (response) {
-    if (response.headers.location) {
-        return axios.get(response.headers.location);
-    }
-
+instance.interceptors.response.use(function (response) {
     return Promise.resolve(response);
   }, function (error) {
-    return Promise.reject(error);
+    const message = mapExceptionToResponse(error);
+    console.log(message);
+    return Promise.reject(message);
   });
 
 export default instance;

@@ -18,7 +18,7 @@ export function PaymentByOrderId() {
             setPayment(mapToPayment(response.data));
         } catch(exception) {
             console.log(exception);
-            setError(exception.response?.data?.reason)
+            setError(exception);
         }
         
         setLoading(false);

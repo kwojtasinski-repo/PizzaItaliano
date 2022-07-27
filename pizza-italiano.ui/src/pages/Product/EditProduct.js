@@ -16,16 +16,15 @@ function EditProduct(props) {
         try {
             const response = await axios.get(`/products/${id}`);
             setItem(mapToProduct(response.data));
+            setLoading(false);
         } catch(exception) {
             console.log(exception);
-            setError(exception.response.data.reason);
+            setError(exception);
         }
 
-        setLoading(false);
     }
 
     const onSubmit = async (form) => {
-        debugger;
         await axios.put('/products/', form);
     }
 
@@ -38,7 +37,13 @@ function EditProduct(props) {
     }, [])
 
     return (
-        loading ? <LoadingIcon /> : 
+        loading ? 
+            <>
+                <LoadingIcon /> 
+                {error ? (
+                    <div className="alert alert-danger">{error}</div>
+                    ) : null}
+            </> : 
         <div>
             {error ? (
                 <div className="alert alert-danger">{error}</div>

@@ -15,7 +15,7 @@ function Home(props) {
             setItems(mapToProducts(response.data));
         } catch(exception) {
             console.log(exception);
-            setError(exception.message);
+            setError(exception);
         }
         setLoading(false);
     };

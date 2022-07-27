@@ -14,7 +14,7 @@ export function Payments() {
             setPayments(mapToPayments(response.data));
         } catch(exception) {
             console.log(exception);
-            setError(exception.response?.data?.reason)
+            setError(exception);
         }
         
         setLoading(false);

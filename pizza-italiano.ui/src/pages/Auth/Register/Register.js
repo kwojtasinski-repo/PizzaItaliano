@@ -70,7 +70,7 @@ function Register() {
             success('Successfully signed up', true);
             navigate('/');
         } catch(exception) {
-            setError(exception.message);
+            setError(exception);
             setLoading(false);
         }
     };

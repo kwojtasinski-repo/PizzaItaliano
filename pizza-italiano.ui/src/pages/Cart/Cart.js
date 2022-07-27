@@ -14,6 +14,7 @@ function Cart(props) {
     const disabledButton = items.length > 0 ? false : true;
     const navigate = useNavigate();
     const context = useContext(ReducerContext);
+    const [error, setError] = useState('');
 
     const removeItemHandler = (item) => {
         deleteItemFromCart(item.id);
@@ -29,15 +30,21 @@ function Cart(props) {
     const summaryHandler = async () => {
         setLoading(true);
         const orderId = createGuid();
-        await axios.post('/orders', { orderId });
+        
+        try {
+            await axios.post('/orders', { orderId });
 
-        for (const item of items) {
-            await axios.post('/orders/order-product', {
-                orderId,
-                orderProductId: createGuid(),
-                productId: item.id,
-                quantity: item.quantity
-            });
+            for (const item of items) {
+                await axios.post('/orders/order-product', {
+                    orderId,
+                    orderProductId: createGuid(),
+                    productId: item.id,
+                    quantity: item.quantity
+                });
+            }
+        } catch (exception) {
+            console.log(exception);
+            setError(exception);
         }
 
         setLoading(false);
@@ -51,6 +58,9 @@ function Cart(props) {
             <div className={styles.title} >
                 Cart
             </div>
+            {error ? (
+                <div className="alert alert-danger">{error}</div>
+            ) : null}
             <table className="table">
                 <thead>
                     <tr>

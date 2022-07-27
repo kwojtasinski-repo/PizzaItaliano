@@ -15,7 +15,7 @@ function Users(props) {
             setUsers(mapToUsers(response.data));
         } catch (exception) {
             console.log(exception);
-            setError(exception.response.data.reason);
+            setError(exception);
         }
 
         setLoading(false);

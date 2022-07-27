@@ -19,7 +19,7 @@ export default function AddOrderProduct(props) {
             setItems(mapToProducts(response.data));
         } catch(exception) {
             console.log(exception);
-            setError(exception.message);
+            setError(exception);
         }
         setLoading(false);
     };
@@ -36,7 +36,7 @@ export default function AddOrderProduct(props) {
             navigate(`/orders/${id}`);
         } catch(exception) {
             console.log(exception);
-            setError(exception.message);
+            setError(exception);
         }
     }
 

@@ -15,7 +15,7 @@ function MyOrders(props) {
             setOrders(mapToOrders(response.data));
         } catch(exception) {
             console.log(exception);
-            setError(exception.message);
+            setError(exception);
         }
         setLoading(false);
     };

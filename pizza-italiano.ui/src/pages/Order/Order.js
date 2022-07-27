@@ -22,7 +22,7 @@ function Order(props) {
             setOrder(mapToOrder(response.data));
         } catch(exception) {
             console.log(exception);
-            setError(exception.response?.data?.reason)
+            setError(exception);
         }
         
         setLoading(false);
@@ -38,7 +38,7 @@ function Order(props) {
             navigate(0);
         } catch(exception) {
             console.log(exception);
-            setError(exception.response?.data?.reason)
+            setError(exception);
         }
     }
 
@@ -50,7 +50,7 @@ function Order(props) {
             navigate(0);
         } catch(exception) {
             console.log(exception);
-            setError(exception.response?.data?.reason)
+            setError(exception);
         }
     }
 
@@ -68,7 +68,7 @@ function Order(props) {
             navigate(0);
         } catch(exception) {
             console.log(exception);
-            setError(exception.response?.data?.reason)
+            setError(exception);
         }
     }
 
@@ -83,7 +83,7 @@ function Order(props) {
             navigate(0);
         } catch(exception) {
             console.log(exception);
-            setError(exception.response?.data?.reason)
+            setError(exception);
         }
     }
 

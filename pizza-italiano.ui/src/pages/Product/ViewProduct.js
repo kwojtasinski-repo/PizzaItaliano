@@ -17,12 +17,12 @@ function ViewProduct() {
         try {
             const response = await axios.get(`products/${id}`);
             setProduct(mapToProduct(response.data));
+            setLoading(false);
         } catch(exception) {
             console.log(exception);
-            setError(exception.response?.data?.reason)
+            setError(exception);
         }
         
-        setLoading(false);
     }
 
     useEffect(() => {
@@ -39,14 +39,19 @@ function ViewProduct() {
             navigate(`/`);
         } catch(exception) {
             console.log(exception);
-            setError(exception.response.data.reason);
+            setError(exception);
         }
 
         setIsOpen(false);
     }
 
     return (
-        loading ? <LoadingIcon /> : 
+        loading ? <>
+            <LoadingIcon />
+            {error ? (
+                <div className="alert alert-danger">{error}</div>
+            ) : null}
+        </> : 
         <>
             {error ? (
                 <div className="alert alert-danger">{error}</div>

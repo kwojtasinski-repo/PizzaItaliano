@@ -22,9 +22,13 @@ function ProfileDetails(props) {
     const [success, setSuccess] = useState(false);
 
     const fetchUser = async() => {
-        const response = await axios.get('/identity/me');
-        setUser(mapToUser(response.data));
-        setLoadingData(false);
+        try {
+            const response = await axios.get('/identity/me');
+            setUser(mapToUser(response.data));
+            setLoadingData(false);
+        } catch (exception) {
+            setError(exception);
+        }
     }
 
     const buttonDisabled = Object.values(errors).filter(x => x).length;
@@ -63,7 +67,13 @@ function ProfileDetails(props) {
 
     return (
         <>
-        {loadingData ? <LoadingIcon /> :
+        {loadingData ? 
+        <>
+            <LoadingIcon />
+            {error ? (
+                    <div className="alert alert-danger">{error}</div>
+                ) : null}
+        </> :
         <form onSubmit={submit}>
             {success ? (
                 <div className="alert alert-success">Data changed successfully</div>

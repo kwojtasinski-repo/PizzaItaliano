@@ -16,12 +16,12 @@ export function ReleasesByOrderId() {
         try {
             const response = await axios.get(`/releases/by-order/${id}`);
             setReleases(mapToReleases(response.data));
+            setLoading(false);
         } catch(exception) {
             console.log(exception);
-            setError(exception.response?.data?.reason)
+            setError(exception);
         }
         
-        setLoading(false);
     }
 
     useEffect(() => {
@@ -30,7 +30,13 @@ export function ReleasesByOrderId() {
 
     return (
         <>
-            {loading ? <LoadingIcon /> : (
+            {loading ? 
+                <>    
+                    <LoadingIcon /> 
+                    {error ? (
+                        <div className="alert alert-danger">{error}</div>
+                    ) : null}
+                </> : (
                 <div className="pt-2">
                     {error ? (
                         <div className="alert alert-danger">{error}</div>
