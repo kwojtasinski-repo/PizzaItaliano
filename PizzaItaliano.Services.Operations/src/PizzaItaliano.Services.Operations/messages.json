@@ -66,5 +66,21 @@
       "add_payment_rejected",
       "update_payment_rejected"
     ]
+  },
+  "identity-service": {
+    "exchange": "identity",
+    "commands": [
+      "sign_in",
+      "change_password",
+      "change_user_role"
+    ],
+    "events": [
+      "signed_in",
+      "signed_up"
+    ],
+    "rejectedEvents": [
+      "signed_in_rejected",
+      "signed_up_rejected"
+    ]
   }
 }
