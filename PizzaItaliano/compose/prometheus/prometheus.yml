@@ -31,6 +31,10 @@ scrape_configs:
     static_configs:
       - targets: ['operations-service']
 
+  - job_name: 'identity-service'
+    static_configs:
+      - targets: ['identity-service']
+
   - job_name: 'rabbitmq'
     static_configs:
       - targets: ['rabbitmq:15692']
