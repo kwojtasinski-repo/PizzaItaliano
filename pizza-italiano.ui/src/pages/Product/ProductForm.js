@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Input from "../../components/Input/Input";
 import LoadingButton from "../../components/UI/LoadingButton/LoadingButton";
+import { isEmpty } from "../../helpers/stringExtensions";
 import { validate } from "../../helpers/validation";
 
 export default function ProductForm(props) {
@@ -28,6 +29,11 @@ export default function ProductForm(props) {
 
     const submit = async e => {
         e.preventDefault();
+        const errorItem = validateBeforeSend(form, setForm);
+        if (!isEmpty(errorItem)) {
+            setLoading(false);
+            return;
+        }
         setLoading(true);
         
         try {
@@ -44,6 +50,24 @@ export default function ProductForm(props) {
 
         setLoading(false);
     };
+
+    
+    const validateBeforeSend = (form, setForm) => {
+        for(let field in form) {
+            const error = validate(form[field].rules, form[field].value);
+
+            if (error) {
+                setForm({...form, 
+                    [field]: {
+                        ...form[field],
+                        showError: true,
+                        error
+                    }});
+                setLoading(false);
+                return error;
+            }
+        }
+    }
 
     const changeHandler = (value, fieldName) => {
         const error = validate(form[fieldName].rules, value);

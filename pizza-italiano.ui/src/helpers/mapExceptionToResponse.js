@@ -21,10 +21,10 @@ function mapFromStatusToResponse(response) {
 
     switch (response.status) {
         case 404:
-            message = { code: "resource_not_found", reason: "Resource not found" };
+            message = "Resource not found";
             break;
         case 0:
-            message = { code: "network_problem", reason: "There was problem with network" };
+            message = "There was problem with network";
             break;
         default:
             message = genericException();
@@ -35,5 +35,5 @@ function mapFromStatusToResponse(response) {
 }
 
 function genericException() {
-    return { code: "network_problem", reason: "Something bad happen" };
+    return "Something bad happen";
 }
