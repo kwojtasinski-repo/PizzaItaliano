@@ -39,6 +39,7 @@ using PizzaItaliano.Services.Identity.Infrastructure.Exceptions;
 using PizzaItaliano.Services.Identity.Infrastructure.Mongo;
 using PizzaItaliano.Services.Identity.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Identity.Infrastructure.Mongo.Repositories;
+using PizzaItaliano.Services.Identity.Infrastructure.Mongo.Seed;
 using PizzaItaliano.Services.Identity.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
@@ -87,6 +88,7 @@ namespace PizzaItaliano.Services.Identity.Infrastructure
             conveyBuilder.AddMongoRepository<UserDocument, Guid>("users");
             conveyBuilder.AddWebApiSwaggerDocs();
             conveyBuilder.AddSecurity();
+            conveyBuilder.AddSeedData();
 
             return conveyBuilder;
         }
