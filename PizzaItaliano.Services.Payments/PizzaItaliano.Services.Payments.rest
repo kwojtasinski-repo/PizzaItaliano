@@ -22,7 +22,7 @@ Correlation-Context: { {{user}} }
 }
 
 ### 
-PUT {{url}}/payments
+PUT {{url}}/payments/{{paymentId}}
 Content-Type: application/json
 
 {

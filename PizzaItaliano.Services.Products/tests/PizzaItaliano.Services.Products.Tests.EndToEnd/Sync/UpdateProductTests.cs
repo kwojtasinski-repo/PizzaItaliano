@@ -21,7 +21,7 @@ namespace PizzaItaliano.Services.Products.Tests.EndToEnd.Sync
     public class UpdateProductTests
     {
         private Task<HttpResponseMessage> Act(UpdateProduct command)
-            => _httpClient.PutAsync("products", TestHelper.GetContent(command));
+            => _httpClient.PutAsync($"products/{command.ProductId}", TestHelper.GetContent(command));
 
         [Fact]
         public async Task update_product_endpoint_should_return_http_status_code_created()

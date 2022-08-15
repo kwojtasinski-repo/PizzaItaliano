@@ -18,7 +18,7 @@ namespace PizzaItaliano.Services.Orders.Tests.EndToEnd.Sync
     public class SetOrderStatusReadyTests
     {
         private Task<HttpResponseMessage> Act(SetOrderStatusReady command)
-            => _httpClient.PutAsync($"orders", TestHelper.GetContent(command));
+            => _httpClient.PutAsync($"orders/{command.OrderId}", TestHelper.GetContent(command));
 
         [Fact]
         public async Task set_order_status_endpoint_should_return_http_status_code_ok()

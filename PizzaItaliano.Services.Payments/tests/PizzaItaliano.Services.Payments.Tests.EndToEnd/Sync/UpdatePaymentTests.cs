@@ -18,7 +18,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd.Sync
     public class UpdatePaymentTests
     {
         private Task<HttpResponseMessage> Act(UpdatePayment command)
-           => _httpClient.PutAsync("payments", TestHelper.GetContent(command));
+           => _httpClient.PutAsync($"payments/{command.PaymentId}", TestHelper.GetContent(command));
 
         [Fact]
         public async Task update_payment_endpoint_should_return_http_status_code_created()

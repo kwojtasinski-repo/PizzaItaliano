@@ -188,12 +188,14 @@ modules:
         auth: true
         role: admin
 
-      - upstream: /
+      - upstream: /{productId}
         method: PUT
         use: rabbitmq
         config:
           exchange: product
           routing_key: modify_product
+        bind:
+          - productId: {productId}
         auth: true
         role: admin
 
@@ -257,12 +259,14 @@ modules:
           routing_key: add_order_product
         auth: true
 
-      - upstream: /
+      - upstream: /{orderId}
         method: PUT
         use: rabbitmq
         config:
           exchange: order
           routing_key: set_order_status_ready
+        bind:
+          - orderId: {orderId}
         auth: true
 
       - upstream: /{orderId}/order-product/{orderProductId}/quantity/{quantity}
@@ -387,12 +391,14 @@ modules:
           routing_key: add_payment
         auth: true
 
-      - upstream: /
+      - upstream: /{paymentId}
         method: PUT
         use: rabbitmq
         config:
           exchange: payment
           routing_key: update_payment
+        bind:
+          - paymentId: {paymentId}
         auth: true
 
       - upstream: /by-order/{orderId}

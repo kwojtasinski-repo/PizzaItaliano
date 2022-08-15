@@ -15,5 +15,10 @@ namespace PizzaItaliano.Services.Payments.Application.Exceptions
         {
             PaymentId = paymentId;
         }
+
+        public InvalidPaymentIdException() : base($"Invalid PaymentId")
+        {
+            PaymentId = Guid.Empty;
+        }
     }
 }

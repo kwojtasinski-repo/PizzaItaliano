@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PizzaItaliano.Services.Products.Application;
 using PizzaItaliano.Services.Products.Application.Commands;
 using PizzaItaliano.Services.Products.Application.DTO;
+using PizzaItaliano.Services.Products.Application.Exceptions;
 using PizzaItaliano.Services.Products.Application.Queries;
 using PizzaItaliano.Services.Products.Infrastructure;
 
@@ -55,7 +57,17 @@ namespace PizzaItaliano.Services.Products.API
                             return ctx.Response.Ok(result);
                         })
                         .Post<AddProduct>("products", afterDispatch: (cmd, ctx) => ctx.Response.Created($"products/{cmd.ProductId}"))
-                        .Put<UpdateProduct>("products", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"products/{cmd.ProductId}"))
+                        .Put<UpdateProduct>("products/{productId}", beforeDispatch: async (cmd, ctx) =>
+                        {
+                            var isValid = Guid.TryParse(ctx.Request.RouteValues["productId"] as string, out var productId);
+
+                            if (!isValid)
+                            {
+                                throw new InvalidProductIdException();
+                            }
+
+                            cmd.ProductId = productId;
+                        }, afterDispatch: (cmd, ctx) => ctx.Response.Ok($"products/{cmd.ProductId}"))
                         .Delete<DeleteProduct>("products/{productId}", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"Product with {cmd.ProductId} deleted"))
                     ))
                 .UseLogging()

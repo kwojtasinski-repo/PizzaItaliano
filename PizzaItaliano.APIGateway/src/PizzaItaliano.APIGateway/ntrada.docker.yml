@@ -159,7 +159,7 @@ modules:
         auth: true
         role: admin
 
-      - upstream: /
+      - upstream: /{productId}
         method: PUT
         use: downstream
         downstream: products-service/products
@@ -217,7 +217,7 @@ modules:
         downstream: orders-service/orders/order-product
         auth: true
 
-      - upstream: /
+      - upstream: /{orderId}
         method: PUT
         use: downstream
         downstream: orders-service/orders
@@ -335,7 +335,7 @@ modules:
         downstream: payments-service/payments
         auth: true
 
-      - upstream: /
+      - upstream: /{paymentId}
         method: PUT
         use: downstream
         downstream: payments-service/payments

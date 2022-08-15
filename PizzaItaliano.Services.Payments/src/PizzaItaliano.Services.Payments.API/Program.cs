@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 using Convey.Logging;
 using Convey.Secrets.Vault;
 using System.Net;
+using System;
+using PizzaItaliano.Services.Payments.Application.Exceptions;
 
 namespace PizzaItaliano.Services.Payments.API
 {
@@ -75,7 +77,17 @@ namespace PizzaItaliano.Services.Payments.API
                             return ctx.Response.Ok(result);
                         })
                         .Post<AddPayment>("payments", afterDispatch: (cmd, ctx) => ctx.Response.Created($"payments/{cmd.PaymentId}"))
-                        .Put<UpdatePayment>("payments", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"payments/{cmd.PaymentId}"))
+                        .Put<UpdatePayment>("payments/{paymentId}", beforeDispatch: async (cmd, ctx) =>
+                        {
+                            var isValid = Guid.TryParse(ctx.Request.RouteValues["paymentId"] as string, out var paymentId);
+
+                            if (!isValid)
+                            {
+                                throw new InvalidPaymentIdException();
+                            }
+
+                            cmd.PaymentId = paymentId;
+                        }, afterDispatch: (cmd, ctx) => ctx.Response.Ok($"payments/{cmd.PaymentId}"))
                     ))
                 .UseLogging()
                 .UseVault();

@@ -50,7 +50,7 @@ Content-Type: application/json
 }
 
 ### 
-PUT {{api}}/products
+PUT {{api}}/products/{{productId}}
 Content-Type: application/json
 
 {
@@ -94,7 +94,7 @@ Content-Type: application/json
 }
 
 ### 
-PUT {{api}}/orders
+PUT {{api}}/orders/{{orderId}}
 Content-Type: application/json
 
 {
@@ -147,11 +147,11 @@ Content-Type: application/json
 }
 
 ### 
-PUT {{api}}/payments
+PUT {{api}}/payments/{{paymentId}}
 Content-Type: application/json
 
 {
-  "orderId": "{{orderId}}"
+  "paymentId": "{{paymentId}}"
 }
 
 # ============== OPERATIONS ==================== #

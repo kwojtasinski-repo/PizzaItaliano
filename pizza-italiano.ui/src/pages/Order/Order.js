@@ -44,7 +44,7 @@ function Order(props) {
 
     const setOrderAsReady = async () => {
         try {
-            await axios.put(`/orders`, {
+            await axios.put(`/orders/${id}`, {
                 orderId: id
             });
             navigate(0);
@@ -62,7 +62,7 @@ function Order(props) {
                 cost: Number(order.cost),
                 orderId: id
             });
-            await axios.put('/payments', {
+            await axios.put(`/payments/${paymentId}`, {
                 paymentId
             });
             navigate(0);

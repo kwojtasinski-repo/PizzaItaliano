@@ -85,7 +85,7 @@ GET {{api}}/orders/{{orderId}}
 
 ### Set order ready
 # @name change_status_order_operation
-PUT {{api}}/orders
+PUT {{api}}/orders/{{orderId}}
 Content-Type: application/json
 
 {
@@ -116,7 +116,7 @@ Content-Type: application/json
 }
 
 ### Paid for order
-PUT {{api}}/payments
+PUT {{api}}/payments/{{paymentId}}
 Content-Type: application/json
 
 {
