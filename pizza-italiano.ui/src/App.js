@@ -29,6 +29,7 @@ import Profile from "./pages/Profile/Profile";
 import ProfileDetails from "./pages/Profile/ProfileDetails";
 import Users from "./pages/Users/Users";
 import EditUser from "./pages/Users/EditUser";
+import Products from "./pages/Product/Products";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -48,6 +49,7 @@ function App() {
           <Route path='/products/details/:id' element = { <RequireAuth> <ViewProduct /> </RequireAuth> } />
           <Route path='/products/edit/:id' element = { <RequireAuth> <EditProduct /> </RequireAuth> } />
           <Route path='/products/add' element = {<RequireAuth> <AddProduct /> </RequireAuth>} />
+          <Route path='/products' element = { <RequireAuth> <Products /> </RequireAuth> } />
           <Route path='/releases/by-order/:id' element = { <RequireAuth> <ReleasesByOrderId /> </RequireAuth> } />
           <Route path='/releases' element = { <RequireAuth> <Releases /> </RequireAuth> } />
           <Route path='/payments/by-order/:id' element = { <RequireAuth> <PaymentByOrderId /> </RequireAuth> } />

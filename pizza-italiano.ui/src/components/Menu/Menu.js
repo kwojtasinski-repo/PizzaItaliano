@@ -99,6 +99,11 @@ function Menu() {
                                 User Management
                             </Link> 
                         </li>
+                        <li className={style.menuItem}>
+                            <Link to='/products' className={`${style.menuItem}`}>
+                                Products
+                            </Link> 
+                        </li>
                     </>
                 : null}
             </ul>
