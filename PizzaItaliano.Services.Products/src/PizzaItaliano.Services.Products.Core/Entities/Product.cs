@@ -1,10 +1,6 @@
 ﻿using PizzaItaliano.Services.Products.Core.Events;
 using PizzaItaliano.Services.Products.Core.Exceptions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Products.Core.Entities
 {
@@ -55,7 +51,6 @@ namespace PizzaItaliano.Services.Products.Core.Entities
             {
                 throw new InvalidProductCostException(id, cost);
             }
-
         }
 
         private static void ValidName(string name)
@@ -65,6 +60,10 @@ namespace PizzaItaliano.Services.Products.Core.Entities
                 throw new ProductNameCannotBeEmptyException();
             }
 
+            if (name.Length < 3)
+            {
+                throw new ProductNameShouldHaveAtLeastThreeCharactersException(name);
+            }
         }
         
         public void Modified(string name, decimal cost)

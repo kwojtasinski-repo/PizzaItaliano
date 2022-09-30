@@ -46,6 +46,54 @@ const availableRules = {
     only(value, rule) {
         return value.length === rule.length ? '' : `Field should contain ${rule.length} characters`;
     },
+    greaterOrEqualTo(value, rule) {
+        const localValue = Number(value);
+        if(!isNumber(localValue)) {
+            return;
+        }
+
+        if(!isNumber(rule.equalityValue)) {
+            return;
+        }
+
+        return Number(localValue) >= Number(rule.equalityValue) ? '' : `Field should be greater or equal to ${rule.equalityValue}`;
+    },
+    greaterThan(value, rule) {
+        const localValue = Number(value);
+        if(!isNumber(localValue)) {
+            return;
+        }
+
+        if(!isNumber(rule.equalityValue)) {
+            return;
+        }
+
+        return Number(localValue) > Number(rule.equalityValue) ? '' : `Field should be greater than ${rule.equalityValue}`;
+    },
+    lessOrEqualTo(value, rule) {
+        const localValue = Number(value);
+        if(!isNumber(localValue)) {
+            return;
+        }
+
+        if(!isNumber(rule.qualityValue)) {
+            return;
+        }
+
+        return Number(localValue) <= Number(rule.equalityValue) ? '' : `Field should be less or equal to ${rule.equalityValue}`;
+    },
+    lessThan(value, rule) {
+        const localValue = Number(value);
+        if(!isNumber(localValue)) {
+            return;
+        }
+
+        if(!isNumber(rule.equalityValue)) {
+            return;
+        }
+
+        return Number(localValue) < Number(rule.equalityValue) ? '' : `Field should be less than ${rule.equalityValue}`;
+    },
     requiredIf(value, rules) {
         if (rules.isRequired) {
             let errorMessage = '';
@@ -69,3 +117,7 @@ const availableRules = {
         }
     }
 };
+
+function isNumber(value) {
+    return typeof value === 'number' && !Number.isNaN(value);
+}

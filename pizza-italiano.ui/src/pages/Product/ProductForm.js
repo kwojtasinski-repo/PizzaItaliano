@@ -23,7 +23,7 @@ export default function ProductForm(props) {
             value: '',
             error: '',
             showError: false,
-            rules: ['required']
+            rules: ['required', { rule: 'greaterThan', equalityValue: 0 }]
         }
     });
 
