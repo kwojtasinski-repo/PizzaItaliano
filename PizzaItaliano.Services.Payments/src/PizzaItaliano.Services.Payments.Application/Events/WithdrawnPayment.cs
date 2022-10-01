@@ -3,6 +3,7 @@ using System;
 
 namespace PizzaItaliano.Services.Payments.Application.Events
 {
+    [Contract]
     public class WithdrawnPayment : IEvent
     {
         public Guid PaymentId { get; }

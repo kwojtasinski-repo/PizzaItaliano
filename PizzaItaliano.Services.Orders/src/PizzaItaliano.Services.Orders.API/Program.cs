@@ -72,6 +72,28 @@ namespace PizzaItaliano.Services.Orders.API
                                 cmd.OrderId = orderId;
                             }, afterDispatch: (cmd, ctx) => ctx.Response.Ok($"Set status ready orders/{cmd.OrderId}"))
                             .Delete<DeleteOrderProduct>("orders/{orderId}/order-product/{orderProductId}/quantity/{quantity:int}", afterDispatch: (cmd, ctx) => ctx.Response.Ok($"Deleted orders/order-product/{cmd.OrderProductId} with quantity {cmd.Quantity}"))
+                            .Delete<DeleteOrder>("orders/{orderId}", beforeDispatch: async (cmd, ctx) =>
+                            {
+                                var isValid = Guid.TryParse(ctx.Request.RouteValues["orderId"] as string, out var orderId);
+
+                                if (!isValid)
+                                {
+                                    throw new InvalidOrderIdException();
+                                }
+
+                                cmd.OrderId = orderId;
+                            }, afterDispatch: (cmd, ctx) => ctx.Response.Ok($"Order deleted"))
+                            .Put<SetOrderStatusNew>("orders/{orderId}/new", beforeDispatch: async (cmd, ctx) =>
+                            {
+                                var isValid = Guid.TryParse(ctx.Request.RouteValues["orderId"] as string, out var orderId);
+
+                                if (!isValid)
+                                {
+                                    throw new InvalidOrderIdException();
+                                }
+
+                                cmd.OrderId = orderId;
+                            }, afterDispatch: (cmd, ctx) => ctx.Response.Ok($"Set status new orders/{cmd.OrderId}"))
                         ))
                     .UseLogging()
                     .UseVault();

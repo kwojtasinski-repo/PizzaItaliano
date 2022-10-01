@@ -11,6 +11,7 @@ namespace PizzaItaliano.Services.Payments.Core.Repositories
     public interface IPaymentRepository
     {
         Task<Payment> GetAsync(AggregateId id);
+        Task<Payment> GetByOrderIdAsync(Guid orderId);
         Task<bool> ExistsAsync(AggregateId id);
         Task AddAsync(Payment payment);
         Task UpdateAsync(Payment payment);

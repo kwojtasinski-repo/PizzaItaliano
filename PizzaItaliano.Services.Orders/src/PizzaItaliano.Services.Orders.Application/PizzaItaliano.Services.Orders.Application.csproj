@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Convey" Version="0.5.506" />
     <PackageReference Include="Convey.CQRS.Commands" Version="0.5.506" />
     <PackageReference Include="Convey.CQRS.Events" Version="0.5.506" />
     <PackageReference Include="Convey.CQRS.Queries" Version="0.5.506" />
