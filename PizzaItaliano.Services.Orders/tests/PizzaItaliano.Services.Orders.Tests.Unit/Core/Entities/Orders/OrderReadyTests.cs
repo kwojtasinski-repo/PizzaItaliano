@@ -13,13 +13,14 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
 {
     public class OrderReadyTests
     {
-        [Fact]
-        public void given_valid_parameters_order_should_mark_as_ready()
+        [Theory]
+        [InlineData(OrderStatus.New)]
+        [InlineData(OrderStatus.Paid)]
+        public void given_valid_parameters_order_should_mark_as_ready(OrderStatus status)
         {
             // Arrange
             var orderId = new AggregateId();
             var number = "ORD/2021/10/31/1";
-            var status = OrderStatus.New;
             var statusExpected = OrderStatus.Ready;
             var userId = Guid.NewGuid();
             var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
@@ -33,8 +34,10 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             @event.ShouldBeOfType<OrderStateChanged>();
         }
 
-        [Fact]
-        public void given_invalid_status_should_throw_an_exception()
+        [Theory]
+        [InlineData(OrderStatus.Ready)]
+        [InlineData(OrderStatus.Released)]
+        public void given_invalid_status_should_throw_an_exception(OrderStatus status)
         {
             // Arrange
             var orderId = new AggregateId();
@@ -42,12 +45,11 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var productId = Guid.NewGuid();
             var number = "ORD/2021/10/31/1";
             var cost = new decimal(12.12);
-            var status = OrderStatus.Released;
             var userId = Guid.NewGuid();
             var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
 
             // Act
-            var exception = Record.Exception(() => order.OrderPaid());
+            var exception = Record.Exception(() => order.OrderReady());
 
             // Assert
             exception.ShouldNotBeNull();

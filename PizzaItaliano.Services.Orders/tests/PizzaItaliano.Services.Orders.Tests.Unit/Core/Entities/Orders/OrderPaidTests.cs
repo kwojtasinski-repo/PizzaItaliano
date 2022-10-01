@@ -13,8 +13,10 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
 {
     public class OrderPaidTests
     {
-        [Fact]
-        public void given_valid_parameters_order_should_mark_as_paid()
+        [Theory]
+        [InlineData(OrderStatus.Ready)]
+        [InlineData(OrderStatus.Released)]
+        public void given_valid_parameters_order_should_mark_as_paid(OrderStatus status)
         {
             // Arrange
             var orderId = new AggregateId();
@@ -23,7 +25,6 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var number = "ORD/2021/10/31/1";
             var cost = new decimal(12.12);
             var quantity = 1;
-            var status = OrderStatus.Ready;
             var statusExpected = OrderStatus.Paid;
             var userId = Guid.NewGuid();
             var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
@@ -45,8 +46,10 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             @event.ShouldBeOfType<OrderProductStateChanged>();
         }
 
-        [Fact]
-        public void given_invalid_order_should_throw_an_exception()
+        [Theory]
+        [InlineData(OrderStatus.New)]
+        [InlineData(OrderStatus.Paid)]
+        public void given_invalid_order_should_throw_an_exception(OrderStatus status)
         {
             // Arrange
             var orderId = new AggregateId();
@@ -55,7 +58,6 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var number = "ORD/2021/10/31/1";
             var cost = new decimal(12.12);
             var quantity = 1;
-            var status = OrderStatus.Paid;
             var productName = "Product #1";
             var userId = Guid.NewGuid();
             var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);

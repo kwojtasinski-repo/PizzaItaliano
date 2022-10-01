@@ -18,7 +18,7 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
         public PaymentStatus PaymentStatus { get; private set; }
         public Guid UserId { get; private set; }
 
-        public Payment()
+        protected Payment()
         {
 
         }
@@ -61,6 +61,18 @@ namespace PizzaItaliano.Services.Payments.Core.Entities
             PaymentStatus = PaymentStatus.Paid;
             ModifiedDate = DateTime.Now;
             AddEvent(new PaymentPaid(this));
+        }
+
+        public void MarkAsUnpaid()
+        {
+            if (PaymentStatus == PaymentStatus.Unpaid)
+            {
+                return;
+            }
+
+            PaymentStatus = PaymentStatus.Unpaid;
+            ModifiedDate = DateTime.Now;
+            AddEvent(new PaymentWithdrawn(this));
         }
 
         private static void ValidCost(Guid id, decimal cost)

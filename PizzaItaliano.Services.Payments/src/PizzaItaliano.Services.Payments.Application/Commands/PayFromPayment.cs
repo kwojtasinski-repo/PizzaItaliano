@@ -1,13 +1,15 @@
 ﻿using Convey.CQRS.Commands;
-using PizzaItaliano.Services.Payments.Core.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Payments.Application.Commands
 {
     [Contract]
-    public class UpdatePayment : ICommand
+    public class PayFromPayment : ICommand
     {
         public Guid PaymentId { get; set; }
-        public PaymentStatus PaymentStatus { get; set; }
     }
 }

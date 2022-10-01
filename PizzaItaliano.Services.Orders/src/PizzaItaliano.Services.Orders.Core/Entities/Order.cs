@@ -99,17 +99,26 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
         {
             var orderBeforeChange = new Order(Id, OrderNumber, Cost, OrderStatus, OrderDate, ReleaseDate, UserId, OrderProducts, Version);
 
-            if (OrderStatus != OrderStatus.New)
+            if (OrderStatus != OrderStatus.New && OrderStatus != OrderStatus.Paid)
             {
                 throw new CannotChangeOrderStateException(Id, OrderStatus, OrderStatus.Ready);
             }
+
+            if (OrderStatus == OrderStatus.Paid && HasProducts)
+            {
+                foreach (var orderProduct in _orderProducts)
+                {
+                    orderProduct.OrderProductNew();
+                }
+            }
+
             OrderStatus = OrderStatus.Ready;
             AddEvent(new OrderStateChanged(orderBeforeChange, this));
         }
 
         public void OrderPaid()
         {
-            if (OrderStatus != OrderStatus.Ready)
+            if (OrderStatus != OrderStatus.Ready && OrderStatus != OrderStatus.Released)
             {
                 throw new CannotChangeOrderStateException(Id, OrderStatus, OrderStatus.Paid);
             }

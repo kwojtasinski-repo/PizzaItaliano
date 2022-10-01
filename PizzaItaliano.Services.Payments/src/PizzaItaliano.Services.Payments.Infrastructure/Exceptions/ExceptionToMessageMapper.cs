@@ -19,7 +19,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Exceptions
                 // App Exceptions
                 CannotUpdatePaymentStatusException ex => message switch
                 {
-                    UpdatePayment command => new UpdatePaymentRejected(command.PaymentId, ex.Message, ex.Code),
+                    PayFromPayment command => new UpdatePaymentRejected(command.PaymentId, ex.Message, ex.Code),
                     _ => null
                 },
                 InvalidCostException ex => message switch
@@ -34,7 +34,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Exceptions
                 },
                 InvalidPaymentIdException ex => message switch
                 {
-                    UpdatePayment command => new UpdatePaymentRejected(command.PaymentId, ex.Message, ex.Code),
+                    PayFromPayment command => new UpdatePaymentRejected(command.PaymentId, ex.Message, ex.Code),
                     _ => null
                 },
                 PaymentAlreadyExistsException ex => message switch
@@ -44,7 +44,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Exceptions
                 },
                 PaymentNotFoundException ex => message switch
                 {
-                    UpdatePayment command => new UpdatePaymentRejected(command.PaymentId, ex.Message, ex.Code),
+                    PayFromPayment command => new UpdatePaymentRejected(command.PaymentId, ex.Message, ex.Code),
                     _ => null
                 },
 

@@ -17,7 +17,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd.Sync
     [Collection("Collection")]
     public class UpdatePaymentTests
     {
-        private Task<HttpResponseMessage> Act(UpdatePayment command)
+        private Task<HttpResponseMessage> Act(PayFromPayment command)
            => _httpClient.PutAsync($"payments/{command.PaymentId}", TestHelper.GetContent(command));
 
         [Fact]
@@ -25,7 +25,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd.Sync
         {
             var paymentId = Guid.NewGuid();
             await TestHelper.AddTestPayment(paymentId, _mongoDbFixture);
-            var command = new UpdatePayment() { PaymentId = paymentId };
+            var command = new PayFromPayment() { PaymentId = paymentId };
 
             var response = await Act(command);
 
@@ -38,7 +38,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd.Sync
         {
             var paymentId = Guid.NewGuid();
             await TestHelper.AddTestPayment(paymentId, _mongoDbFixture);
-            var command = new UpdatePayment() { PaymentId = paymentId };
+            var command = new PayFromPayment() { PaymentId = paymentId };
             var expectedResponse = $"payments/{paymentId}";
 
             var response = await Act(command);
@@ -53,7 +53,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd.Sync
         {
             var paymentId = Guid.NewGuid();
             await TestHelper.AddTestPayment(paymentId, Guid.NewGuid(), Core.Entities.PaymentStatus.Unpaid, _mongoDbFixture);
-            var command = new UpdatePayment() { PaymentId = paymentId };
+            var command = new PayFromPayment() { PaymentId = paymentId };
 
             await Act(command);
             var document = await _mongoDbFixture.GetAsync(command.PaymentId);
@@ -66,7 +66,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd.Sync
         public async Task update_payment_endpoint_with_invalid_id_should_throw_an_exception_and_send_bad_request()
         {
             var paymentId = Guid.Empty;
-            var command = new UpdatePayment() { PaymentId = paymentId };
+            var command = new PayFromPayment() { PaymentId = paymentId };
 
             var response = await Act(command);
             var error = TestHelper.MapTo<TestHelper.Error>(await response.Content.ReadAsStringAsync());
@@ -82,7 +82,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd.Sync
         public async Task update_payment_endpoint_with_not_existed_payment_should_throw_an_exception_and_send_bad_request()
         {
             var paymentId = Guid.NewGuid();
-            var command = new UpdatePayment() { PaymentId = paymentId };
+            var command = new PayFromPayment() { PaymentId = paymentId };
 
             var response = await Act(command);
             var error = TestHelper.MapTo<TestHelper.Error>(await response.Content.ReadAsStringAsync());
@@ -99,7 +99,7 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd.Sync
         {
             var paymentId = Guid.NewGuid();
             await TestHelper.AddTestPayment(paymentId, Guid.NewGuid(), Core.Entities.PaymentStatus.Paid, _mongoDbFixture);
-            var command = new UpdatePayment() { PaymentId = paymentId };
+            var command = new PayFromPayment() { PaymentId = paymentId };
 
             var response = await Act(command);
             var error = TestHelper.MapTo<TestHelper.Error>(await response.Content.ReadAsStringAsync());

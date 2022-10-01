@@ -32,9 +32,21 @@ namespace PizzaItaliano.Services.Orders.Core.Entities
             return orderProduct;
         }
 
+        public void OrderProductNew()
+        {
+            if (OrderProductStatus != OrderProductStatus.Paid)
+            {
+                throw new CannotChangeOrderProductStateException(Id, OrderProductStatus, OrderProductStatus.Paid);
+            }
+
+            var orderProductBeforeChange = new OrderProduct(Id, Quantity, Cost, OrderId, ProductId, ProductName, OrderProductStatus);
+            OrderProductStatus = OrderProductStatus.New;
+            AddEvent(new OrderProductStateChanged(orderProductBeforeChange, this));
+        }
+
         public void OrderProductPaid()
         {
-            if (OrderProductStatus != OrderProductStatus.New)
+            if (OrderProductStatus != OrderProductStatus.New && OrderProductStatus != OrderProductStatus.Released)
             {
                 throw new CannotChangeOrderProductStateException(Id, OrderProductStatus, OrderProductStatus.Paid);
             }

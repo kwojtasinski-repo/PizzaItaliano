@@ -19,6 +19,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Services
             {
                 CreatePayment e => new AddedPayment(e.Payment.Id, e.Payment.OrderId),
                 PaymentPaid e => new PaidPayment(e.Payment.Id, e.Payment.OrderId),
+                PaymentWithdrawn e => new WithdrawnPayment(e.Payment.Id, e.Payment.OrderId),
 
                 _ => null
             };

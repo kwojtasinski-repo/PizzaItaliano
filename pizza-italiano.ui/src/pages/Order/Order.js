@@ -62,7 +62,7 @@ function Order(props) {
                 cost: Number(order.cost),
                 orderId: id
             });
-            await axios.put(`/payments/${paymentId}`, {
+            await axios.put(`/payments/${paymentId}/pay`, {
                 paymentId
             });
             navigate(0);

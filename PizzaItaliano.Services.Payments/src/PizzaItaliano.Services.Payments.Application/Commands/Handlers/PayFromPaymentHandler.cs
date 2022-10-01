@@ -1,27 +1,29 @@
 ﻿using Convey.CQRS.Commands;
 using PizzaItaliano.Services.Payments.Application.Exceptions;
 using PizzaItaliano.Services.Payments.Application.Services;
-using PizzaItaliano.Services.Payments.Core.Entities;
 using PizzaItaliano.Services.Payments.Core.Repositories;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
 {
-    public class UpdatePaymentHandler : ICommandHandler<AddPayment>
+    public class PayFromPaymentHandler : ICommandHandler<PayFromPayment>
     {
         private readonly IPaymentRepository _paymentRepository;
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
 
-        public UpdatePaymentHandler(IPaymentRepository paymentRepository, IMessageBroker messageBroker, IEventMapper eventMapper)
+        public PayFromPaymentHandler(IPaymentRepository paymentRepository, IMessageBroker messageBroker, IEventMapper eventMapper)
         {
             _paymentRepository = paymentRepository;
             _messageBroker = messageBroker;
             _eventMapper = eventMapper;
         }
 
-        public async Task HandleAsync(AddPayment command)
+        public async Task HandleAsync(PayFromPayment command)
         {
             if (command.PaymentId == Guid.Empty)
             {
@@ -34,18 +36,12 @@ namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
                 throw new PaymentNotFoundException(command.PaymentId);
             }
 
-            switch(payment.PaymentStatus)
+            if (payment.PaymentStatus == Core.Entities.PaymentStatus.Paid)
             {
-                case PaymentStatus.Unpaid:
-                    payment.MarkAsUnpaid();
-                    break;
-                case PaymentStatus.Paid:
-                    payment.MarkAsPaid();
-                    break;
-                default:
-                    throw new InvalidOperationException($"Invalid state of payment with id '{command.PaymentId}'");
+                throw new CannotUpdatePaymentStatusException(command.PaymentId);
             }
 
+            payment.MarkAsPaid();
             await _paymentRepository.UpdateAsync(payment);
             var integrationEvents = _eventMapper.MapAll(payment.Events);
             await _messageBroker.PublishAsync(integrationEvents);

@@ -43,8 +43,11 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             @event.ShouldBeOfType<OrderStateChanged>();
         }
 
-        [Fact]
-        public void given_invalid_status_should_throw_an_exception()
+        [Theory]
+        [InlineData(OrderStatus.New)]
+        [InlineData(OrderStatus.Ready)]
+        [InlineData(OrderStatus.Released)]
+        public void given_invalid_status_should_throw_an_exception(OrderStatus status)
         {
             // Arrange
             var orderId = new AggregateId();
@@ -52,59 +55,11 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Core.Entities.Orders
             var productId = Guid.NewGuid();
             var number = "ORD/2021/10/31/1";
             var cost = new decimal(12.12);
-            var status = OrderStatus.Released;
             var userId = Guid.NewGuid();
             var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
 
             // Act
-            var exception = Record.Exception(() => order.OrderPaid());
-
-            // Assert
-            exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<CannotChangeOrderStateException>();
-        }
-
-        [Fact]
-        public void given_empty_order_products_should_throw_an_exception()
-        {
-            // Arrange
-            var orderId = new AggregateId();
-            var orderProductId = Guid.NewGuid();
-            var productId = Guid.NewGuid();
-            var number = "ORD/2021/10/31/1";
-            var cost = new decimal(12.12);
-            var status = OrderStatus.Paid;
-            var userId = Guid.NewGuid();
-            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
-
-            // Act
-            var exception = Record.Exception(() => order.OrderPaid());
-
-            // Assert
-            exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<CannotChangeOrderStateException>();
-        }
-
-        [Fact]
-        public void given_invalid_order_products_should_throw_an_exception()
-        {
-            // Arrange
-            var orderId = new AggregateId();
-            var orderProductId = Guid.NewGuid();
-            var productId = Guid.NewGuid();
-            var number = "ORD/2021/10/31/1";
-            var cost = new decimal(12.12);
-            var quantity = 1;
-            var status = OrderStatus.Paid;
-            var userId = Guid.NewGuid();
-            var order = new Order(orderId, number, decimal.Zero, status, DateTime.Now, null, userId);
-            var productName = "Product #1";
-            var orderProduct = new OrderProduct(orderProductId, quantity, cost, orderId, productId, productName, OrderProductStatus.New);
-            order.AddOrderProduct(orderProduct);
-            order.ClearEvents();
-
-            // Act
-            var exception = Record.Exception(() => order.OrderPaid());
+            var exception = Record.Exception(() => order.OrderReleased());
 
             // Assert
             exception.ShouldNotBeNull();

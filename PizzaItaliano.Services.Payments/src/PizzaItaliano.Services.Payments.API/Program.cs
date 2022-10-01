@@ -77,7 +77,7 @@ namespace PizzaItaliano.Services.Payments.API
                             return ctx.Response.Ok(result);
                         })
                         .Post<AddPayment>("payments", afterDispatch: (cmd, ctx) => ctx.Response.Created($"payments/{cmd.PaymentId}"))
-                        .Put<UpdatePayment>("payments/{paymentId}", beforeDispatch: async (cmd, ctx) =>
+                        .Put<PayFromPayment>("payments/{paymentId}/pay", beforeDispatch: async (cmd, ctx) =>
                         {
                             var isValid = Guid.TryParse(ctx.Request.RouteValues["paymentId"] as string, out var paymentId);
 
