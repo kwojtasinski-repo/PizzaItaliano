@@ -56,14 +56,8 @@ function Order(props) {
 
     const payForOrder = async() => { 
         try {
-            const paymentId = createGuid();
-            await axios.post(`/payments`, {
-                paymentId,
-                cost: Number(order.cost),
-                orderId: id
-            });
-            await axios.put(`/payments/${paymentId}/pay`, {
-                paymentId
+            await axios.put(`/payments/${order.id}/pay`, {
+                orderId: order.id
             });
             navigate(0);
         } catch(exception) {
