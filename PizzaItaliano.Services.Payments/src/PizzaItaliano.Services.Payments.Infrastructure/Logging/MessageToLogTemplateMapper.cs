@@ -31,15 +31,15 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Logging
                     [typeof(InvalidCostException)] = "Invalid cost for payment with id: {PaymentId}"
                 }
             },
-            [typeof(PayFromPayment)] = new HandlerLogTemplate
+            [typeof(PayForPayment)] = new HandlerLogTemplate
             {
-                Before = "Updating an payment with id: {PaymentId}",
-                After = "Updated an payment with id: {PaymentId}",
+                Before = "Updating an payment for order with id: {OrderId}",
+                After = "Updated an payment for order with id: {OrderId}",
                 OnError = new Dictionary<Type, string>
                 {
-                    [typeof(InvalidPaymentIdException)] = "Invalid payment id",
-                    [typeof(PaymentNotFoundException)] = "Payment with id: {PaymentId} not found",
-                    [typeof(CannotUpdatePaymentStatusException)] = "Cannot update payment with id: {PaymentId}"
+                    [typeof(InvalidPaymentIdException)] = "Invalid order id",
+                    [typeof(PaymentNotFoundException)] = "Payment for order with id: {OrderId} not found",
+                    [typeof(CannotUpdatePaymentStatusException)] = "Cannot update payment for order with id: {OrderId}"
                 }
             }
         };

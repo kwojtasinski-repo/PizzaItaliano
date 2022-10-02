@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 namespace PizzaItaliano.Services.Payments.Application.Events.Rejected
 {
     [Contract]
-    public class UpdatePaymentRejected : IRejectedEvent
+    public class PayForPaymentRejected : IRejectedEvent
     {
-        public Guid PaymentId { get; }
+        public Guid OrderId { get; }
         public string Reason { get; }
         public string Code { get; }
 
-        public UpdatePaymentRejected(Guid paymentId, string reason, string code)
+        public PayForPaymentRejected(Guid orderId, string reason, string code)
         {
-            PaymentId = paymentId;
+            OrderId = orderId;
             Reason = reason;
             Code = code;
         }

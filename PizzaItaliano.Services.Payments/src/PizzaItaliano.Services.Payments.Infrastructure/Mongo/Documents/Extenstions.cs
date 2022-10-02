@@ -63,7 +63,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents
             var destType = typeof(TDest);
             foreach (TSource sourceElement in sourceList)
             {
-                TDest destElement = Activator.CreateInstance<TDest>();
+                TDest destElement = (TDest) Activator.CreateInstance(typeof(TDest), true);
                 //Get all properties from the object 
                 PropertyInfo[] sourceProperties = typeof(TSource).GetProperties();
                 foreach (PropertyInfo sourceProperty in sourceProperties)

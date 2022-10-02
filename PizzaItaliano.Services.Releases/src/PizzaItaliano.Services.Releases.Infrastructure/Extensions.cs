@@ -36,6 +36,7 @@ using PizzaItaliano.Services.Releases.Infrastructure.Contexts;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
+using PizzaItaliano.Services.Releases.Application.Events.External;
 
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Releases.Tests.EndToEnd")] // widocznosc internal na poziomie testow (end-to-end)
 [assembly: InternalsVisibleTo("PizzaItaliano.Services.Releases.Tests.Intgration")] // widocznosc internal na poziomie testow (integration)
@@ -87,7 +88,8 @@ namespace PizzaItaliano.Services.Releases.Infrastructure
                .UseMetrics()
                .UseMiddleware<CustomMetricsMiddleware>()
                .UseRabbitMq()
-               .SubscribeCommand<AddRelease>();
+               .SubscribeCommand<AddRelease>()
+               .SubscribeEvent<OrderDeleted>();
 
             return app;
         }

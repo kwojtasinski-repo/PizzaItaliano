@@ -18,7 +18,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Metrics
         {
             [GetKey("GET", "/payments")] = Query(typeof(GetPayments).Name),
             [GetKey("POST", "/payments")] = Command(typeof(AddPayment).Name),
-            [GetKey("PUT", "/payments")] = Command(typeof(PayFromPayment).Name)
+            [GetKey("PUT", "/payments")] = Command(typeof(PayForPayment).Name)
         };
 
         private readonly IServiceScopeFactory _serviceScopeFactory;

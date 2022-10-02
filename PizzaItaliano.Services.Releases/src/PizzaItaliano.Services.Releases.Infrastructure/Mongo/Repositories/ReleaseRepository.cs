@@ -38,6 +38,12 @@ namespace PizzaItaliano.Services.Releases.Infrastructure.Mongo.Repositories
             return exists;
         }
 
+        public async Task<IEnumerable<Release>> GetAllByOrderIdAsync(Guid orderId)
+        {
+            var releasesDocuments = await _mongoRepository.FindAsync(r => r.OrderId == orderId);
+            return releasesDocuments.Select(r => r.AsEntity());
+        }
+
         public async Task<Release> GetAsync(AggregateId id)
         {
             var releaseDocument = await _mongoRepository.GetAsync(id);

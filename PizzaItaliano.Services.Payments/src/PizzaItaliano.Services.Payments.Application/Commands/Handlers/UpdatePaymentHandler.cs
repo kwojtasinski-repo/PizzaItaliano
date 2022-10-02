@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
 {
-    public class UpdatePaymentHandler : ICommandHandler<AddPayment>
+    public class UpdatePaymentHandler : ICommandHandler<UpdatePayment>
     {
         private readonly IPaymentRepository _paymentRepository;
         private readonly IMessageBroker _messageBroker;
@@ -21,7 +21,7 @@ namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
             _eventMapper = eventMapper;
         }
 
-        public async Task HandleAsync(AddPayment command)
+        public async Task HandleAsync(UpdatePayment command)
         {
             if (command.PaymentId == Guid.Empty)
             {
@@ -34,7 +34,7 @@ namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
                 throw new PaymentNotFoundException(command.PaymentId);
             }
 
-            switch(payment.PaymentStatus)
+            switch(command.PaymentStatus)
             {
                 case PaymentStatus.Unpaid:
                     payment.MarkAsUnpaid();

@@ -34,13 +34,13 @@ namespace PizzaItaliano.Services.Payments.Application.Events.External.Handlers
             var orderStateBefore = @event.OrderStatusBeforeChange;
             var orderStateAfter = @event.OrderStatusAfterChange;
 
-            if (orderStateBefore == OrderStatus.New && orderStateAfter != OrderStatus.Ready)
+            if (orderStateBefore == OrderStatus.New && orderStateAfter == OrderStatus.Ready)
             {
                 await CreatePayment(@event);
                 return;
             }
 
-            if (orderStateBefore == OrderStatus.Ready && orderStateAfter != OrderStatus.New)
+            if (orderStateBefore == OrderStatus.Ready && orderStateAfter == OrderStatus.New)
             {
                 await DeletePayment(@event);
                 return;

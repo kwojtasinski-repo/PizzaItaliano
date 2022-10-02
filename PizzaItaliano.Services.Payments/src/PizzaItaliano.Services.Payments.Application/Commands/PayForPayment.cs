@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace PizzaItaliano.Services.Payments.Application.Commands
 {
     [Contract]
-    public class PayFromPayment : ICommand
+    public class PayForPayment : ICommand
     {
-        public Guid PaymentId { get; set; }
+        public Guid OrderId { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Convey.MessageBrokers;
 
 namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
 {
@@ -15,12 +16,17 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
         private readonly IOrderRepository _orderRepository;
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
+        private readonly ICorrelationContextAccessor _correlationContextAccessor;
+        private readonly IAppContext _appContext;
 
-        public SetOrderStatusReadyHandler(IOrderRepository orderRepository, IMessageBroker messageBroker, IEventMapper eventMapper)
+        public SetOrderStatusReadyHandler(IOrderRepository orderRepository, IMessageBroker messageBroker, IEventMapper eventMapper,
+            ICorrelationContextAccessor correlationContextAccessor, IAppContext appContext)
         {
             _orderRepository = orderRepository;
             _messageBroker = messageBroker;
             _eventMapper = eventMapper;
+            _correlationContextAccessor = correlationContextAccessor;
+            _appContext = appContext;
         }
 
         public async Task HandleAsync(SetOrderStatusReady command)
@@ -38,6 +44,7 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
 
             order.OrderReady();
             await _orderRepository.UpdateAsync(order);
+            _correlationContextAccessor.CorrelationContext = new { user = new { Id = _appContext.Identity.Id } };
             var events = _eventMapper.MapAll(order.Events);
             await _messageBroker.PublishAsync(events);
         }

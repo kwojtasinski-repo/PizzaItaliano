@@ -10,6 +10,7 @@ namespace PizzaItaliano.Services.Releases.Core.Repositories
     public interface IReleaseRepository
     {
         Task<Release> GetAsync(AggregateId id);
+        Task<IEnumerable<Release>> GetAllByOrderIdAsync(Guid orderId);
         Task<bool> ExistsAsync(AggregateId id);
         Task AddAsync(Release release);
         Task UpdateAsync(Release release);

@@ -30,7 +30,7 @@ namespace PizzaItaliano.Services.Orders.Application.Commands.Handlers
                 throw new OrderNotFoundException(command.OrderId);
             }
 
-            if (order.OrderStatus == OrderStatus.Ready)
+            if (order.OrderStatus != OrderStatus.Ready)
             {
                 throw new CannotChangeOrderStatusException(order.Id);
             }

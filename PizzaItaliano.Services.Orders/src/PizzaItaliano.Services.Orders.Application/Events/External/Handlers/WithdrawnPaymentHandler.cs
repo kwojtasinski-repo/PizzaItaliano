@@ -11,6 +11,13 @@ namespace PizzaItaliano.Services.Orders.Application.Events.External.Handlers
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
 
+        public WithdrawnPaymentHandler(IOrderRepository orderRepository, IMessageBroker messageBroker, IEventMapper eventMapper)
+        {
+            _orderRepository = orderRepository;
+            _messageBroker = messageBroker;
+            _eventMapper = eventMapper;
+        }
+
         public async Task HandleAsync(WithdrawnPayment @event)
         {
             var order = await _orderRepository.GetAsync(@event.OrderId);
@@ -19,7 +26,7 @@ namespace PizzaItaliano.Services.Orders.Application.Events.External.Handlers
                 return;
             }
 
-            if (order.OrderStatus != Core.Entities.OrderStatus.Ready)
+            if (order.OrderStatus == Core.Entities.OrderStatus.Ready)
             {
                 return;
             }

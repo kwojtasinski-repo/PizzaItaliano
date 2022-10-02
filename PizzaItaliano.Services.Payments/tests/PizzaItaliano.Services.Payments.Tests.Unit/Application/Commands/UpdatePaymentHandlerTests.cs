@@ -18,7 +18,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
 {
     public class UpdatePaymentHandlerTests
     {
-        private Task Act(PayFromPayment command) => _handler.HandleAsync(command);
+        private Task Act(PayForPayment command) => _handler.HandleAsync(command);
 
         [Fact]
         public async Task given_valid_parameters_payment_should_be_updated()
@@ -26,7 +26,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
             // Arrange
             var paymentId = Guid.NewGuid();
             var orderId = Guid.NewGuid();
-            var command = new PayFromPayment() { PaymentId = paymentId };
+            var command = new PayForPayment() { PaymentId = paymentId };
             var paymentNumber = "PAY/2021/10/31/1";
             var cost = decimal.One;
             var status = PaymentStatus.Unpaid;
@@ -47,7 +47,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
         {
             // Arrange
             var paymentId = Guid.Empty;
-            var command = new PayFromPayment() { PaymentId = paymentId };
+            var command = new PayForPayment() { PaymentId = paymentId };
 
             // Act
             var exception = await Record.ExceptionAsync(() => Act(command));
@@ -62,7 +62,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
         {
             // Arrange
             var paymentId = Guid.NewGuid();
-            var command = new PayFromPayment() { PaymentId = paymentId };
+            var command = new PayForPayment() { PaymentId = paymentId };
 
             // Act
             var exception = await Record.ExceptionAsync(() => Act(command));
@@ -77,7 +77,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
         {
             // Arrange
             var paymentId = Guid.NewGuid();
-            var command = new PayFromPayment() { PaymentId = paymentId };
+            var command = new PayForPayment() { PaymentId = paymentId };
             var orderId = Guid.NewGuid();
             var paymentNumber = "PAY/2021/10/31/1";
             var cost = decimal.One;
@@ -96,7 +96,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
 
         #region Arrange
 
-        private readonly PayFromPaymentHandler _handler;
+        private readonly PayForPaymentHandler _handler;
         private readonly IPaymentRepository _paymentRepository;
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
@@ -106,7 +106,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
             _paymentRepository = Substitute.For<IPaymentRepository>();
             _messageBroker = Substitute.For<IMessageBroker>();
             _eventMapper = Substitute.For<IEventMapper>();
-            _handler = new PayFromPaymentHandler(_paymentRepository, _messageBroker, _eventMapper);
+            _handler = new PayForPaymentHandler(_paymentRepository, _messageBroker, _eventMapper);
         }
 
         #endregion

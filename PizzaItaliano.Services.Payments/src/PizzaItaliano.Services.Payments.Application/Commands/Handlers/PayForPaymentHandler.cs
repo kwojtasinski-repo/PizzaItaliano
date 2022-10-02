@@ -10,35 +10,35 @@ using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Payments.Application.Commands.Handlers
 {
-    public class PayFromPaymentHandler : ICommandHandler<PayFromPayment>
+    public class PayForPaymentHandler : ICommandHandler<PayForPayment>
     {
         private readonly IPaymentRepository _paymentRepository;
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
 
-        public PayFromPaymentHandler(IPaymentRepository paymentRepository, IMessageBroker messageBroker, IEventMapper eventMapper)
+        public PayForPaymentHandler(IPaymentRepository paymentRepository, IMessageBroker messageBroker, IEventMapper eventMapper)
         {
             _paymentRepository = paymentRepository;
             _messageBroker = messageBroker;
             _eventMapper = eventMapper;
         }
 
-        public async Task HandleAsync(PayFromPayment command)
+        public async Task HandleAsync(PayForPayment command)
         {
-            if (command.PaymentId == Guid.Empty)
+            if (command.OrderId == Guid.Empty)
             {
-                throw new InvalidPaymentIdException(command.PaymentId);
+                throw new InvalidOrderIdException(command.OrderId);
             }
 
-            var payment = await _paymentRepository.GetAsync(command.PaymentId);
+            var payment = await _paymentRepository.GetByOrderIdAsync(command.OrderId);
             if (payment is null)
             {
-                throw new PaymentNotFoundException(command.PaymentId);
+                throw new PaymentForOrderNotFoundException(command.OrderId);
             }
 
             if (payment.PaymentStatus == Core.Entities.PaymentStatus.Paid)
             {
-                throw new CannotUpdatePaymentStatusException(command.PaymentId);
+                throw new CannotUpdatePaymentStatusException(payment.Id);
             }
 
             payment.MarkAsPaid();

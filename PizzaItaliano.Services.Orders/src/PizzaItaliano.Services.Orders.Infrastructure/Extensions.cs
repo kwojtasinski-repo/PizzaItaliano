@@ -104,7 +104,8 @@ namespace PizzaItaliano.Services.Orders.Infrastructure
                .SubscribeCommand<DeleteOrderProduct>()
                .SubscribeCommand<SetOrderStatusReady>()
                .SubscribeEvent<PaidPayment>()
-               .SubscribeEvent<ReleaseAdded>(); 
+               .SubscribeEvent<ReleaseAdded>() 
+               .SubscribeEvent<WithdrawnPayment>(); 
 
             return app;
         }
