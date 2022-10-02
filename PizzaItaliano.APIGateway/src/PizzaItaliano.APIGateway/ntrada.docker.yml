@@ -233,6 +233,22 @@ modules:
           - quantity: {quantity}
         auth: true
 
+      - upstream: /{orderId}
+        method: DELETE
+        use: downstream
+        downstream: orders-service/orders/{orderId}
+        auth: true
+        role: admin
+
+      - upstream: /{orderId}/new
+        method: PUT
+        use: downstream
+        downstream: orders-service/orders/{orderId}/new
+        bind:
+          - orderId: {orderId}
+        auth: true
+        role: admin
+
     services:
       orders-service:
         localUrl: localhost:5002
@@ -335,10 +351,10 @@ modules:
         downstream: payments-service/payments
         auth: true
 
-      - upstream: /{paymentId}
+      - upstream: /{orderId}/pay
         method: PUT
         use: downstream
-        downstream: payments-service/payments
+        downstream: payments-service/payments/{orderId}/pay
         auth: true
 
       - upstream: /by-order/{orderId}
@@ -348,6 +364,15 @@ modules:
         bind:
           - orderId: {orderId}
         auth: true
+
+      - upstream: /{paymentId}
+        method: PUT
+        use: downstream
+        downstream: payments-service/payments/{paymentId}
+        bind:
+          - paymentId: {paymentId}
+        auth: true
+        role: admin
 
     services:
       payments-service:

@@ -281,6 +281,22 @@ modules:
           - quantity: {quantity}
         auth: true
 
+      - upstream: /{orderId}
+        method: DELETE
+        use: downstream
+        downstream: orders-service/orders/{orderId}
+        auth: true
+        role: admin
+
+      - upstream: /{orderId}/new
+        method: PUT
+        use: downstream
+        downstream: orders-service/orders/{orderId}/new
+        bind:
+          - orderId: {orderId}
+        auth: true
+        role: admin
+
     services:
       orders-service:
         localUrl: localhost:5002
@@ -391,14 +407,14 @@ modules:
           routing_key: add_payment
         auth: true
 
-      - upstream: /{paymentId}
+      - upstream: /{orderId}
         method: PUT
         use: rabbitmq
         config:
           exchange: payment
-          routing_key: update_payment
+          routing_key: pay_for_payment
         bind:
-          - paymentId: {paymentId}
+          - orderId: {orderId}
         auth: true
 
       - upstream: /by-order/{orderId}
@@ -408,6 +424,15 @@ modules:
         bind:
           - orderId: {orderId}
         auth: true
+     
+      - upstream: /{paymentId}
+        method: PUT
+        use: downstream
+        downstream: payments-service/payments/{paymentId}
+        bind:
+          - paymentId: {paymentId}
+        auth: true
+        role: admin
 
     services:
       payments-service:
