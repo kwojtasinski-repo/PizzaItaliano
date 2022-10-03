@@ -2,10 +2,7 @@
 using PizzaItaliano.Services.Products.Core.Entities;
 using Shouldly;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using PizzaItaliano.Services.Products.Core.Exceptions;
 
@@ -17,9 +14,9 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Core.Entities
         public void given_valid_name_should_modified_product()
         {
             // Arrange
-            var productToModified = new Product(Guid.NewGuid(), "T1", new decimal(123.123), ProductStatus.New);
-            var product = new Product(Guid.NewGuid(), "T1", new decimal(123.123), ProductStatus.New);
-            var name = "T2";
+            var productToModified = new Product(Guid.NewGuid(), "T1ab", new decimal(123.123), ProductStatus.New);
+            var product = new Product(Guid.NewGuid(), "T1ab", new decimal(123.123), ProductStatus.New);
+            var name = "T2wa";
 
             // Act
             productToModified.Modified(name);
@@ -36,7 +33,7 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Core.Entities
         public void given_invalid_name_should_throw_an_exception()
         {
             // Arrange
-            var productToModified = new Product(Guid.NewGuid(), "T1", new decimal(123.123), ProductStatus.New);
+            var productToModified = new Product(Guid.NewGuid(), "T1aw", new decimal(123.123), ProductStatus.New);
             var name = "";
 
             // Act
@@ -51,8 +48,8 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Core.Entities
         public void given_valid_cost_should_modified_product()
         {
             // Arrange
-            var productToModified = new Product(Guid.NewGuid(), "T1", new decimal(123.123), ProductStatus.New);
-            var product = new Product(Guid.NewGuid(), "T1", new decimal(123.123), ProductStatus.New);
+            var productToModified = new Product(Guid.NewGuid(), "T1gs", new decimal(123.123), ProductStatus.New);
+            var product = new Product(Guid.NewGuid(), "T1gs", new decimal(123.123), ProductStatus.New);
             var cost = new decimal(124.42);
 
             // Act
@@ -70,7 +67,7 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Core.Entities
         public void given_invalid_cost_should_throw_an_exception()
         {
             // Arrange
-            var productToModified = new Product(Guid.NewGuid(), "T1", new decimal(123.123), ProductStatus.New);
+            var productToModified = new Product(Guid.NewGuid(), "T1adsf", new decimal(123.123), ProductStatus.New);
             var cost = new decimal(-123);
 
             // Act
@@ -85,8 +82,8 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Core.Entities
         public void given_valid_name_and_cost_should_modified_product()
         {
             // Arrange
-            var productToModified = new Product(Guid.NewGuid(), "T1", new decimal(123.123), ProductStatus.New);
-            var product = new Product(Guid.NewGuid(), "T1", new decimal(123.123), ProductStatus.New);
+            var productToModified = new Product(Guid.NewGuid(), "T1AB", new decimal(123.123), ProductStatus.New);
+            var product = new Product(Guid.NewGuid(), "T1AB", new decimal(123.123), ProductStatus.New);
             var name = "abc";
             var cost = new decimal(999.99);
 
@@ -106,7 +103,7 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Core.Entities
         public void given_invalid_name_and_valid_cost_should_throw_an_exception()
         {
             // Arrange
-            var productToModified = new Product(Guid.NewGuid(), "T1", new decimal(123.123), ProductStatus.New);
+            var productToModified = new Product(Guid.NewGuid(), "T1GD", new decimal(123.123), ProductStatus.New);
             var name = "";
             var cost = new decimal(999.99);
 
@@ -122,7 +119,7 @@ namespace PizzaItaliano.Services.Products.Tests.Unit.Core.Entities
         public void given_valid_name_and_invalid_cost_should_throw_an_exception()
         {
             // Arrange
-            var productToModified = new Product(Guid.NewGuid(), "T1", new decimal(123.123), ProductStatus.New);
+            var productToModified = new Product(Guid.NewGuid(), "T1CB", new decimal(123.123), ProductStatus.New);
             var name = "abc";
             var cost = new decimal(-999.99);
 

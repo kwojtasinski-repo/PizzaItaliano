@@ -14,20 +14,21 @@ using Xunit;
 namespace PizzaItaliano.Services.Payments.Tests.Intgration.Async
 {
     [Collection("Collection")]
-    public class UpdatePaymentTests
+    public class PayForPaymentTests
     {
         private Task Act(PayForPayment command) => _rabbitMqFixture.PublishAsync(command, Exchange);
 
         [Fact]
-        public async Task update_payment_command_should_update_document_with_given_id_to_database()
+        public async Task pay_for_payment_command_should_update_document_with_given_id_to_database()
         {
             var paymentId = Guid.NewGuid();
-            await TestHelper.AddTestPayment(paymentId, Guid.NewGuid(), Core.Entities.PaymentStatus.Unpaid, _mongoDbFixture);
-            var command = new PayForPayment() { PaymentId = paymentId };
+            var orderId = Guid.NewGuid();
+            await TestHelper.AddTestPayment(paymentId, orderId, Core.Entities.PaymentStatus.Unpaid, _mongoDbFixture);
+            var command = new PayForPayment() { OrderId = orderId };
 
             var tcs = _rabbitMqFixture
                 .SubscribeAndGet<PaidPayment, PaymentDocument>(Exchange,
-                    _mongoDbFixture.GetAsync, command.PaymentId);
+                    _mongoDbFixture.GetAsync, paymentId);
 
             await Act(command);
 
@@ -38,10 +39,10 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration.Async
         }
 
         [Fact]
-        public async Task update_payment_command_with_invalid_id_should_throw_an_exception_and_send_rejected_event()
+        public async Task pay_for_payment_command_with_invalid_id_should_throw_an_exception_and_send_rejected_event()
         {
-            var paymentId = Guid.Empty;
-            var command = new PayForPayment() { PaymentId = paymentId };
+            var orderId = Guid.Empty;
+            var command = new PayForPayment() { OrderId = orderId };
 
             var tcs = _rabbitMqFixture
                 .SubscribeAndGet<PayForPaymentRejected>(Exchange);
@@ -52,16 +53,16 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration.Async
 
             updatePaymentRejected.ShouldNotBeNull();
             updatePaymentRejected.ShouldBeOfType<PayForPaymentRejected>();
-            var exception = new InvalidPaymentIdException(paymentId);
+            var exception = new InvalidOrderIdException(orderId);
             updatePaymentRejected.Code.ShouldBe(exception.Code);
             updatePaymentRejected.Reason.ShouldBe(exception.Message);
         }
 
         [Fact]
-        public async Task update_payment_command_with_not_existed_payment_should_throw_an_exception_and_send_rejected_event()
+        public async Task pay_for_payment_command_with_not_existed_payment_should_throw_an_exception_and_send_rejected_event()
         {
-            var paymentId = Guid.NewGuid();
-            var command = new PayForPayment() { PaymentId = paymentId };
+            var orderId = Guid.NewGuid();
+            var command = new PayForPayment() { OrderId = orderId };
 
             var tcs = _rabbitMqFixture
                 .SubscribeAndGet<PayForPaymentRejected>(Exchange);
@@ -72,17 +73,18 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration.Async
 
             updatePaymentRejected.ShouldNotBeNull();
             updatePaymentRejected.ShouldBeOfType<PayForPaymentRejected>();
-            var exception = new PaymentNotFoundException(paymentId);
+            var exception = new PaymentForOrderNotFoundException(orderId);
             updatePaymentRejected.Code.ShouldBe(exception.Code);
             updatePaymentRejected.Reason.ShouldBe(exception.Message);
         }
 
         [Fact]
-        public async Task update_payment_command_with_payment_status_should_throw_an_exception_and_send_rejected_event()
+        public async Task pay_for_payment_command_with_payment_status_should_throw_an_exception_and_send_rejected_event()
         {
             var paymentId = Guid.NewGuid();
-            await TestHelper.AddTestPayment(paymentId, Guid.NewGuid(), Core.Entities.PaymentStatus.Paid, _mongoDbFixture);
-            var command = new PayForPayment() { PaymentId = paymentId };
+            var orderId = Guid.NewGuid();
+            await TestHelper.AddTestPayment(paymentId, orderId, Core.Entities.PaymentStatus.Paid, _mongoDbFixture);
+            var command = new PayForPayment() { OrderId = orderId };
 
             var tcs = _rabbitMqFixture
                 .SubscribeAndGet<PayForPaymentRejected>(Exchange);
@@ -104,7 +106,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Intgration.Async
         private readonly MongoDbFixture<PaymentDocument, Guid> _mongoDbFixture;
         private readonly RabbitMqFixture _rabbitMqFixture;
 
-        public UpdatePaymentTests(TestAppFactory factory)
+        public PayForPaymentTests(TestAppFactory factory)
         {
             _rabbitMqFixture = new RabbitMqFixture();
             _mongoDbFixture = new MongoDbFixture<PaymentDocument, Guid>("payments");

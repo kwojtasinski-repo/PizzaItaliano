@@ -1,6 +1,6 @@
 ﻿using PizzaItaliano.Services.Payments.API;
 using PizzaItaliano.Services.Payments.Application.Commands;
-using PizzaItaliano.Services.Payments.Application.Exceptions;
+using PizzaItaliano.Services.Payments.Core.Entities;
 using PizzaItaliano.Services.Payments.Infrastructure.Mongo.Documents;
 using PizzaItaliano.Services.Payments.Tests.EndToEnd.Helpers;
 using PizzaItaliano.Services.Payments.Tests.Shared;
@@ -17,98 +17,41 @@ namespace PizzaItaliano.Services.Payments.Tests.EndToEnd.Sync
     [Collection("Collection")]
     public class UpdatePaymentTests
     {
-        private Task<HttpResponseMessage> Act(PayForPayment command)
+        private Task<HttpResponseMessage> Act(UpdatePayment command)
            => _httpClient.PutAsync($"payments/{command.PaymentId}", TestHelper.GetContent(command));
 
         [Fact]
-        public async Task update_payment_endpoint_should_return_http_status_code_created()
+        public async Task should_update_payment_and_change_status_to_paid()
         {
             var paymentId = Guid.NewGuid();
-            await TestHelper.AddTestPayment(paymentId, _mongoDbFixture);
-            var command = new PayForPayment() { PaymentId = paymentId };
+            var orderId = Guid.NewGuid();
+            await TestHelper.AddTestPayment(paymentId, orderId, PaymentStatus.Unpaid, _mongoDbFixture);
+            var command = new UpdatePayment { PaymentId = paymentId, PaymentStatus = PaymentStatus.Paid };
 
             var response = await Act(command);
 
             response.ShouldNotBeNull();
             response.StatusCode.ShouldBe(HttpStatusCode.OK);
+            var paymentUpdated = await _mongoDbFixture.GetAsync(paymentId);
+            paymentUpdated.ShouldNotBeNull();
+            paymentUpdated.PaymentStatus.ShouldBe(PaymentStatus.Paid);
         }
 
         [Fact]
-        public async Task update_payment_endpoint_should_return_body_with_correct_order_id()
+        public async Task should_update_payment_and_change_status_to_unpaid()
         {
             var paymentId = Guid.NewGuid();
-            await TestHelper.AddTestPayment(paymentId, _mongoDbFixture);
-            var command = new PayForPayment() { PaymentId = paymentId };
-            var expectedResponse = $"payments/{paymentId}";
+            var orderId = Guid.NewGuid();
+            await TestHelper.AddTestPayment(paymentId, orderId, PaymentStatus.Paid, _mongoDbFixture);
+            var command = new UpdatePayment { PaymentId = paymentId, PaymentStatus = PaymentStatus.Unpaid };
 
             var response = await Act(command);
-            var bodyString = TestHelper.MapTo<string>(await response.Content.ReadAsStringAsync());
 
-            bodyString.ShouldNotBeNull();
-            bodyString.ShouldBe(expectedResponse);
-        }
-
-        [Fact]
-        public async Task update_payment_endpoint_should_update_document_with_given_id_to_database()
-        {
-            var paymentId = Guid.NewGuid();
-            await TestHelper.AddTestPayment(paymentId, Guid.NewGuid(), Core.Entities.PaymentStatus.Unpaid, _mongoDbFixture);
-            var command = new PayForPayment() { PaymentId = paymentId };
-
-            await Act(command);
-            var document = await _mongoDbFixture.GetAsync(command.PaymentId);
-
-            document.ShouldNotBeNull();
-            document.PaymentStatus.ShouldBe(Core.Entities.PaymentStatus.Paid);
-        }
-
-        [Fact]
-        public async Task update_payment_endpoint_with_invalid_id_should_throw_an_exception_and_send_bad_request()
-        {
-            var paymentId = Guid.Empty;
-            var command = new PayForPayment() { PaymentId = paymentId };
-
-            var response = await Act(command);
-            var error = TestHelper.MapTo<TestHelper.Error>(await response.Content.ReadAsStringAsync());
-
-            error.ShouldNotBeNull();
-            error.ShouldBeOfType<TestHelper.Error>();
-            var exception = new InvalidPaymentIdException(paymentId);
-            error.Code.ShouldBe(exception.Code);
-            error.Reason.ShouldBe(exception.Message);
-        }
-
-        [Fact]
-        public async Task update_payment_endpoint_with_not_existed_payment_should_throw_an_exception_and_send_bad_request()
-        {
-            var paymentId = Guid.NewGuid();
-            var command = new PayForPayment() { PaymentId = paymentId };
-
-            var response = await Act(command);
-            var error = TestHelper.MapTo<TestHelper.Error>(await response.Content.ReadAsStringAsync());
-
-            error.ShouldNotBeNull();
-            error.ShouldBeOfType<TestHelper.Error>();
-            var exception = new PaymentNotFoundException(paymentId);
-            error.Code.ShouldBe(exception.Code);
-            error.Reason.ShouldBe(exception.Message);
-        }
-
-        [Fact]
-        public async Task update_payment_endpoint_with_payment_status_should_throw_an_exception_and_send_bad_request()
-        {
-            var paymentId = Guid.NewGuid();
-            await TestHelper.AddTestPayment(paymentId, Guid.NewGuid(), Core.Entities.PaymentStatus.Paid, _mongoDbFixture);
-            var command = new PayForPayment() { PaymentId = paymentId };
-
-            var response = await Act(command);
-            var error = TestHelper.MapTo<TestHelper.Error>(await response.Content.ReadAsStringAsync());
-
-            error.ShouldNotBeNull();
-            error.ShouldBeOfType<TestHelper.Error>();
-            var exception = new CannotUpdatePaymentStatusException(paymentId);
-            error.Code.ShouldBe(exception.Code);
-            error.Reason.ShouldBe(exception.Message);
+            response.ShouldNotBeNull();
+            response.StatusCode.ShouldBe(HttpStatusCode.OK);
+            var paymentUpdated =  await _mongoDbFixture.GetAsync(paymentId);
+            paymentUpdated.ShouldNotBeNull();
+            paymentUpdated.PaymentStatus.ShouldBe(PaymentStatus.Unpaid);
         }
 
         #region Arrange

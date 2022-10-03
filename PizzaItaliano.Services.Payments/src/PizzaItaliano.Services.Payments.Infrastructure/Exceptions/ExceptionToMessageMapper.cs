@@ -22,6 +22,11 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Exceptions
                     PayForPayment command => new PayForPaymentRejected(command.OrderId, ex.Message, ex.Code),
                     _ => null
                 },
+                PaymentForOrderNotFoundException ex => message switch
+                {
+                    PayForPayment command => new PayForPaymentRejected(command.OrderId, ex.Message, ex.Code),
+                    _ => null
+                },
                 InvalidCostException ex => message switch
                 {
                     AddPayment command => new AddPaymentRejected(command.PaymentId, ex.Message, ex.Code),
@@ -30,6 +35,7 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Exceptions
                 InvalidOrderIdException ex => message switch
                 {
                     AddPayment command => new AddPaymentRejected(command.PaymentId, ex.Message, ex.Code),
+                    PayForPayment command => new PayForPaymentRejected(command.OrderId, ex.Message, ex.Code),
                     _ => null
                 },
                 InvalidPaymentIdException ex => message switch

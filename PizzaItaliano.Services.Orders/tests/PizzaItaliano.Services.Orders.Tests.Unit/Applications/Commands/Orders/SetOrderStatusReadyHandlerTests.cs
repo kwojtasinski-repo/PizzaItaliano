@@ -1,5 +1,7 @@
 ﻿using Convey.CQRS.Events;
+using Convey.MessageBrokers;
 using NSubstitute;
+using PizzaItaliano.Services.Orders.Application;
 using PizzaItaliano.Services.Orders.Application.Commands;
 using PizzaItaliano.Services.Orders.Application.Commands.Handlers;
 using PizzaItaliano.Services.Orders.Application.Exceptions;
@@ -76,13 +78,18 @@ namespace PizzaItaliano.Services.Orders.Tests.Unit.Applications.Commands.Orders
         private readonly IOrderRepository _orderRepository;
         private readonly IMessageBroker _messageBroker;
         private readonly IEventMapper _eventMapper;
+        private readonly ICorrelationContextAccessor _correlationContextAccessor;
+        private readonly IAppContext _appContext;
 
         public SetOrderStatusReadyHandlerTests()
         {
             _orderRepository = Substitute.For<IOrderRepository>();
             _messageBroker = Substitute.For<IMessageBroker>();
             _eventMapper = Substitute.For<IEventMapper>();
-            _handler = new SetOrderStatusReadyHandler(_orderRepository, _messageBroker, _eventMapper);
+            _appContext = Substitute.For<IAppContext>();
+            _correlationContextAccessor = Substitute.For<ICorrelationContextAccessor>();
+            _handler = new SetOrderStatusReadyHandler(_orderRepository, _messageBroker, _eventMapper,
+                _correlationContextAccessor, _appContext);
         }
 
         #endregion

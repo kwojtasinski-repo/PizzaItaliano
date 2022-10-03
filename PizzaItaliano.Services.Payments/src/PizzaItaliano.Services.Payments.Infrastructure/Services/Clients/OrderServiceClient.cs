@@ -20,9 +20,9 @@ namespace PizzaItaliano.Services.Payments.Infrastructure.Services.Clients
             _url = httpClientOptions.Services["orders"];
         }
 
-        public Task<OrderDto> GetAsync(Guid orderId)
+        public async Task<OrderDto> GetAsync(Guid orderId)
         {
-            var order = _httpClient.GetAsync<OrderDto>($"{_url}/orders/{orderId}");
+            var order = await _httpClient.GetAsync<OrderDto>($"{_url}/orders/{orderId}");
             return order;
         }
     }

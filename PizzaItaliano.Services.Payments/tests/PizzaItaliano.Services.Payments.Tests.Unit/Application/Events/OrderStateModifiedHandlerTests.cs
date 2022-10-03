@@ -1,10 +1,13 @@
-﻿using Convey.CQRS.Commands;
+﻿using Castle.Core.Logging;
+using Convey.CQRS.Commands;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using PizzaItaliano.Services.Payments.Application.Commands;
 using PizzaItaliano.Services.Payments.Application.DTO;
 using PizzaItaliano.Services.Payments.Application.Events.External;
 using PizzaItaliano.Services.Payments.Application.Events.External.Handlers;
 using PizzaItaliano.Services.Payments.Application.Services.Clients;
+using PizzaItaliano.Services.Payments.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -94,12 +97,17 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Events
         private readonly OrderStateModifiedHandler _handler;
         private readonly IOrderServiceClient _orderServiceClient;
         private readonly ICommandHandler<AddPayment> _addPaymentCommandHandler;
+        private readonly IPaymentRepository _paymentRepository;
+        private readonly ILogger<OrderStateModifiedHandler> _logger;
 
         public OrderStateModifiedHandlerTests()
         {
             _orderServiceClient = Substitute.For<IOrderServiceClient>();
             _addPaymentCommandHandler = Substitute.For<ICommandHandler<AddPayment>>();
-            _handler = new OrderStateModifiedHandler(_orderServiceClient, _addPaymentCommandHandler);
+            _paymentRepository = Substitute.For<IPaymentRepository>();
+            _logger = Substitute.For<ILogger<OrderStateModifiedHandler>>();
+            _handler = new OrderStateModifiedHandler(_orderServiceClient, _addPaymentCommandHandler, _paymentRepository,
+                _logger);
         }
 
         #endregion

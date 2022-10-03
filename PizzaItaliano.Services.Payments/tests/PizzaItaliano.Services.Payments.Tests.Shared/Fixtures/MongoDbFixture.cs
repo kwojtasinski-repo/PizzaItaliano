@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using PizzaItaliano.Services.Payments.Tests.Shared.Fixtures;
 using PizzaItaliano.Services.Payments.Tests.Shared.Helpers;
 using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PizzaItaliano.Services.Payments.Tests.Shared
@@ -39,6 +40,9 @@ namespace PizzaItaliano.Services.Payments.Tests.Shared
         public Task<TEntity> GetAsync(TKey id)
             => _collection.Find(d => d.Id.Equals(id)).SingleOrDefaultAsync();
 
+        public Task<TEntity> GetUsingPredicateAsync(Expression<Func<TEntity, bool>> filter)
+            => _collection.Find(filter).SingleOrDefaultAsync();
+
         public async Task GetAsync(TKey expectedId, TaskCompletionSource<TEntity> receivedTask)
         {
             if (expectedId is null)
@@ -47,6 +51,24 @@ namespace PizzaItaliano.Services.Payments.Tests.Shared
             }
 
             var entity = await GetAsync(expectedId);
+
+            if (entity is null)
+            {
+                receivedTask.TrySetCanceled();
+                return;
+            }
+
+            receivedTask.TrySetResult(entity);
+        }
+
+        public async Task GetAsync(Expression<Func<TEntity, bool>> filter, TaskCompletionSource<TEntity> receivedTask)
+        {
+            if (filter is null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            var entity = await GetUsingPredicateAsync(filter);
 
             if (entity is null)
             {

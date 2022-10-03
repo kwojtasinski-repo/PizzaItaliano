@@ -26,13 +26,13 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
             // Arrange
             var paymentId = Guid.NewGuid();
             var orderId = Guid.NewGuid();
-            var command = new PayForPayment() { PaymentId = paymentId };
+            var command = new PayForPayment() { OrderId = orderId };
             var paymentNumber = "PAY/2021/10/31/1";
             var cost = decimal.One;
             var status = PaymentStatus.Unpaid;
             var userId = Guid.NewGuid();
             var payment = new Payment(paymentId, paymentNumber, cost, orderId, DateTime.Now, DateTime.Now, status, userId);
-            _paymentRepository.GetAsync(paymentId).Returns(payment);
+            _paymentRepository.GetByOrderIdAsync(orderId).Returns(payment);
 
             // Act
             await Act(command);
@@ -46,30 +46,30 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
         public async Task given_invalid_payment_id_should_throw_an_exception()
         {
             // Arrange
-            var paymentId = Guid.Empty;
-            var command = new PayForPayment() { PaymentId = paymentId };
+            var orderId = Guid.Empty;
+            var command = new PayForPayment() { OrderId = orderId };
 
             // Act
             var exception = await Record.ExceptionAsync(() => Act(command));
 
             // Assert
             exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<InvalidPaymentIdException>();
+            exception.ShouldBeOfType<InvalidOrderIdException>();
         }
 
         [Fact]
         public async Task given_not_existed_payment_should_throw_an_exception()
         {
             // Arrange
-            var paymentId = Guid.NewGuid();
-            var command = new PayForPayment() { PaymentId = paymentId };
+            var orderId = Guid.NewGuid();
+            var command = new PayForPayment() { OrderId = orderId };
 
             // Act
             var exception = await Record.ExceptionAsync(() => Act(command));
 
             // Assert
             exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<PaymentNotFoundException>();
+            exception.ShouldBeOfType<PaymentForOrderNotFoundException>();
         }
 
         [Fact]
@@ -77,14 +77,14 @@ namespace PizzaItaliano.Services.Payments.Tests.Unit.Application.Commands
         {
             // Arrange
             var paymentId = Guid.NewGuid();
-            var command = new PayForPayment() { PaymentId = paymentId };
             var orderId = Guid.NewGuid();
+            var command = new PayForPayment() { OrderId = orderId };
             var paymentNumber = "PAY/2021/10/31/1";
             var cost = decimal.One;
             var status = PaymentStatus.Paid;
             var userId = Guid.NewGuid();
             var payment = new Payment(paymentId, paymentNumber, cost, orderId, DateTime.Now, DateTime.Now, status, userId);
-            _paymentRepository.GetAsync(paymentId).Returns(payment);
+            _paymentRepository.GetByOrderIdAsync(orderId).Returns(payment);
 
             // Act
             var exception = await Record.ExceptionAsync(() => Act(command));
