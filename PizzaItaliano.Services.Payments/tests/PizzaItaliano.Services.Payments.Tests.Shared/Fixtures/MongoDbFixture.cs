@@ -1,6 +1,7 @@
 using Convey.Persistence.MongoDB;
 using Convey.Types;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using PizzaItaliano.Services.Payments.Tests.Shared.Fixtures;
 using PizzaItaliano.Services.Payments.Tests.Shared.Helpers;
 using System;
@@ -41,7 +42,7 @@ namespace PizzaItaliano.Services.Payments.Tests.Shared
             => _collection.Find(d => d.Id.Equals(id)).SingleOrDefaultAsync();
 
         public Task<TEntity> GetUsingPredicateAsync(Expression<Func<TEntity, bool>> filter)
-            => _collection.Find(filter).SingleOrDefaultAsync();
+            => _collection.AsQueryable().Where(filter).SingleOrDefaultAsync();
 
         public async Task GetAsync(TKey expectedId, TaskCompletionSource<TEntity> receivedTask)
         {
